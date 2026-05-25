@@ -2,6 +2,7 @@
 alwaysApply: true
 ---
 Групповой репозиторий разработки игры (домашнее задание по software engineering)
-В группе 3 человека. (стажеры в BigTech, 3 курс ВШЭ ПМИ)
-Локальное окружение: WSL
-Есть Android Studio
+В группе 3 человека. 
+1 - Java (Kotlin)
+2 - Scala (Java)
+3 - SRE
