@@ -1,8 +1,13 @@
 .PHONY: db-generate build clean test
 
 db-generate:
-	./gradlew :shared:generateCommonMainSqlDelightDatabaseInterface
+	./gradlew :shared:generateSqlDelightInterface
 
+shared-build:
+    ./gradlew :shared:build
+
+shared-tests:
+    ./gradlew :shared:allTests
 build:
 	./gradlew build
 
