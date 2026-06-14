@@ -80,3 +80,12 @@ sqldelight {
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
 }
+
+detekt {
+    config.setFrom(files("detekt.yml"))
+    parallel = true
+}
+
+ktfmt {
+    kotlinLangStyle()
+}

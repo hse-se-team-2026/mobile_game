@@ -1,4 +1,4 @@
-.PHONY: db-generate build clean test shared-build shared-tests ci-build
+.PHONY: db-generate build clean test shared-build shared-tests ci-build detekt ktfmt
 
 db-generate:
 	./gradlew :shared:generateSqlDelightInterface
@@ -11,6 +11,12 @@ shared-tests:
 
 ci-build:
 	./gradlew :shared:compileKotlinJvm :shared:compileAndroidMain --no-daemon
+
+detekt:
+	./gradlew :shared:detekt --no-daemon
+
+ktfmt:
+	./gradlew :shared:ktfmtCheck --no-daemon
 
 build:
 	./gradlew build
