@@ -1,8 +1,5 @@
 package ru.hse.mobile_game.di
 
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
 import ru.hse.mobile_game.data.database.SaveRepositoryImpl
 import ru.hse.mobile_game.data.narrative.NarrativeRepositoryImpl

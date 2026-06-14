@@ -19,7 +19,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -47,9 +46,7 @@ fun SaveLoadScreen(
     LaunchedEffect(Unit) { viewModel.loadSlots() }
 
     Box(
-        modifier =
-            Modifier.fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.TopCenter,
     ) {
         Column(
@@ -78,10 +75,7 @@ fun SaveLoadScreen(
 
             when (val state = uiState) {
                 is SaveLoadUiState.Loading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator()
                     }
                 }
@@ -111,10 +105,7 @@ fun SaveLoadScreen(
                     }
                 }
                 is SaveLoadUiState.Error -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = state.message,
@@ -133,18 +124,11 @@ fun SaveLoadScreen(
 }
 
 @Composable
-private fun SaveSlotCard(
-    slot: SaveSlotUiModel,
-    onLoad: () -> Unit,
-    onDelete: () -> Unit,
-) {
+private fun SaveSlotCard(slot: SaveSlotUiModel, onLoad: () -> Unit, onDelete: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onLoad),
         shape = RoundedCornerShape(12.dp),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -188,7 +172,9 @@ private fun SaveSlotCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedButton(onClick = onDelete) { Text("Delete", style = MaterialTheme.typography.bodySmall) }
+                OutlinedButton(onClick = onDelete) {
+                    Text("Delete", style = MaterialTheme.typography.bodySmall)
+                }
             }
         }
     }

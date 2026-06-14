@@ -20,9 +20,7 @@ import ru.hse.mobile_game.screen.model.CharacterUiModel
 
 @Composable
 fun CharacterSheet(character: CharacterUiModel) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp),
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp)) {
         item {
             Text(
                 text = "Character",

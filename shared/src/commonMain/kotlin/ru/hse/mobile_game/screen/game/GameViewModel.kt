@@ -33,12 +33,7 @@ class GameViewModel(
 
     /** Start a new game with the given origin. */
     fun startNewGame(origin: String) {
-        val initialCharacter =
-            Character(
-                id = "player",
-                origin = origin,
-                stats = Stats(),
-            )
+        val initialCharacter = Character(id = "player", origin = origin, stats = Stats())
         val initialState =
             GameState(
                 character = initialCharacter,
@@ -114,8 +109,7 @@ class GameViewModel(
                             id = choice.id,
                             text = choice.text,
                             isAvailable = available,
-                            requirementHint =
-                                if (!available) buildRequirementHint(choice) else null,
+                            requirementHint = if (!available) buildRequirementHint(choice) else null,
                         )
                     }
 
@@ -161,13 +155,9 @@ class GameViewModel(
         )
     }
 
-    private fun buildRequirementHint(
-        choice: ru.hse.mobile_game.domain.entity.Choice
-    ): String {
+    private fun buildRequirementHint(choice: ru.hse.mobile_game.domain.entity.Choice): String {
         val parts = mutableListOf<String>()
-        choice.requires?.statMin?.forEach { (stat, min) ->
-            parts.add("$stat ≥ $min")
-        }
+        choice.requires?.statMin?.forEach { (stat, min) -> parts.add("$stat ≥ $min") }
         choice.requires?.flagsRequired?.forEach { flag -> parts.add("Requires: $flag") }
         choice.requires?.flagsForbidden?.forEach { flag -> parts.add("Forbidden: $flag") }
         return parts.joinToString(", ")

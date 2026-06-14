@@ -20,7 +20,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
@@ -41,7 +40,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.hse.mobile_game.screen.character.CharacterSheet
-import ru.hse.mobile_game.screen.model.CharacterUiModel
 import ru.hse.mobile_game.screen.model.ChoiceUiModel
 import ru.hse.mobile_game.screen.model.GameUiState
 
@@ -63,11 +61,7 @@ fun GameScreen(
         }
     }
 
-    Box(
-        modifier =
-            Modifier.fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
-    ) {
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
         when (val state = uiState) {
             is GameUiState.Loading -> LoadingContent()
             is GameUiState.SceneReady ->
@@ -79,10 +73,7 @@ fun GameScreen(
                     onMenuClick = onNavigateToMenu,
                 )
             is GameUiState.ChapterTransition ->
-                ChapterTransitionContent(
-                    chapter = state.chapter,
-                    summary = state.summaryText,
-                )
+                ChapterTransitionContent(chapter = state.chapter, summary = state.summaryText)
             is GameUiState.GameOver -> GameOverContent(onMenuClick = onNavigateToMenu)
             is GameUiState.Error ->
                 ErrorContent(message = state.message, onRetry = { /* retry logic */ })
@@ -117,24 +108,20 @@ private fun SceneContent(
     onSaveClick: () -> Unit,
     onMenuClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-    ) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         // Top bar with action buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = "⚔",
-                fontSize = 24.sp,
-                modifier =
-                    Modifier.padding(8.dp),
-            )
+            Text(text = "⚔", fontSize = 24.sp, modifier = Modifier.padding(8.dp))
 
             Row {
-                OutlinedButton(onClick = onCharacterClick, modifier = Modifier.padding(end = 8.dp)) {
+                OutlinedButton(
+                    onClick = onCharacterClick,
+                    modifier = Modifier.padding(end = 8.dp),
+                ) {
                     Text("Character")
                 }
                 OutlinedButton(onClick = onSaveClick, modifier = Modifier.padding(end = 8.dp)) {
@@ -147,9 +134,7 @@ private fun SceneContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Scene text
-        LazyColumn(
-            modifier = Modifier.weight(1f).fillMaxWidth(),
-        ) {
+        LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -171,7 +156,9 @@ private fun SceneContent(
             item { Spacer(modifier = Modifier.height(24.dp)) }
 
             // Choices
-            items(state.choices) { choice -> ChoiceButton(choice = choice, onClick = { onChoiceSelected(choice.id) }) }
+            items(state.choices) { choice ->
+                ChoiceButton(choice = choice, onClick = { onChoiceSelected(choice.id) })
+            }
         }
     }
 }
@@ -189,18 +176,14 @@ private fun ChoiceButton(choice: ChoiceUiModel, onClick: () -> Unit) {
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 disabledContainerColor =
                     MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                disabledContentColor =
-                    MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
             ),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
             horizontalAlignment = Alignment.Start,
         ) {
-            Text(
-                text = choice.text,
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            Text(text = choice.text, style = MaterialTheme.typography.bodyMedium)
             if (choice.requirementHint != null) {
                 Text(
                     text = choice.requirementHint,

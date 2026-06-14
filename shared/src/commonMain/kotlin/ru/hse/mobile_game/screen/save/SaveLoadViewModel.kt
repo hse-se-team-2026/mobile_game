@@ -22,7 +22,8 @@ class SaveLoadViewModel(
 
     /** Loaded game state when user picks a slot to resume. */
     private var _selectedGameState: GameState? = null
-    val selectedGameState: GameState? get() = _selectedGameState
+    val selectedGameState: GameState?
+        get() = _selectedGameState
 
     fun loadSlots() {
         _uiState.value = SaveLoadUiState.Loading
@@ -42,8 +43,7 @@ class SaveLoadViewModel(
                         }
                     )
             } catch (e: Exception) {
-                _uiState.value =
-                    SaveLoadUiState.Error("Failed to load saves: ${e.message}")
+                _uiState.value = SaveLoadUiState.Error("Failed to load saves: ${e.message}")
             }
         }
     }
@@ -55,8 +55,7 @@ class SaveLoadViewModel(
                 val slot = slots.find { it.id == slotId }
                 _selectedGameState = slot?.gameState
             } catch (e: Exception) {
-                _uiState.value =
-                    SaveLoadUiState.Error("Failed to load save: ${e.message}")
+                _uiState.value = SaveLoadUiState.Error("Failed to load save: ${e.message}")
             }
         }
     }
@@ -67,8 +66,7 @@ class SaveLoadViewModel(
                 saveGame(slotId, name, gameState, previewText)
                 loadSlots() // Refresh the list
             } catch (e: Exception) {
-                _uiState.value =
-                    SaveLoadUiState.Error("Failed to save: ${e.message}")
+                _uiState.value = SaveLoadUiState.Error("Failed to save: ${e.message}")
             }
         }
     }
@@ -79,8 +77,7 @@ class SaveLoadViewModel(
                 loadGame.deleteSlot(slotId)
                 loadSlots()
             } catch (e: Exception) {
-                _uiState.value =
-                    SaveLoadUiState.Error("Failed to delete save: ${e.message}")
+                _uiState.value = SaveLoadUiState.Error("Failed to delete save: ${e.message}")
             }
         }
     }

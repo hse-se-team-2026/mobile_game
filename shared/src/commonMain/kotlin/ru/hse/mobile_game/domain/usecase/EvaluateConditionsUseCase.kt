@@ -6,8 +6,8 @@ import ru.hse.mobile_game.domain.entity.Requirements
 import ru.hse.mobile_game.domain.entity.Stats
 
 /**
- * Evaluates whether a character meets the requirements for a given choice.
- * Checks stat minimums, required flags, and forbidden flags.
+ * Evaluates whether a character meets the requirements for a given choice. Checks stat minimums,
+ * required flags, and forbidden flags.
  */
 class EvaluateConditionsUseCase {
 

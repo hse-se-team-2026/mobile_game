@@ -7,8 +7,8 @@ import ru.hse.mobile_game.domain.entity.GameState
 import ru.hse.mobile_game.domain.entity.Stats
 
 /**
- * Processes a player's choice: validates requirements, applies effects to the character,
- * and returns an updated GameState pointing to the next scene.
+ * Processes a player's choice: validates requirements, applies effects to the character, and
+ * returns an updated GameState pointing to the next scene.
  */
 class MakeChoiceUseCase(private val evaluateConditions: EvaluateConditionsUseCase) {
 

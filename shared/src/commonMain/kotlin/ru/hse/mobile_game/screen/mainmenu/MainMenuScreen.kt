@@ -24,14 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MainMenuScreen(
-    onNewGame: () -> Unit,
-    onLoadGame: () -> Unit,
-) {
+fun MainMenuScreen(onNewGame: () -> Unit, onLoadGame: () -> Unit) {
     Box(
-        modifier =
-            Modifier.fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -63,19 +58,14 @@ fun MainMenuScreen(
                 onClick = onNewGame,
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
+                    ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             ) {
                 Text("New Game", fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedButton(
-                onClick = onLoadGame,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-            ) {
+            OutlinedButton(onClick = onLoadGame, modifier = Modifier.fillMaxWidth().height(56.dp)) {
                 Text("Load Game", fontSize = 18.sp)
             }
         }

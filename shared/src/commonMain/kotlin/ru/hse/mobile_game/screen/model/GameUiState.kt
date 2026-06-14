@@ -1,8 +1,6 @@
 package ru.hse.mobile_game.screen.model
 
-/**
- * Represents the UI state of the game screen.
- */
+/** Represents the UI state of the game screen. */
 sealed interface GameUiState {
     data object Loading : GameUiState
 

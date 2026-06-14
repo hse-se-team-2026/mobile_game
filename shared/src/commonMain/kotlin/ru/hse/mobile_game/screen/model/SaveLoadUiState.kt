@@ -1,8 +1,6 @@
 package ru.hse.mobile_game.screen.model
 
-/**
- * UI state for the save/load screen.
- */
+/** UI state for the save/load screen. */
 sealed interface SaveLoadUiState {
     data object Loading : SaveLoadUiState
 

@@ -26,11 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private data class OriginOption(
-    val id: String,
-    val title: String,
-    val description: String,
-)
+private data class OriginOption(val id: String, val title: String, val description: String)
 
 private val origins =
     listOf(
@@ -67,9 +63,7 @@ private val origins =
 @Composable
 fun OriginSelectScreen(onOriginSelected: (String) -> Unit) {
     Box(
-        modifier =
-            Modifier.fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.TopCenter,
     ) {
         Column(
@@ -89,7 +83,8 @@ fun OriginSelectScreen(onOriginSelected: (String) -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Your origin shapes your starting abilities and how the world perceives you.",
+                text =
+                    "Your origin shapes your starting abilities and how the world perceives you.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
@@ -98,7 +93,9 @@ fun OriginSelectScreen(onOriginSelected: (String) -> Unit) {
             Spacer(modifier = Modifier.height(24.dp))
 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(origins) { origin -> OriginCard(origin = origin, onClick = { onOriginSelected(origin.id) }) }
+                items(origins) { origin ->
+                    OriginCard(origin = origin, onClick = { onOriginSelected(origin.id) })
+                }
             }
         }
     }
@@ -109,10 +106,7 @@ private fun OriginCard(origin: OriginOption, onClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(12.dp),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
