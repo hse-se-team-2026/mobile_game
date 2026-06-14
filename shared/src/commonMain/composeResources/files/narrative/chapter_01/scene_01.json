@@ -1,0 +1,21 @@
+{
+  "id": "scene_01",
+  "chapter": 1,
+  "background": "market_dusk",
+  "text": "You wake up before dawn and step into a noisy city market.",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Talk to the guard at the gate",
+      "requires": { "stat_min": { "cunning": 1 } },
+      "effects": { "relations": { "npc_guard": 1 } },
+      "next_scene": "scene_02"
+    },
+    {
+      "id": "c2",
+      "text": "Stay in the crowd and observe",
+      "effects": { "stats": { "cunning": 1 } },
+      "next_scene": "scene_02"
+    }
+  ]
+}

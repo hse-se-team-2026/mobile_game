@@ -9,7 +9,7 @@ import ru.hse.mobile_game.domain.repository.SaveSlot
 
 class SaveRepositoryImpl(
     private val database: AppDatabase,
-    private val json: Json = Json { ignoreUnknownKeys = true }
+    private val json: Json = Json { ignoreUnknownKeys = true },
 ) : SaveRepository {
 
     private val queries = database.saveSlotQueries
@@ -22,7 +22,7 @@ class SaveRepositoryImpl(
                 gameState = deserializeState(entity.game_state),
                 chapter = entity.chapter.toInt(),
                 timestamp = entity.timestamp,
-                previewText = entity.preview_text
+                previewText = entity.preview_text,
             )
         }
     }
@@ -34,7 +34,7 @@ class SaveRepositoryImpl(
             game_state = serializeState(slot.gameState),
             chapter = slot.chapter.toLong(),
             timestamp = slot.timestamp,
-            preview_text = slot.previewText
+            preview_text = slot.previewText,
         )
     }
 

@@ -8,5 +8,5 @@ data class GameState(
     val currentSceneId: String,
     val chapter: Int,
     val choiceHistory: List<String> = emptyList(),
-    val timestamp: Long
+    val timestamp: Long,
 )

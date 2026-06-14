@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
           retention-days: 1
 
   build-jvm:
-    name: Build JVM Target
+    name: Build Shared Metadata
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: generate
@@ -58,8 +58,8 @@ jobs:
           name: generated-sqldelight
           path: shared/build/generated/
 
-      - name: Compile JVM
-        run: ./gradlew :shared:compileKotlinJvm --no-daemon
+      - name: Compile shared metadata
+        run: ./gradlew :shared:compileKotlinMetadata --no-daemon
 
   build-android:
     name: Build Android Target
@@ -112,8 +112,8 @@ jobs:
           name: generated-sqldelight
           path: shared/build/generated/
 
-      - name: Run JVM Tests
-        run: ./gradlew :shared:jvmTest --no-daemon
+      - name: Run Android host tests
+        run: ./gradlew :shared:testAndroidHostTest --no-daemon
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4

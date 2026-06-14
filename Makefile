@@ -10,13 +10,13 @@ shared-tests:
 	./gradlew :shared:allTests
 
 ci-build:
-	./gradlew :shared:compileKotlinJvm :shared:compileAndroidMain --no-daemon
+	./gradlew :shared:compileKotlinMetadata :shared:compileAndroidMain --stacktrace --no-daemon
 
 detekt:
 	./gradlew :shared:detekt --no-daemon
 
 ktfmt:
-	./gradlew :shared:ktfmtCheck --no-daemon
+	./gradlew :shared:ktfmtFormat --no-daemon
 
 build:
 	./gradlew build

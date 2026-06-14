@@ -6,9 +6,7 @@ import ru.hse.mobile_game.domain.entity.Effects
 import ru.hse.mobile_game.domain.entity.Requirements
 import ru.hse.mobile_game.domain.entity.Scene
 
-class SceneJsonParser(
-    private val json: Json = Json { ignoreUnknownKeys = true }
-) {
+class SceneJsonParser(private val json: Json = Json { ignoreUnknownKeys = true }) {
     fun parseScene(jsonString: String): SceneJson {
         return try {
             json.decodeFromString(SceneJson.serializer(), jsonString)
@@ -31,7 +29,7 @@ class SceneJsonParser(
             chapter = sceneJson.chapter,
             backgroundAsset = sceneJson.background,
             text = sceneJson.text,
-            choices = sceneJson.choices.map { mapChoiceToDomain(it) }
+            choices = sceneJson.choices.map { mapChoiceToDomain(it) },
         )
     }
 
@@ -41,7 +39,7 @@ class SceneJsonParser(
             text = choiceJson.text,
             requires = choiceJson.requires?.let { mapRequirementsToDomain(it) },
             effects = choiceJson.effects?.let { mapEffectsToDomain(it) } ?: Effects(),
-            nextSceneId = choiceJson.nextSceneId
+            nextSceneId = choiceJson.nextSceneId,
         )
     }
 
@@ -49,7 +47,7 @@ class SceneJsonParser(
         return Requirements(
             statMin = requirementsJson.statMin,
             flagsRequired = requirementsJson.flagsRequired,
-            flagsForbidden = requirementsJson.flagsForbidden
+            flagsForbidden = requirementsJson.flagsForbidden,
         )
     }
 
@@ -58,7 +56,7 @@ class SceneJsonParser(
             stats = effectsJson.stats,
             relations = effectsJson.relations,
             factionStandings = effectsJson.factionStandings,
-            flags = effectsJson.flags
+            flags = effectsJson.flags,
         )
     }
 }

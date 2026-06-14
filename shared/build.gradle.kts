@@ -12,10 +12,7 @@ plugins {
 }
 
 kotlin {
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
+    listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
             isStatic = true
@@ -23,19 +20,13 @@ kotlin {
     }
 
     androidLibrary {
-       namespace = "ru.hse.mobile_game.shared"
-       compileSdk = libs.versions.android.compileSdk.get().toInt()
-       minSdk = libs.versions.android.minSdk.get().toInt()
+        namespace = "ru.hse.mobile_game.shared"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
-       compilerOptions {
-           jvmTarget = JvmTarget.JVM_11
-       }
-       androidResources {
-           enable = true
-       }
-       withHostTest {
-           isIncludeAndroidResources = true
-       }
+        compilerOptions { jvmTarget = JvmTarget.JVM_11 }
+        androidResources { enable = true }
+        withHostTest { isIncludeAndroidResources = true }
     }
 
     sourceSets {
@@ -44,9 +35,7 @@ kotlin {
             implementation(libs.sqldelight.android)
             implementation(libs.androidx.datastore.preferences)
         }
-        iosMain.dependencies {
-            implementation(libs.sqldelight.native)
-        }
+        iosMain.dependencies { implementation(libs.sqldelight.native) }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
@@ -62,9 +51,7 @@ kotlin {
             implementation(libs.androidx.datastore.core)
             implementation(libs.androidx.datastore.preferences.core)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
+        commonTest.dependencies { implementation(libs.kotlin.test) }
     }
 }
 
@@ -77,15 +64,11 @@ sqldelight {
     }
 }
 
-dependencies {
-    androidRuntimeClasspath(libs.compose.uiTooling)
-}
+dependencies { androidRuntimeClasspath(libs.compose.uiTooling) }
 
 detekt {
     config.setFrom(files("detekt.yml"))
     parallel = true
 }
 
-ktfmt {
-    kotlinLangStyle()
-}
+ktfmt { kotlinLangStyle() }
