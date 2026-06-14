@@ -9,7 +9,7 @@ data class SceneJson(
     val chapter: Int,
     val background: String,
     val text: String,
-    val choices: List<ChoiceJson> = emptyList()
+    val choices: List<ChoiceJson> = emptyList(),
 )
 
 @Serializable
@@ -18,25 +18,20 @@ data class ChoiceJson(
     val text: String,
     val requires: RequirementsJson? = null,
     val effects: EffectsJson? = null,
-    @SerialName("next_scene")
-    val nextSceneId: String
+    @SerialName("next_scene") val nextSceneId: String,
 )
 
 @Serializable
 data class RequirementsJson(
-    @SerialName("stat_min")
-    val statMin: Map<String, Int> = emptyMap(),
-    @SerialName("flags_required")
-    val flagsRequired: Set<String> = emptySet(),
-    @SerialName("flags_forbidden")
-    val flagsForbidden: Set<String> = emptySet()
+    @SerialName("stat_min") val statMin: Map<String, Int> = emptyMap(),
+    @SerialName("flags_required") val flagsRequired: Set<String> = emptySet(),
+    @SerialName("flags_forbidden") val flagsForbidden: Set<String> = emptySet(),
 )
 
 @Serializable
 data class EffectsJson(
     val stats: Map<String, Int> = emptyMap(),
     val relations: Map<String, Int> = emptyMap(),
-    @SerialName("faction_standings")
-    val factionStandings: Map<String, Int> = emptyMap(),
-    val flags: Set<String> = emptySet()
+    @SerialName("faction_standings") val factionStandings: Map<String, Int> = emptyMap(),
+    val flags: Set<String> = emptySet(),
 )

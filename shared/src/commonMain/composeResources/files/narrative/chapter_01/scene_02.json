@@ -1,0 +1,17 @@
+{
+  "id": "scene_02",
+  "chapter": 1,
+  "background": "guard_post",
+  "text": "The guard watches you carefully, waiting for your answer.",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Promise to help with patrol duties",
+      "effects": {
+        "relations": { "npc_guard": 2 },
+        "flags": ["guard_alliance"]
+      },
+      "next_scene": "scene_02"
+    }
+  ]
+}
