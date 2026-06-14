@@ -34,6 +34,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.sqldelight.android)
             implementation(libs.androidx.datastore.preferences)
+            implementation(libs.koin.android)
         }
         iosMain.dependencies { implementation(libs.sqldelight.native) }
         commonMain.dependencies {
@@ -45,11 +46,15 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.navigation.compose)
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutines)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.androidx.datastore.core)
             implementation(libs.androidx.datastore.preferences.core)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies { implementation(libs.kotlin.test) }
     }
