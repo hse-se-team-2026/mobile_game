@@ -7,4 +7,7 @@ plugins {
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.sqldelight) apply false
+    alias(libs.plugins.kotlinx.serialization) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.ktfmt) apply false
 }

@@ -1,0 +1,18 @@
+CREATE TABLE SaveSlot (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    game_state TEXT NOT NULL,
+    chapter INTEGER NOT NULL,
+    timestamp INTEGER NOT NULL,
+    preview_text TEXT
+);
+
+selectAll:
+SELECT * FROM SaveSlot ORDER BY timestamp DESC;
+
+upsert:
+INSERT OR REPLACE INTO SaveSlot (id, name, game_state, chapter, timestamp, preview_text)
+VALUES (?, ?, ?, ?, ?, ?);
+
+deleteById:
+DELETE FROM SaveSlot WHERE id = ?;

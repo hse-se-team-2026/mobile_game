@@ -1,13 +1,17 @@
-.PHONY: db-generate build clean test
+.PHONY: db-generate build clean test shared-build shared-tests ci-build
 
 db-generate:
 	./gradlew :shared:generateSqlDelightInterface
 
 shared-build:
-    ./gradlew :shared:build
+	./gradlew :shared:build
 
 shared-tests:
-    ./gradlew :shared:allTests
+	./gradlew :shared:allTests
+
+ci-build:
+	./gradlew :shared:compileKotlinJvm :shared:compileAndroidMain --no-daemon
+
 build:
 	./gradlew build
 
