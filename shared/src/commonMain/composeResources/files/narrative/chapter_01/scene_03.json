@@ -1,0 +1,14 @@
+{
+  "id": "scene_03",
+  "chapter": 1,
+  "background": "city_gate",
+  "text": "The sun rises over the city walls. Your first day in the capital has begun — and the choices you made will echo through the days to come. This is only the beginning of your story.",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Continue to Chapter 2...",
+      "effects": {},
+      "next_scene": "end"
+    }
+  ]
+}

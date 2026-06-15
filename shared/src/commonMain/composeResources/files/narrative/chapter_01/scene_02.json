@@ -11,7 +11,15 @@
         "relations": { "npc_guard": 2 },
         "flags": ["guard_alliance"]
       },
-      "next_scene": "scene_02"
+      "next_scene": "scene_03"
+    },
+    {
+      "id": "c2",
+      "text": "Refuse and walk away",
+      "effects": {
+        "relations": { "npc_guard": -1 }
+      },
+      "next_scene": "scene_03"
     }
   ]
 }

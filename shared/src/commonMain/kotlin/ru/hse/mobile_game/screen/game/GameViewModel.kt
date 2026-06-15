@@ -33,7 +33,12 @@ class GameViewModel(
 
     /** Start a new game with the given origin. */
     fun startNewGame(origin: String) {
-        val initialCharacter = Character(id = "player", origin = origin, stats = Stats())
+        val initialCharacter =
+            Character(
+                id = "player",
+                origin = origin,
+                stats = Stats(strength = 1, cunning = 1, wisdom = 1, charisma = 1),
+            )
         val initialState =
             GameState(
                 character = initialCharacter,
@@ -94,6 +99,13 @@ class GameViewModel(
 
     private fun loadCurrentScene() {
         val state = gameState ?: return
+
+        // Handle end-of-content marker
+        if (state.currentSceneId == "end") {
+            _uiState.value = GameUiState.GameOver
+            return
+        }
+
         _uiState.value = GameUiState.Loading
 
         viewModelScope.launch {
