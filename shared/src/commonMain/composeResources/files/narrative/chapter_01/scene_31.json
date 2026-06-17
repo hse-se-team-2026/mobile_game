@@ -1,0 +1,34 @@
+{
+  "id": "scene_31",
+  "chapter": 1,
+  "background": "guard_post",
+  "text": "*Guard Captain Brynn reads the note you took from the thug. Her jaw tightens. She reads it again, then sets it down with the careful precision of someone controlling their anger.*\n\nBrynn: \"G for Goran. That weasel-faced bastard tried to have you killed. This, combined with what my own people have been telling me...\"\n\n*She stands abruptly, buckling on her sword belt.*\n\nBrynn: \"I have twelve guards I trust — the ones Goran's purge missed. It's not enough to storm the estate, but it's enough to make a difference. What's the plan?\"\n\n*She looks at you with the fierce determination of a soldier who has finally been given permission to fight.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Plan a coordinated strike with her loyal guards",
+      "effects": {
+        "relations": {
+          "guard_captain": 3
+        },
+        "flags": [
+          "brynn_forces"
+        ]
+      },
+      "next_scene": "scene_28"
+    },
+    {
+      "id": "c2",
+      "text": "Ask her to protect the Duke while you handle Harren",
+      "effects": {
+        "relations": {
+          "guard_captain": 2
+        },
+        "flags": [
+          "brynn_guards_duke"
+        ]
+      },
+      "next_scene": "scene_28"
+    }
+  ]
+}

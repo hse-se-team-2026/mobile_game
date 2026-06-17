@@ -1,0 +1,35 @@
+{
+  "id": "scene_22",
+  "chapter": 1,
+  "background": "library",
+  "text": "*The city archives occupy the basement of the old courthouse — rows upon rows of shelves sagging under the weight of ledgers, tax records, deeds, and shipping manifests going back a century.*\n\n*It takes hours of searching, but you find what you're looking for. The shipping records for the past year tell a clear story: cargo tonnage through Ashenmoor has doubled, but tax revenue has dropped. Someone is moving vast quantities of goods without paying duties.*\n\n*Cross-referencing the Guild records, you find a pattern. Every undocumented shipment routes through warehouses leased to the same entity: the Ashenmoor Merchants' Guild, under Harren's signature.*\n\n*But here's the real find — buried in a stack of old property deeds, a transfer document. Harren has been quietly buying up properties throughout the city: warehouses, a foundry, even a section of the city wall. No merchant needs to own a section of wall.*\n\n*Unless they plan to open a gate that shouldn't be opened.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Copy the key documents as evidence",
+      "effects": {
+        "flags": [
+          "has_ledger",
+          "knows_smuggling",
+          "knows_wall_gate"
+        ],
+        "stats": {
+          "wisdom": 1
+        }
+      },
+      "next_scene": "scene_24"
+    },
+    {
+      "id": "c2",
+      "text": "Take the property deed — someone needs to see this",
+      "effects": {
+        "flags": [
+          "has_deed",
+          "knows_smuggling",
+          "knows_wall_gate"
+        ]
+      },
+      "next_scene": "scene_24"
+    }
+  ]
+}

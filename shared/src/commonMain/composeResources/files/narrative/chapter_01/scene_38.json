@@ -1,0 +1,18 @@
+{
+  "id": "scene_38",
+  "chapter": 1,
+  "background": "alley_night",
+  "text": "*You're free — whether by cunning, force, or deception — and you carry with you knowledge that could save Ashenmoor. Harren's plan is clear now: Baron Varketh arrives within days, the Duke will be dead by then, and the north gate will open.*\n\n*The night air tastes like freedom and urgency. Every hour that passes brings the city closer to falling.*\n\n*You hurry through the dark streets toward the Hollow Crown. Your allies need to hear this — and then you need to act. There are three things that must happen before Varketh arrives: the Duke must be saved, the weapons must be dealt with, and the gate must be secured.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Rush to gather your allies at the tavern",
+      "effects": {
+        "flags": [
+          "knows_full_plan"
+        ]
+      },
+      "next_scene": "scene_28"
+    }
+  ]
+}

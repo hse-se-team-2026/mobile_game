@@ -1,0 +1,33 @@
+{
+  "id": "scene_10",
+  "chapter": 1,
+  "background": "tavern_interior",
+  "text": "*You slide a coin across the bar. Marta pours you something dark and bitter without being asked — apparently the house specialty is whatever she feels like serving.*\n\nMarta: \"New in town? I can tell. You've still got hope in your eyes. Give it a week.\"\n\n*She leans closer, her voice dropping.*\n\nMarta: \"Three merchants gone in the last month. Good people — well, mostly good. Aldric was a friend. His shop was torn apart, and the guards called it 'burglary.' But burglars don't take people, stranger. They take things.\"\n\n*She glances toward the door, checking for eavesdroppers.*\n\nMarta: \"If you're here about the trouble — and I think you are — talk to the Guild. The Merchants' Guild. Harren's the head, keeps his offices by the harbor. But watch yourself around that one. He smiles too much for an honest man.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Ask about the swordsman by the fire",
+      "effects": {
+        "relations": {
+          "marta": 1
+        },
+        "flags": [
+          "knows_disappearances",
+          "knows_harren"
+        ]
+      },
+      "next_scene": "scene_17"
+    },
+    {
+      "id": "c2",
+      "text": "Thank her and head back to the market to follow up",
+      "effects": {
+        "flags": [
+          "knows_disappearances",
+          "knows_harren"
+        ]
+      },
+      "next_scene": "scene_17"
+    }
+  ]
+}

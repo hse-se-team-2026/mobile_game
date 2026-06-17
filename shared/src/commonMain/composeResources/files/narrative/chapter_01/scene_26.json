@@ -1,0 +1,30 @@
+{
+  "id": "scene_26",
+  "chapter": 1,
+  "background": "alley_night",
+  "text": "*The thugs didn't expect real resistance. Within minutes, the confrontation is over. You stand in the alley, breathing hard, the taste of adrenaline sharp on your tongue.*\n\n*One of the thugs groans at your feet. You search him — a few coins, a crude knife, and a folded note. The handwriting is educated, precise:*\n\n*\"Remove the outsider. Standard payment upon confirmation. —G\"*\n\n*G for Goran. The steward is working with Harren's Guild. The conspiracy goes all the way to the Duke's household.*\n\n*Dawn is breaking over the rooftops. You need to decide your next move carefully — they know you're a threat now, and the next attempt won't be three thugs in an alley.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Keep the note and gather your allies immediately",
+      "effects": {
+        "flags": [
+          "has_note",
+          "knows_coup"
+        ]
+      },
+      "next_scene": "scene_28"
+    },
+    {
+      "id": "c2",
+      "text": "Go directly to the Guard Captain with this evidence",
+      "effects": {
+        "flags": [
+          "has_note",
+          "knows_coup"
+        ]
+      },
+      "next_scene": "scene_31"
+    }
+  ]
+}

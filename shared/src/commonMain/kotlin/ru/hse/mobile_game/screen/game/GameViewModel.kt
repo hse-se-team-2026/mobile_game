@@ -37,7 +37,7 @@ class GameViewModel(
             Character(
                 id = "player",
                 origin = origin,
-                stats = Stats(strength = 1, cunning = 1, wisdom = 1, charisma = 1),
+                stats = statsForOrigin(origin),
             )
         val initialState =
             GameState(
@@ -173,6 +173,16 @@ class GameViewModel(
         choice.requires?.flagsRequired?.forEach { flag -> parts.add("Requires: $flag") }
         choice.requires?.flagsForbidden?.forEach { flag -> parts.add("Forbidden: $flag") }
         return parts.joinToString(", ")
+    }
+}
+
+private fun statsForOrigin(origin: String): Stats {
+    return when (origin) {
+        "noble" -> Stats(strength = 1, cunning = 2, wisdom = 2, charisma = 5)
+        "merchant" -> Stats(strength = 1, cunning = 5, wisdom = 2, charisma = 2)
+        "soldier" -> Stats(strength = 5, cunning = 2, wisdom = 1, charisma = 2)
+        "scholar" -> Stats(strength = 1, cunning = 2, wisdom = 5, charisma = 2)
+        else -> Stats(strength = 2, cunning = 2, wisdom = 2, charisma = 2)
     }
 }
 

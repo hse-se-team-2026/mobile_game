@@ -1,0 +1,30 @@
+{
+  "id": "scene_42",
+  "chapter": 1,
+  "background": "city_gate",
+  "text": "*The north gate has been modified — you can see it now, in the grey predawn light. New hinges, the old lock replaced, the bar mechanism altered to open from outside. Harren's renovation project was a trap built in plain sight.*\n\n*You work fast with whatever hands are available, re-barricading the gate with anything heavy — carts, barrels, stone blocks. It won't hold a determined army forever, but it will buy time.*\n\n*A scout runs up, breathless.*\n\nScout: \"Dust cloud on the north road. At least five hundred men. Varketh's banners. They'll be here by noon.\"\n\n*Time is running out. The gate is secured for now, but Harren must be stopped or the city falls regardless.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Leave defenders at the gate and lead the assault on Harren",
+      "effects": {
+        "flags": [
+          "gate_secured",
+          "assault_guild"
+        ]
+      },
+      "next_scene": "scene_43"
+    },
+    {
+      "id": "c2",
+      "text": "Stay and command the gate defense personally",
+      "effects": {
+        "flags": [
+          "gate_secured",
+          "defend_gate"
+        ]
+      },
+      "next_scene": "scene_44"
+    }
+  ]
+}

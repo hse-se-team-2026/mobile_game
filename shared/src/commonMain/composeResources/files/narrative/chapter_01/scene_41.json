@@ -1,0 +1,43 @@
+{
+  "id": "scene_41",
+  "chapter": 1,
+  "background": "tavern_interior",
+  "text": "*Everything comes down to this. In the back room of the Hollow Crown, you lay out the final plan. The faces around you are grim but determined.*\n\n*The Duke — if he lives — has given what authority he can. Captain Brynn's loyal guards stand ready. Edric has rallied veterans from across the city. Even the dock workers have volunteered, armed with boathooks and courage.*\n\n*Harren has fortified the Guild Hall with his remaining mercenaries. Goran — if still free — commands the estate guards. And somewhere out there, Baron Varketh's army marches toward the north gate.*\n\nMarta: \"We can't fight on three fronts. Choose — where do you lead?\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Lead the assault on Harren at the Guild Hall",
+      "effects": {
+        "flags": [
+          "assault_guild"
+        ]
+      },
+      "next_scene": "scene_43"
+    },
+    {
+      "id": "c2",
+      "text": "Race to the north gate to hold it against Varketh",
+      "effects": {
+        "flags": [
+          "defend_gate"
+        ]
+      },
+      "next_scene": "scene_44"
+    },
+    {
+      "id": "c3",
+      "text": "Infiltrate the estate to neutralize Goran personally",
+      "requires": {
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "infiltrate_estate"
+        ]
+      },
+      "next_scene": "scene_45"
+    }
+  ]
+}

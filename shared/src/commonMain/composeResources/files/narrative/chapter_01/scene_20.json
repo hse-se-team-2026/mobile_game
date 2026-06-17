@@ -1,0 +1,63 @@
+{
+  "id": "scene_20",
+  "chapter": 1,
+  "background": "noble_estate",
+  "text": "*The Duke's estate sits atop Ashenmoor's only hill, surrounded by walls of pale stone now stained grey. The gardens are untended, the fountains dry. An air of quiet decay hangs over the place like a funeral shroud.*\n\nThe guards at the gate are Goran's men — new hires with sharp armor and dull eyes. They turn you away at first, but your letter of passage forces them to summon someone.\n\n*A young man appears — thin, nervous, ink-stained fingers clutching a ledger. Thomas, the Duke's personal scribe.*\n\nThomas: \"The Duke is... indisposed. He has been for weeks now. The steward, Goran, handles all affairs. But — \"\n\n*He glances behind him, then lowers his voice.*\n\nThomas: \"I've been copying the estate's financial records. Large sums are being moved — diverted to accounts I can't trace. And the Duke's physician has been replaced. The new one is Goran's man.\"\n\n*His eyes are frightened but determined.*\n\nThomas: \"I think the Duke is being poisoned. But I cannot prove it alone.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "\"I'll help you. Give me copies of those records.\"",
+      "effects": {
+        "relations": {
+          "thomas": 3
+        },
+        "flags": [
+          "thomas_ally",
+          "has_records",
+          "duke_poisoned"
+        ]
+      },
+      "next_scene": "scene_24"
+    },
+    {
+      "id": "c2",
+      "text": "\"That's a serious accusation. What evidence do you have?\"",
+      "requires": {
+        "stat_min": {
+          "wisdom": 3
+        }
+      },
+      "effects": {
+        "relations": {
+          "thomas": 1
+        },
+        "flags": [
+          "duke_poisoned"
+        ],
+        "stats": {
+          "wisdom": 1
+        }
+      },
+      "next_scene": "scene_24"
+    },
+    {
+      "id": "c3",
+      "text": "\"I need to see the Duke myself.\"",
+      "requires": {
+        "stat_min": {
+          "charisma": 5
+        }
+      },
+      "effects": {
+        "relations": {
+          "thomas": 2
+        },
+        "flags": [
+          "duke_poisoned",
+          "saw_duke"
+        ]
+      },
+      "next_scene": "scene_25"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "id": "scene_27",
+  "chapter": 1,
+  "background": "dungeon",
+  "text": "*They bind your hands and pull a sack over your head. You're marched through streets, down stairs, into a cellar that smells of mold and fear. When the hood comes off, you're in a stone room lit by a single lantern.*\n\n*A man sits across from you — well-dressed, soft hands, a merchant's smile that doesn't reach his eyes. Harren, head of the Merchants' Guild.*\n\nHarren: \"So you're the one who's been poking around my harbor. I admire persistence — I really do. But you've become inconvenient.\"\n\n*He leans forward.*\n\nHarren: \"I'm going to offer you a choice. Work for me — help me transition this city into its new era — and you'll be rewarded beyond imagination. Or... well, Aldric made the other choice. You see how that ended.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Pretend to agree while planning your escape",
+      "requires": {
+        "stat_min": {
+          "cunning": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_coup",
+          "double_agent",
+          "met_harren"
+        ]
+      },
+      "next_scene": "scene_32"
+    },
+    {
+      "id": "c2",
+      "text": "Refuse and spit in his face",
+      "requires": {
+        "stat_min": {
+          "strength": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_coup",
+          "defiant_prisoner",
+          "met_harren"
+        ]
+      },
+      "next_scene": "scene_33"
+    },
+    {
+      "id": "c3",
+      "text": "\"What exactly is this 'new era' you're planning?\"",
+      "requires": {
+        "stat_min": {
+          "wisdom": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_coup",
+          "met_harren"
+        ],
+        "stats": {
+          "wisdom": 1
+        }
+      },
+      "next_scene": "scene_32"
+    }
+  ]
+}

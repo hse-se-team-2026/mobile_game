@@ -1,0 +1,39 @@
+{
+  "id": "scene_25",
+  "chapter": 1,
+  "background": "noble_estate",
+  "text": "*Thomas leads you through servant passages to the Duke's chambers. The halls are grand but neglected — tapestries gathering dust, candles burned low and unreplaced.*\n\n*Duke Aldren lies in a vast bed, propped against silk pillows. He was once a powerful man — you can see it in his broad frame — but now he is wasted. His skin is sallow, his eyes clouded. A half-empty goblet of wine sits on the bedside table.*\n\nDuke Aldren: \"Who... Thomas, who is this?\"\n\nThomas: \"A friend, my lord. Someone who can help.\"\n\n*The Duke's eyes focus briefly — a flash of the sharp mind still buried under the poison's fog.*\n\nDuke Aldren: \"Goran... he has changed everything. My guards, my advisors... I feel so weak. I cannot even rise from this bed. Something is wrong — I know it — but I cannot...\"\n\n*His eyes close. The effort of speaking has exhausted him. But you've seen enough. This man is being murdered by inches.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Take the wine goblet for analysis — this is evidence",
+      "effects": {
+        "flags": [
+          "has_goblet",
+          "duke_poisoned",
+          "knows_coup"
+        ],
+        "stats": {
+          "wisdom": 1
+        }
+      },
+      "next_scene": "scene_28"
+    },
+    {
+      "id": "c2",
+      "text": "Swear to the Duke that you will save him and this city",
+      "effects": {
+        "relations": {
+          "thomas": 2,
+          "duke": 3
+        },
+        "flags": [
+          "duke_poisoned",
+          "knows_coup",
+          "duke_trust"
+        ]
+      },
+      "next_scene": "scene_28"
+    }
+  ]
+}

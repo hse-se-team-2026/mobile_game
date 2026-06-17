@@ -1,0 +1,43 @@
+{
+  "id": "scene_28",
+  "chapter": 1,
+  "background": "tavern_interior",
+  "text": "*The back room of the Hollow Crown becomes your war council. Those who have chosen to stand against the conspiracy gather around a table covered in maps and stolen documents.*\n\n*Marta has barred the doors. Those present lean in close, voices barely above whispers.*\n\nMarta: \"The way I see it, we have three problems. First, the Duke is being poisoned — he needs to be saved or at least stabilized. Second, Harren's weapons cache needs to be destroyed or seized before he can arm his uprising. Third, Goran controls the estate and the new guards — he needs to be removed.\"\n\n*She looks at you.*\n\nMarta: \"We can't do all three at once. Where do we strike first?\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Save the Duke — if he recovers, he can order the guards to act",
+      "requires": {
+        "flags_required": [
+          "duke_poisoned"
+        ]
+      },
+      "effects": {
+        "flags": [
+          "plan_duke"
+        ]
+      },
+      "next_scene": "scene_34"
+    },
+    {
+      "id": "c2",
+      "text": "Hit the weapons cache — without arms, Harren is powerless",
+      "effects": {
+        "flags": [
+          "plan_weapons"
+        ]
+      },
+      "next_scene": "scene_35"
+    },
+    {
+      "id": "c3",
+      "text": "Expose Goran first — cut the head of the snake at the estate",
+      "effects": {
+        "flags": [
+          "plan_goran"
+        ]
+      },
+      "next_scene": "scene_36"
+    }
+  ]
+}

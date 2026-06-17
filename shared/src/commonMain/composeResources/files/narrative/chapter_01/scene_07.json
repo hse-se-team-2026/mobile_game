@@ -1,0 +1,39 @@
+{
+  "id": "scene_07",
+  "chapter": 1,
+  "background": "tavern_interior",
+  "text": "*The Hollow Crown is the kind of tavern where the floor is sticky, the ale is strong, and everyone minds their own business — because the alternative is dangerous.*\n\nA massive woman tends the bar, polishing a glass with a rag that looks dirtier than what it cleans. Her arms are thick as ship ropes, and a scar traces from her left ear to her jaw. A few rough-looking men play dice in the corner. Near the fire, a lone figure sits with his back to the wall — military bearing, a longsword propped against his chair.\n\nBarkeep Marta: \"Sit or stand, stranger, but either way you're buying a drink. That's the rule of the Crown.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Buy a drink and chat with Marta the barkeep",
+      "effects": {
+        "relations": {
+          "marta": 1
+        }
+      },
+      "next_scene": "scene_10"
+    },
+    {
+      "id": "c2",
+      "text": "Approach the lone swordsman by the fire",
+      "effects": {},
+      "next_scene": "scene_11"
+    },
+    {
+      "id": "c3",
+      "text": "Join the dice game in the corner",
+      "requires": {
+        "stat_min": {
+          "cunning": 3
+        }
+      },
+      "effects": {
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_12"
+    }
+  ]
+}

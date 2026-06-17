@@ -1,5 +1,6 @@
 package ru.hse.mobile_game.screen.game
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,14 +35,49 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import moblile_game.shared.generated.resources.Res
+import moblile_game.shared.generated.resources.bg_city_gate
+import moblile_game.shared.generated.resources.bg_guard_post
+import moblile_game.shared.generated.resources.bg_main_menu
+import moblile_game.shared.generated.resources.bg_market_dusk
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import ru.hse.mobile_game.screen.character.CharacterSheet
 import ru.hse.mobile_game.screen.model.ChoiceUiModel
 import ru.hse.mobile_game.screen.model.GameUiState
+
+private fun resolveBackground(backgroundAsset: String): DrawableResource? {
+    return when (backgroundAsset) {
+        "market_dusk" -> Res.drawable.bg_market_dusk
+        "guard_post" -> Res.drawable.bg_guard_post
+        "city_gate" -> Res.drawable.bg_city_gate
+        "tavern_interior" -> Res.drawable.bg_market_dusk // reuse
+        "palace_hall" -> Res.drawable.bg_city_gate // reuse
+        "market_day" -> Res.drawable.bg_market_dusk
+        "throne_room" -> Res.drawable.bg_main_menu
+        "dungeon" -> Res.drawable.bg_guard_post // reuse dark
+        "council_chamber" -> Res.drawable.bg_city_gate
+        "harbor" -> Res.drawable.bg_city_gate
+        "temple" -> Res.drawable.bg_main_menu
+        "warehouse" -> Res.drawable.bg_guard_post
+        "alley_night" -> Res.drawable.bg_guard_post
+        "noble_estate" -> Res.drawable.bg_city_gate
+        "library" -> Res.drawable.bg_main_menu
+        "barracks" -> Res.drawable.bg_guard_post
+        "garden" -> Res.drawable.bg_city_gate
+        "battlefield" -> Res.drawable.bg_guard_post
+        "cathedral" -> Res.drawable.bg_main_menu
+        else -> Res.drawable.bg_market_dusk
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,7 +97,7 @@ fun GameScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
+    Box(modifier = Modifier.fillMaxSize()) {
         when (val state = uiState) {
             is GameUiState.Loading -> LoadingContent()
             is GameUiState.SceneReady ->
@@ -95,8 +131,11 @@ fun GameScreen(
 
 @Composable
 private fun LoadingContent() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color(0xFF1A1A2E)),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator(color = Color(0xFFE0C080))
     }
 }
 
@@ -108,56 +147,99 @@ private fun SceneContent(
     onSaveClick: () -> Unit,
     onMenuClick: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Top bar with action buttons
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(text = "⚔", fontSize = 24.sp, modifier = Modifier.padding(8.dp))
+    val bgDrawable = resolveBackground(state.backgroundAsset)
 
-            Row {
-                OutlinedButton(
-                    onClick = onCharacterClick,
-                    modifier = Modifier.padding(end = 8.dp),
-                ) {
-                    Text("Character")
-                }
-                OutlinedButton(onClick = onSaveClick, modifier = Modifier.padding(end = 8.dp)) {
-                    Text("Save")
-                }
-                OutlinedButton(onClick = onMenuClick) { Text("Menu") }
-            }
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background image
+        if (bgDrawable != null) {
+            Image(
+                painter = painterResource(bgDrawable),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Scene text
-        LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors =
-                        CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant
-                        ),
-                ) {
-                    Text(
-                        text = state.sceneText,
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(16.dp),
-                        lineHeight = 24.sp,
+        // Dark gradient overlay for readability
+        Box(
+            modifier =
+                Modifier.fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors =
+                                listOf(
+                                    Color(0xCC1A1A2E),
+                                    Color(0xAA1A1A2E),
+                                    Color(0xDD1A1A2E),
+                                )
+                        )
                     )
+        )
+
+        // Content
+        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            // Top bar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "⚔",
+                    fontSize = 24.sp,
+                    modifier = Modifier.padding(8.dp),
+                    color = Color(0xFFE0C080),
+                )
+
+                Row {
+                    OutlinedButton(
+                        onClick = onCharacterClick,
+                        modifier = Modifier.padding(end = 8.dp),
+                    ) {
+                        Text("Character", color = Color(0xFFE0C080))
+                    }
+                    OutlinedButton(
+                        onClick = onSaveClick,
+                        modifier = Modifier.padding(end = 8.dp),
+                    ) {
+                        Text("Save", color = Color(0xFFE0C080))
+                    }
+                    OutlinedButton(onClick = onMenuClick) {
+                        Text("Menu", color = Color(0xFFE0C080))
+                    }
                 }
             }
 
-            item { Spacer(modifier = Modifier.height(24.dp)) }
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Choices
-            items(state.choices) { choice ->
-                ChoiceButton(choice = choice, onClick = { onChoiceSelected(choice.id) })
+            // Scene text + choices
+            LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors =
+                            CardDefaults.cardColors(containerColor = Color(0xBB1A1A2E)),
+                    ) {
+                        val annotatedText = remember(state.sceneText) {
+                            parseNarrativeText(state.sceneText)
+                        }
+                        Text(
+                            text = annotatedText,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(16.dp),
+                            lineHeight = 26.sp,
+                        )
+                    }
+                }
+
+                item { Spacer(modifier = Modifier.height(20.dp)) }
+
+                items(state.choices) { choice ->
+                    ChoiceButton(choice = choice, onClick = { onChoiceSelected(choice.id) })
+                }
+
+                item { Spacer(modifier = Modifier.height(16.dp)) }
             }
         }
     }
@@ -172,11 +254,10 @@ private fun ChoiceButton(choice: ChoiceUiModel, onClick: () -> Unit) {
         shape = RoundedCornerShape(8.dp),
         colors =
             ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                disabledContainerColor =
-                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                containerColor = Color(0xFF2A2A4E),
+                contentColor = Color(0xFFF0EAE0),
+                disabledContainerColor = Color(0xFF1A1A2E).copy(alpha = 0.5f),
+                disabledContentColor = Color(0xFF888888),
             ),
     ) {
         Column(
@@ -189,7 +270,7 @@ private fun ChoiceButton(choice: ChoiceUiModel, onClick: () -> Unit) {
                     text = choice.requirementHint,
                     style = MaterialTheme.typography.bodySmall,
                     fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                    color = Color(0xFFCC6666),
                 )
             }
         }
@@ -198,7 +279,10 @@ private fun ChoiceButton(choice: ChoiceUiModel, onClick: () -> Unit) {
 
 @Composable
 private fun ChapterTransitionContent(chapter: Int, summary: String) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color(0xFF1A1A2E)),
+        contentAlignment = Alignment.Center,
+    ) {
         Column(
             modifier = Modifier.widthIn(max = 400.dp).padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -207,14 +291,14 @@ private fun ChapterTransitionContent(chapter: Int, summary: String) {
                 text = "Chapter $chapter",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
+                color = Color(0xFFE0C080),
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = summary,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = Color(0xFFF0EAE0),
             )
         }
     }
@@ -222,26 +306,48 @@ private fun ChapterTransitionContent(chapter: Int, summary: String) {
 
 @Composable
 private fun GameOverContent(onMenuClick: () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color(0xFF1A1A2E)),
+        contentAlignment = Alignment.Center,
+    ) {
         Column(
             modifier = Modifier.widthIn(max = 400.dp).padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "The End",
+                text = "End of Demo",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
+                color = Color(0xFFE0C080),
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Your choices have shaped the beginning of this tale.\nThe full story awaits...",
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center,
+                color = Color(0xFFF0EAE0),
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Button(onClick = onMenuClick) { Text("Return to Menu") }
+            Button(
+                onClick = onMenuClick,
+                colors =
+                    ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF6B4E9B),
+                        contentColor = Color(0xFFF0EAE0),
+                    ),
+            ) {
+                Text("Return to Menu")
+            }
         }
     }
 }
 
 @Composable
 private fun ErrorContent(message: String, onRetry: () -> Unit) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color(0xFF1A1A2E)),
+        contentAlignment = Alignment.Center,
+    ) {
         Column(
             modifier = Modifier.widthIn(max = 400.dp).padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -249,13 +355,14 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
             Text(
                 text = "Error",
                 style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.error,
+                color = Color(0xFFCC6666),
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = message,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
+                color = Color(0xFFF0EAE0),
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onRetry) { Text("Retry") }

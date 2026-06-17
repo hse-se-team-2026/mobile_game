@@ -1,0 +1,33 @@
+{
+  "id": "scene_32",
+  "chapter": 1,
+  "background": "warehouse",
+  "text": "*Harren smiles — the smile of a man who believes he has won.*\n\nHarren: \"Excellent. A practical decision. Let me show you what we're building. Baron Varketh will arrive within the week with five hundred men. By then, the Duke will be dead, Goran will open the north gate — the one I've been so carefully modifying — and Ashenmoor will change hands without a drop of blood spilled. Well... almost.\"\n\n*He walks you through the warehouse, showing you the weapons — enough to arm two hundred men inside the walls. Swords, crossbows, blasting powder.*\n\nHarren: \"The merchants who discovered our shipments were... unfortunate. Aldric was the worst — he actually tried to go to the guards. We couldn't allow that.\"\n\n*He looks at you, searching for a reaction you carefully don't give.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Memorize every detail for when you betray him",
+      "effects": {
+        "flags": [
+          "knows_full_plan",
+          "knows_varketh"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_38"
+    },
+    {
+      "id": "c2",
+      "text": "Ask about Goran's role in the plan",
+      "effects": {
+        "flags": [
+          "knows_full_plan",
+          "knows_varketh"
+        ]
+      },
+      "next_scene": "scene_38"
+    }
+  ]
+}
