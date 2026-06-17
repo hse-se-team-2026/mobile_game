@@ -1,5 +1,6 @@
 {
   "id": "scene_06",
+  "title": "The Ashen Market",
   "chapter": 1,
   "background": "market_dusk",
   "text": "*The Ashen Market sprawls across the city's heart like a living thing — stalls of weathered canvas and splintered wood, the air thick with the smell of smoked fish, leather, and the ever-present grey dust that gives Ashenmoor its name.*\n\nDespite the hour, the market feels subdued. Merchants hawk their wares with weary persistence. You notice empty stalls here and there — spaces where vendors should be but aren't. A patrol of guards moves through the crowd, their eyes scanning faces rather than goods.\n\n*Three paths branch from the market square: the Hollow Crown tavern squats at the north end, its sign creaking in the wind. To the east, a large noticeboard draws a small crowd. Southward, the street slopes down toward the harbor, where masts rock against a grey sky.*",
@@ -30,7 +31,9 @@
       "id": "c4",
       "text": "Approach the merchants' stalls and ask about the empty spaces",
       "requires": {
-        "origin_required": ["merchant"]
+        "origin_required": [
+          "merchant"
+        ]
       },
       "effects": {
         "stats": {

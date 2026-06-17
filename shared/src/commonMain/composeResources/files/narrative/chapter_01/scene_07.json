@@ -1,5 +1,6 @@
 {
   "id": "scene_07",
+  "title": "The Hollow Crown",
   "chapter": 1,
   "background": "tavern_interior",
   "text": "*The Hollow Crown is the kind of tavern where the floor is sticky, the ale is strong, and everyone minds their own business — because the alternative is dangerous.*\n\nA massive woman tends the bar, polishing a glass with a rag that looks dirtier than what it cleans. Her arms are thick as ship ropes, and a scar traces from her left ear to her jaw. A few rough-looking men play dice in the corner. Near the fire, a lone figure sits with his back to the wall — military bearing, a longsword propped against his chair.\n\nBarkeep Marta: \"Sit or stand, stranger, but either way you're buying a drink. That's the rule of the Crown.\"",
@@ -69,7 +70,9 @@
       "id": "c5",
       "text": "Flash a noble's signet ring and demand a private room",
       "requires": {
-        "origin_required": ["noble"]
+        "origin_required": [
+          "noble"
+        ]
       },
       "effects": {
         "stats": {
@@ -89,7 +92,9 @@
       "id": "c6",
       "text": "Recognize the swordsman's military insignia — offer a veteran's greeting",
       "requires": {
-        "origin_required": ["soldier"]
+        "origin_required": [
+          "soldier"
+        ]
       },
       "effects": {
         "stats": {

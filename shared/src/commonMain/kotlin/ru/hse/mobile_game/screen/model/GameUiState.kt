@@ -5,6 +5,7 @@ sealed interface GameUiState {
     data object Loading : GameUiState
 
     data class SceneReady(
+        val sceneName: String,
         val paragraphs: List<String>,
         val visibleParagraphs: Int,
         val backgroundAsset: String,
@@ -13,7 +14,7 @@ sealed interface GameUiState {
         val allTextRevealed: Boolean,
         val activeGlossaryTerms: List<String>,
         val choiceOutcome: ChoiceOutcome? = null,
-        /** Brief message shown after a manual save, e.g. "Saved: Scene 05 — 15:42". */
+        /** Brief message shown after a manual save, e.g. "Saved: The Gates of Ashenmoor — 15:42". */
         val saveConfirmation: String? = null,
     ) : GameUiState
 

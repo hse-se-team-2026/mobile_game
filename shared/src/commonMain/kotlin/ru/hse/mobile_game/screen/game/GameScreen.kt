@@ -27,6 +27,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -220,40 +222,58 @@ private fun SceneContent(
             // Extra top spacing to push buttons below the status bar area
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Top bar
+            // Scene title
+            Text(
+                text = state.sceneName,
+                color = Color(0xFFE0C080),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+            )
+
+            // Top bar — two buttons: Character & Menu
+            var showMenuPopup by remember { mutableStateOf(false) }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
-                    text = "⚔",
-                    fontSize = 24.sp,
-                    modifier = Modifier.padding(8.dp),
-                    color = Color(0xFFE0C080),
-                )
+                OutlinedButton(onClick = onCharacterClick) {
+                    Text("📜 Character", color = Color(0xFFE0C080))
+                }
 
-                Row {
-                    OutlinedButton(
-                        onClick = onCharacterClick,
-                        modifier = Modifier.padding(end = 4.dp),
-                    ) {
-                        Text("Char", color = Color(0xFFE0C080))
+                Box {
+                    OutlinedButton(onClick = { showMenuPopup = true }) {
+                        Text("☰ Menu", color = Color(0xFFE0C080))
                     }
-                    OutlinedButton(
-                        onClick = onSaveClick,
-                        modifier = Modifier.padding(end = 4.dp),
+                    DropdownMenu(
+                        expanded = showMenuPopup,
+                        onDismissRequest = { showMenuPopup = false },
                     ) {
-                        Text("Save", color = Color(0xFFE0C080))
-                    }
-                    OutlinedButton(
-                        onClick = onLoadClick,
-                        modifier = Modifier.padding(end = 4.dp),
-                    ) {
-                        Text("Load", color = Color(0xFFE0C080))
-                    }
-                    OutlinedButton(onClick = onMenuClick) {
-                        Text("Menu", color = Color(0xFFE0C080))
+                        DropdownMenuItem(
+                            text = { Text("💾 Save") },
+                            onClick = {
+                                showMenuPopup = false
+                                onSaveClick()
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("📂 Load") },
+                            onClick = {
+                                showMenuPopup = false
+                                onLoadClick()
+                            },
+                        )
+                        HorizontalDivider()
+                        DropdownMenuItem(
+                            text = { Text("🏠 Main Menu") },
+                            onClick = {
+                                showMenuPopup = false
+                                onMenuClick()
+                            },
+                        )
                     }
                 }
             }

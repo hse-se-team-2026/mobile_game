@@ -1,5 +1,6 @@
 {
   "id": "scene_09",
+  "title": "The Rotting Harbor",
   "chapter": 1,
   "background": "harbor",
   "text": "*The harbor district smells of brine and tar. Ships line the quays in uneven rows — trading vessels, fishing boats, a few lean smuggling cutters that pretend to be neither. The water is grey and choppy, reflecting an overcast sky.*\n\nDock workers haul crates under the supervision of a heavyset foreman. Their movements are mechanical, tired. You notice several berths standing empty — ships that should be here but aren't.\n\nDock Worker: \"Watch your step, stranger. The planks are rotting faster than the harbormaster can patch 'em. Like everything else in this city.\"\n\n*Something about the harbor feels wrong. The workers avoid the far end of the dock, where a cluster of warehouses stands dark and silent.*",
@@ -36,7 +37,9 @@
       "id": "c3",
       "text": "Demand the shipping manifests — you know trade irregularities when you see them",
       "requires": {
-        "origin_required": ["merchant"]
+        "origin_required": [
+          "merchant"
+        ]
       },
       "effects": {
         "flags": [
@@ -56,7 +59,9 @@
       "id": "c4",
       "text": "Study the warehouse construction for hidden passages",
       "requires": {
-        "origin_required": ["scholar"]
+        "origin_required": [
+          "scholar"
+        ]
       },
       "effects": {
         "flags": [

@@ -120,9 +120,7 @@ class GameViewModel(
         viewModelScope.launch {
             try {
                 val slotId = currentTimeMillis()
-                val sceneName = state.currentSceneId
-                    .replace("_", " ")
-                    .replaceFirstChar { it.uppercase() }
+                val sceneName = currentScene?.title ?: state.currentSceneId
                 val time = formatTime(currentTimeMillis())
                 val saveName = "$sceneName — $time"
 
@@ -248,6 +246,7 @@ class GameViewModel(
 
                 _uiState.value =
                     GameUiState.SceneReady(
+                        sceneName = scene.title,
                         paragraphs = paragraphs,
                         visibleParagraphs = 1,
                         backgroundAsset = scene.backgroundAsset,

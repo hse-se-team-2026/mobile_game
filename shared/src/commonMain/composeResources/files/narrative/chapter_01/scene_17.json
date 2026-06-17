@@ -1,5 +1,6 @@
 {
   "id": "scene_17",
+  "title": "Dusk in the Market",
   "chapter": 1,
   "background": "market_dusk",
   "text": "*The market is thinning as dusk approaches. Lanterns are being lit along the main streets, but the side alleys remain dark. You take stock of what you've learned.*\n\n*Ashenmoor is a city under siege from within. Merchants are disappearing, ships arrive in secret, and the Merchants' Guild — led by the smiling Harren — seems to be at the center of it all. Meanwhile, the Duke lies ill and his steward, Goran, has been replacing loyal guards with hired swords.*\n\n*The picture is incomplete. You need to dig deeper — but where?*",
@@ -63,7 +64,10 @@
       "id": "c5",
       "text": "Invoke your family's trade connections to get an audience with Harren himself",
       "requires": {
-        "origin_required": ["noble", "merchant"]
+        "origin_required": [
+          "noble",
+          "merchant"
+        ]
       },
       "effects": {
         "stats": {
@@ -82,7 +86,9 @@
       "id": "c6",
       "text": "Search the old military records for Goran's background",
       "requires": {
-        "origin_required": ["scholar"]
+        "origin_required": [
+          "scholar"
+        ]
       },
       "effects": {
         "stats": {

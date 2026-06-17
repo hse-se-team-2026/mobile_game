@@ -1,5 +1,6 @@
 {
   "id": "scene_24",
+  "title": "Dawn at the Hollow Crown",
   "chapter": 1,
   "background": "tavern_interior",
   "text": "*You return to the Hollow Crown as the sky begins to lighten. The pieces are falling into place, and the picture they form is terrifying.*\n\n*Harren, the head of the Merchants' Guild, is smuggling weapons into the city. The Duke is being poisoned — slowly, steadily — by his own physician, installed by the steward Goran. Veteran guards have been replaced with mercenaries. And properties along the city wall are being bought up in secret.*\n\n*This isn't corruption. This is a coup. When the Duke finally dies, Harren will have an armed force inside the walls and a way to let more in.*\n\nMarta: \"You look like you've seen a ghost, stranger.\"\n\n*You need allies. You need a plan. And you need to move fast — the Duke could die any day now.*",
@@ -57,7 +58,9 @@
       "id": "c4",
       "text": "Use your noble connections to call an emergency council meeting",
       "requires": {
-        "origin_required": ["noble"]
+        "origin_required": [
+          "noble"
+        ]
       },
       "effects": {
         "flags": [
@@ -77,7 +80,9 @@
       "id": "c5",
       "text": "Calculate Harren's supply chain weaknesses and plan a financial sabotage",
       "requires": {
-        "origin_required": ["merchant"]
+        "origin_required": [
+          "merchant"
+        ]
       },
       "effects": {
         "flags": [

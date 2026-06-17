@@ -1,5 +1,6 @@
 {
   "id": "scene_30",
+  "title": "The Guild Offices",
   "chapter": 1,
   "background": "warehouse",
   "text": "*The Merchants' Guild offices are near the harbor — a grand building for a city this size, with a gilded sign and iron-barred windows. You wait until the last clerk leaves, then make your move.*\n\n*The lock on the side door yields to your picks. Inside, the offices are immaculate — mahogany desks, leather-bound ledgers, the smell of expensive ink. Harren's personal office is on the upper floor.*\n\n*His desk is locked, but the lock is no match for your skills. Inside, you find a leather portfolio containing a complete operations plan: dates, quantities, contacts outside the city. And a letter — sealed with the crest of Baron Varketh, a minor warlord from the eastern marches.*\n\n*Harren isn't acting alone. He's a puppet — or a partner — of an outside power. Baron Varketh means to take Ashenmoor, and Harren is opening the door.*",
@@ -41,7 +42,10 @@
       "id": "c3",
       "text": "Forge a reply to Baron Varketh using Harren's seal, feeding false information",
       "requires": {
-        "origin_required": ["merchant", "scholar"],
+        "origin_required": [
+          "merchant",
+          "scholar"
+        ],
         "stat_min": {
           "cunning": 4
         }

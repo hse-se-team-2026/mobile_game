@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SceneJson(
     val id: String,
+    val title: String = "",
     val chapter: Int,
     val background: String,
     val text: String,
