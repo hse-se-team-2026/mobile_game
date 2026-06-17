@@ -124,12 +124,11 @@ fun CharacterSheet(character: CharacterUiModel) {
                         text = "• $title",
                         style =
                             MaterialTheme.typography.bodyMedium.copy(
-                                textDecoration = TextDecoration.Underline,
+                                textDecoration = TextDecoration.Underline
                             ),
                         color = Color(0xFFE0C080),
                         modifier =
-                            Modifier.padding(vertical = 2.dp)
-                                .clickable { selectedFlag = flag },
+                            Modifier.padding(vertical = 2.dp).clickable { selectedFlag = flag },
                     )
                 }
             }
@@ -139,10 +138,7 @@ fun CharacterSheet(character: CharacterUiModel) {
 
         // Flag detail popup overlay
         if (selectedFlag != null) {
-            FlagDetailPopup(
-                flagId = selectedFlag!!,
-                onDismiss = { selectedFlag = null },
-            )
+            FlagDetailPopup(flagId = selectedFlag!!, onDismiss = { selectedFlag = null })
         }
 
         // NPC glossary popup overlay
@@ -162,10 +158,7 @@ fun CharacterSheet(character: CharacterUiModel) {
 
 /** Popup showing detailed info about a Chronicle flag entry. */
 @Composable
-private fun FlagDetailPopup(
-    flagId: String,
-    onDismiss: () -> Unit,
-) {
+private fun FlagDetailPopup(flagId: String, onDismiss: () -> Unit) {
     val info = FlagRegistry.lookup(flagId)
     val title = info?.title ?: flagId.replace("_", " ").replaceFirstChar { it.uppercase() }
 
@@ -193,9 +186,7 @@ private fun FlagDetailPopup(
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E)),
         ) {
-            Column(
-                modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState()),
-            ) {
+            Column(modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState())) {
                 // Title
                 Text(
                     text = title,
@@ -320,12 +311,7 @@ private fun StatRow(label: String, value: Int) {
 
 /** A stat row where the label is clickable (gold + underlined) to open a detail popup. */
 @Composable
-private fun ClickableStatRow(
-    label: String,
-    value: Int,
-    clickable: Boolean,
-    onClick: () -> Unit,
-) {
+private fun ClickableStatRow(label: String, value: Int, clickable: Boolean, onClick: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -335,16 +321,13 @@ private fun ClickableStatRow(
                 text = label,
                 style =
                     MaterialTheme.typography.bodyMedium.copy(
-                        textDecoration = TextDecoration.Underline,
+                        textDecoration = TextDecoration.Underline
                     ),
                 color = Color(0xFFE0C080),
                 modifier = Modifier.clickable(onClick = onClick),
             )
         } else {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-            )
+            Text(text = label, style = MaterialTheme.typography.bodyMedium)
         }
         Text(
             text = value.toString(),
@@ -362,11 +345,7 @@ private fun ClickableStatRow(
 
 /** Popup showing glossary info about an NPC, including relation flavor. */
 @Composable
-private fun NpcGlossaryPopup(
-    npcKey: String,
-    onDismiss: () -> Unit,
-    onTermClick: (String) -> Unit,
-) {
+private fun NpcGlossaryPopup(npcKey: String, onDismiss: () -> Unit, onTermClick: (String) -> Unit) {
     val glossaryKey = Glossary.glossaryKeyForNpc(npcKey)
     val glossaryEntry = glossaryKey?.let { Glossary.lookup(it) }
     val npcInfo = NpcRegistry.lookup(npcKey)
@@ -396,9 +375,7 @@ private fun NpcGlossaryPopup(
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E)),
         ) {
-            Column(
-                modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState()),
-            ) {
+            Column(modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState())) {
                 // Title
                 Text(
                     text = displayName,

@@ -14,7 +14,9 @@ sealed interface GameUiState {
         val allTextRevealed: Boolean,
         val activeGlossaryTerms: List<String>,
         val choiceOutcome: ChoiceOutcome? = null,
-        /** Brief message shown after a manual save, e.g. "Saved: The Gates of Ashenmoor — 15:42". */
+        /**
+         * Brief message shown after a manual save, e.g. "Saved: The Gates of Ashenmoor — 15:42".
+         */
         val saveConfirmation: String? = null,
     ) : GameUiState
 
@@ -45,7 +47,8 @@ data class ChoiceOutcome(
     val newKnowledge: List<KnowledgeGain> = emptyList(),
 ) {
     val hasContent: Boolean
-        get() = statChanges.isNotEmpty() || relationChanges.isNotEmpty() || newKnowledge.isNotEmpty()
+        get() =
+            statChanges.isNotEmpty() || relationChanges.isNotEmpty() || newKnowledge.isNotEmpty()
 }
 
 /** A single stat change with its narrative reason. */

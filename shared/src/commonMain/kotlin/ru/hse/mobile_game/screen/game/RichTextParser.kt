@@ -20,7 +20,6 @@ private val DIALOGUE_REGEX = Regex("""^([\w\s''-]+):\s*"([\s\S]+)"$""")
 /**
  * Parses scene text with simple markup conventions, highlighting only the [activeTerms] glossary
  * entries (those the player has unlocked).
- *
  * - A paragraph wrapped in `*asterisks*` is narrator text (rendered italic, muted color)
  * - A paragraph matching `Speaker: "dialogue"` is dialogue (bold speaker, italic quote)
  * - Within regular paragraphs, inline `*italic*` markers are supported
@@ -44,18 +43,12 @@ fun parseNarrativeText(text: String, activeTerms: List<String> = emptyList()): A
  * Parses a single paragraph of text (no double-newline splitting). Used for glossary description
  * text which may contain inline formatting.
  */
-fun parseSingleParagraph(
-    text: String,
-    activeTerms: List<String> = emptyList(),
-): AnnotatedString {
+fun parseSingleParagraph(text: String, activeTerms: List<String> = emptyList()): AnnotatedString {
     return buildAnnotatedString { parseParagraph(text.trim(), activeTerms) }
 }
 
 @Suppress("DEPRECATION")
-private fun AnnotatedString.Builder.parseParagraph(
-    paragraph: String,
-    activeTerms: List<String>,
-) {
+private fun AnnotatedString.Builder.parseParagraph(paragraph: String, activeTerms: List<String>) {
     when {
         // Full narrator paragraph: *entire text*
         paragraph.startsWith("*") && paragraph.endsWith("*") && paragraph.length > 2 -> {
@@ -94,10 +87,7 @@ private fun AnnotatedString.Builder.parseParagraph(
 }
 
 @Suppress("DEPRECATION")
-private fun AnnotatedString.Builder.parseInlineFormatting(
-    text: String,
-    activeTerms: List<String>,
-) {
+private fun AnnotatedString.Builder.parseInlineFormatting(text: String, activeTerms: List<String>) {
     var i = 0
     while (i < text.length) {
         val starIndex = text.indexOf('*', i)
@@ -153,9 +143,10 @@ private fun AnnotatedString.Builder.appendWithGlossary(
 
         for (term in activeTerms) {
             val idx = text.indexOf(term, pos, ignoreCase = true)
-            if (idx != -1 &&
-                (idx < bestStart ||
-                    (idx == bestStart && term.length > (bestMatch?.length ?: 0)))
+            if (
+                idx != -1 &&
+                    (idx < bestStart ||
+                        (idx == bestStart && term.length > (bestMatch?.length ?: 0)))
             ) {
                 bestStart = idx
                 bestMatch = term
@@ -175,11 +166,7 @@ private fun AnnotatedString.Builder.appendWithGlossary(
 
         // Append the glossary term with gold style + annotation
         val matchedText = text.substring(bestStart, bestStart + bestMatch.length)
-        val glossaryStyle =
-            baseStyle.copy(
-                color = GlossaryColor,
-                fontWeight = FontWeight.Bold,
-            )
+        val glossaryStyle = baseStyle.copy(color = GlossaryColor, fontWeight = FontWeight.Bold)
         pushStringAnnotation(tag = "glossary", annotation = bestMatch)
         withStyle(glossaryStyle) { append(matchedText) }
         pop()

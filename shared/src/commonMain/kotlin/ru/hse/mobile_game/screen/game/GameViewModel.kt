@@ -44,11 +44,7 @@ class GameViewModel(
     /** Start a new game with the given origin. */
     fun startNewGame(origin: String) {
         val initialCharacter =
-            Character(
-                id = "player",
-                origin = origin,
-                stats = statsForOrigin(origin),
-            )
+            Character(id = "player", origin = origin, stats = statsForOrigin(origin))
         val initialState =
             GameState(
                 character = initialCharacter,
@@ -232,10 +228,7 @@ class GameViewModel(
 
                 // Split text into paragraphs on double-newline
                 val paragraphs =
-                    scene.text
-                        .split("\n\n")
-                        .map { it.trim() }
-                        .filter { it.isNotEmpty() }
+                    scene.text.split("\n\n").map { it.trim() }.filter { it.isNotEmpty() }
 
                 // Compute unlocked glossary terms based on player flags
                 val activeTerms = Glossary.unlockedTerms(state.character.flags)

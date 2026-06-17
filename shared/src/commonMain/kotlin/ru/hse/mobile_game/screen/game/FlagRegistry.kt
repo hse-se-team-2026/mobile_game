@@ -65,8 +65,7 @@ object FlagRegistry {
                             "then entered quietly during the commotion. Patience " +
                             "revealed much about the town's routines.",
                     howObtained =
-                        "Chose to observe and wait for the right moment to " +
-                            "enter Ashenmoor.",
+                        "Chose to observe and wait for the right moment to " + "enter Ashenmoor.",
                     hint =
                         "Your careful observation has given you insight into " +
                             "the town's guard patterns and daily rhythms.",
@@ -296,9 +295,7 @@ object FlagRegistry {
                         "You have crossed paths with Kess, a street-smart " +
                             "urchin who navigates Ashenmoor's back alleys " +
                             "with uncanny ease.",
-                    howObtained =
-                        "Encountered Kess in the town's less reputable " +
-                            "districts.",
+                    howObtained = "Encountered Kess in the town's less reputable " + "districts.",
                     hint =
                         "Kess knows every shortcut and hiding place in " +
                             "Ashenmoor. Their knowledge of the streets " +
@@ -396,9 +393,7 @@ object FlagRegistry {
                         "You have met Orin, a reclusive scholar who " +
                             "studies the ancient histories of Ashenmoor " +
                             "from his cluttered study.",
-                    howObtained =
-                        "Sought out Orin at the library or his private " +
-                            "quarters.",
+                    howObtained = "Sought out Orin at the library or his private " + "quarters.",
                     hint =
                         "Orin's historical knowledge may illuminate " +
                             "connections between past events and the " +
@@ -426,8 +421,7 @@ object FlagRegistry {
                             "proposition, as few who seek him out return " +
                             "unchanged.",
                     howObtained =
-                        "Tracked down Harren's location and confronted " +
-                            "him directly.",
+                        "Tracked down Harren's location and confronted " + "him directly.",
                     hint =
                         "Having met Harren in person, you understand " +
                             "his methods and motivations better than most.",
@@ -470,8 +464,7 @@ object FlagRegistry {
                             "between the guild, unknown parties, and " +
                             "offshore accounts.",
                     howObtained =
-                        "Acquired the records from a guild office, " +
-                            "warehouse, or informant.",
+                        "Acquired the records from a guild office, " + "warehouse, or informant.",
                     hint =
                         "Following the money trail leads to the " +
                             "conspiracy's financiers and their ultimate goals.",
@@ -498,8 +491,7 @@ object FlagRegistry {
                             "throughout Ashenmoor have been secretly " +
                             "transferred to the conspirators' control.",
                     howObtained =
-                        "Found the deed among seized documents or " +
-                            "in a hidden cache.",
+                        "Found the deed among seized documents or " + "in a hidden cache.",
                     hint =
                         "The deed shows the conspirators' plan extends " +
                             "beyond violence — they aim to own Ashenmoor.",
@@ -613,8 +605,7 @@ object FlagRegistry {
                             "a place of fading holiness that still holds " +
                             "secrets in its weathered stones.",
                     howObtained =
-                        "Made the journey to the temple district and " +
-                            "explored its grounds.",
+                        "Made the journey to the temple district and " + "explored its grounds.",
                     hint =
                         "The temple's archives and clergy may hold " +
                             "historical knowledge relevant to the conspiracy.",
@@ -629,8 +620,7 @@ object FlagRegistry {
                             "People remember the forceful stranger who " +
                             "demanded respect from the start.",
                     howObtained =
-                        "Made a show of strength or authority upon " +
-                            "arriving in Ashenmoor.",
+                        "Made a show of strength or authority upon " + "arriving in Ashenmoor.",
                     hint =
                         "Your fearsome reputation precedes you — it " +
                             "opens some doors through fear but closes " +
@@ -710,9 +700,7 @@ object FlagRegistry {
                         "The Duke has been poisoned — a grave blow to " +
                             "Ashenmoor's stability. Time is running out " +
                             "to find a cure and identify the poisoner.",
-                    howObtained =
-                        "Witnessed or learned about the poisoning " +
-                            "of the Duke.",
+                    howObtained = "Witnessed or learned about the poisoning " + "of the Duke.",
                     hint =
                         "Saving the Duke is paramount. His survival " +
                             "could determine the fate of Ashenmoor.",
@@ -737,8 +725,7 @@ object FlagRegistry {
                             "officials, forcing compliance through the " +
                             "weight of your bloodline and title.",
                     howObtained =
-                        "Invoked your noble privileges to bypass " +
-                            "bureaucratic obstacles.",
+                        "Invoked your noble privileges to bypass " + "bureaucratic obstacles.",
                     hint =
                         "Noble authority is a powerful but limited " +
                             "resource — use it too often and you may " +
@@ -752,8 +739,7 @@ object FlagRegistry {
                             "Ashenmoor's financial networks, identifying " +
                             "key accounts and transactions.",
                     howObtained =
-                        "Investigated financial records and followed " +
-                            "the money trail.",
+                        "Investigated financial records and followed " + "the money trail.",
                     hint =
                         "The financial trail leads to the conspiracy's " +
                             "backers and reveals who profits from the chaos.",
@@ -810,8 +796,7 @@ object FlagRegistry {
                             "the Duke's security, replacing guards whose " +
                             "loyalty is uncertain.",
                     howObtained =
-                        "Persuaded Brynn to prioritize the Duke's " +
-                            "protection above all else.",
+                        "Persuaded Brynn to prioritize the Duke's " + "protection above all else.",
                     hint =
                         "With Brynn guarding the Duke, assassination " +
                             "attempts will be far harder to execute.",
@@ -841,8 +826,7 @@ object FlagRegistry {
                         "Used deception and wit to extract information " +
                             "from Goran during a conversation.",
                     hint =
-                        "Goran may realize he's been played. His " +
-                            "retaliation could be swift.",
+                        "Goran may realize he's been played. His " + "retaliation could be swift.",
                 ),
             "confronted_goran" to
                 FlagInfo(
@@ -851,8 +835,7 @@ object FlagRegistry {
                         "You faced Goran directly, laying your accusations " +
                             "before him and demanding he answer for his crimes.",
                     howObtained =
-                        "Confronted the guildmaster with the evidence " +
-                            "you had gathered.",
+                        "Confronted the guildmaster with the evidence " + "you had gathered.",
                     hint =
                         "Having been confronted, Goran will either " +
                             "accelerate his plans or attempt to negotiate.",
@@ -894,8 +877,7 @@ object FlagRegistry {
                             "or perhaps as part of a larger strategy. He " +
                             "knows you are coming.",
                     howObtained =
-                        "Chose to warn Goran instead of moving against " +
-                            "him immediately.",
+                        "Chose to warn Goran instead of moving against " + "him immediately.",
                     hint =
                         "A warned enemy is a prepared enemy. Goran will " +
                             "have fortified his defenses and prepared " +
@@ -909,8 +891,7 @@ object FlagRegistry {
                             "rather than die fighting. His cooperation " +
                             "could be valuable.",
                     howObtained =
-                        "Cornered Goran and gave him the option to " +
-                            "surrender peacefully.",
+                        "Cornered Goran and gave him the option to " + "surrender peacefully.",
                     hint =
                         "A cooperative Goran can testify against his " +
                             "co-conspirators and reveal hidden assets.",
@@ -922,8 +903,7 @@ object FlagRegistry {
                         "Goran has been captured by force. The " +
                             "guildmaster was taken alive after resisting " +
                             "arrest.",
-                    howObtained =
-                        "Captured Goran during a raid or confrontation.",
+                    howObtained = "Captured Goran during a raid or confrontation.",
                     hint =
                         "A captured Goran can be interrogated, though " +
                             "he may be less forthcoming than if he'd " +
@@ -954,8 +934,7 @@ object FlagRegistry {
                             "neutralize the weapons being smuggled into " +
                             "Ashenmoor for the coup.",
                     howObtained =
-                        "Chose to target the weapons supply chain " +
-                            "as your primary strategy.",
+                        "Chose to target the weapons supply chain " + "as your primary strategy.",
                     hint =
                         "Without weapons, the conspirators' military " +
                             "arm is crippled. But they may have " +
@@ -968,9 +947,7 @@ object FlagRegistry {
                         "You have planned a direct strike against Goran " +
                             "and his operation — cutting the head off " +
                             "the conspiracy.",
-                    howObtained =
-                        "Chose to target Goran directly as your " +
-                            "primary strategy.",
+                    howObtained = "Chose to target Goran directly as your " + "primary strategy.",
                     hint =
                         "Removing Goran disrupts the conspiracy's " +
                             "leadership, but his underlings may continue " +
@@ -1044,8 +1021,7 @@ object FlagRegistry {
                         "You seized the entire weapons cache, removing " +
                             "the conspirators' arsenal from their control.",
                     howObtained =
-                        "Led a raid on the weapons stockpile and " +
-                            "confiscated everything.",
+                        "Led a raid on the weapons stockpile and " + "confiscated everything.",
                     hint =
                         "Without their weapons, the conspirators must " +
                             "find alternative means — or abandon their " +
@@ -1059,8 +1035,7 @@ object FlagRegistry {
                             "weapons, ruining the entire stockpile " +
                             "beyond use.",
                     howObtained =
-                        "Diverted water to flood the weapons cache, " +
-                            "destroying it completely.",
+                        "Diverted water to flood the weapons cache, " + "destroying it completely.",
                     hint =
                         "A flooded arsenal sends a strong message " +
                             "and denies the conspirators their tools of war.",
@@ -1076,8 +1051,7 @@ object FlagRegistry {
                         "Found and freed Aldric from where the " +
                             "conspirators held him prisoner.",
                     hint =
-                        "Aldric's rescued research may contain the " +
-                            "final pieces of the puzzle.",
+                        "Aldric's rescued research may contain the " + "final pieces of the puzzle.",
                 ),
             "gate_secured" to
                 FlagInfo(
@@ -1129,9 +1103,7 @@ object FlagRegistry {
                         "You challenged a champion to single combat — " +
                             "a test of honor and skill that could " +
                             "determine the outcome without mass bloodshed.",
-                    howObtained =
-                        "Accepted or initiated a formal duel to " +
-                            "resolve a conflict.",
+                    howObtained = "Accepted or initiated a formal duel to " + "resolve a conflict.",
                     hint =
                         "Victory in a champion's duel carries enormous " +
                             "symbolic weight — it can break the enemy's " +
@@ -1145,8 +1117,7 @@ object FlagRegistry {
                             "their threats as empty posturing and their " +
                             "position as weaker than they claimed.",
                     howObtained =
-                        "Refused to be intimidated and exposed the " +
-                            "enemy's deception.",
+                        "Refused to be intimidated and exposed the " + "enemy's deception.",
                     hint =
                         "Having been exposed once, the enemy's future " +
                             "bluffs carry less weight.",
@@ -1170,8 +1141,7 @@ object FlagRegistry {
                             "unexpected direction and catching the " +
                             "defenders off guard.",
                     howObtained =
-                        "Used tactical knowledge to attack the guild " +
-                            "from a vulnerable side.",
+                        "Used tactical knowledge to attack the guild " + "from a vulnerable side.",
                     hint =
                         "A flanking maneuver minimized your losses " +
                             "and maximized the element of surprise.",
@@ -1184,8 +1154,7 @@ object FlagRegistry {
                             "without further bloodshed through diplomacy " +
                             "and persuasion.",
                     howObtained =
-                        "Offered terms that the enemy found preferable " +
-                            "to continued fighting.",
+                        "Offered terms that the enemy found preferable " + "to continued fighting.",
                     hint =
                         "A negotiated peace preserves lives and may " +
                             "yield cooperative prisoners willing to talk.",
@@ -1227,9 +1196,7 @@ object FlagRegistry {
                         "You prioritized securing the city gate as " +
                             "your strategic objective, controlling who " +
                             "enters and leaves Ashenmoor.",
-                    howObtained =
-                        "Chose gate security as your primary " +
-                            "strategic focus.",
+                    howObtained = "Chose gate security as your primary " + "strategic focus.",
                     hint =
                         "Controlling the gate gives you leverage over " +
                             "supply lines and escape routes.",
@@ -1242,11 +1209,8 @@ object FlagRegistry {
                             "primary objective — striking at Goran's " +
                             "seat of power.",
                     howObtained =
-                        "Selected the guild assault as your main " +
-                            "strategic approach.",
-                    hint =
-                        "Taking the guild cripples the conspiracy's " +
-                            "command structure.",
+                        "Selected the guild assault as your main " + "strategic approach.",
+                    hint = "Taking the guild cripples the conspiracy's " + "command structure.",
                 ),
             "defend_gate" to
                 FlagInfo(
@@ -1255,9 +1219,7 @@ object FlagRegistry {
                         "You chose to defend the city gate against " +
                             "expected enemy reinforcements or breakout " +
                             "attempts.",
-                    howObtained =
-                        "Prioritized a defensive position at the " +
-                            "city gate.",
+                    howObtained = "Prioritized a defensive position at the " + "city gate.",
                     hint =
                         "A strong defense prevents enemy reinforcements " +
                             "and traps the conspirators inside.",
@@ -1270,8 +1232,7 @@ object FlagRegistry {
                             "to the conspiracy — a stealthy approach " +
                             "to gather intelligence from within.",
                     howObtained =
-                        "Selected infiltration over direct assault " +
-                            "as your approach.",
+                        "Selected infiltration over direct assault " + "as your approach.",
                     hint =
                         "Infiltration yields information that brute " +
                             "force cannot. The estate may hold secrets " +
@@ -1287,8 +1248,7 @@ object FlagRegistry {
                             "in Ashenmoor — to help rebuild, to protect " +
                             "what you fought for, and to find a new home.",
                     howObtained =
-                        "Chose to stay when given the option to leave " +
-                            "Ashenmoor behind.",
+                        "Chose to stay when given the option to leave " + "Ashenmoor behind.",
                     hint =
                         "Ashenmoor's future is your future now. The " +
                             "town will remember what you've done.",
@@ -1300,8 +1260,7 @@ object FlagRegistry {
                         "With the conspiracy broken, you chose to leave " +
                             "Ashenmoor — there are other places that need " +
                             "someone like you.",
-                    howObtained =
-                        "Chose to depart when the battle was won.",
+                    howObtained = "Chose to depart when the battle was won.",
                     hint =
                         "The road ahead is uncertain, but you carry " +
                             "the lessons of Ashenmoor with you.",

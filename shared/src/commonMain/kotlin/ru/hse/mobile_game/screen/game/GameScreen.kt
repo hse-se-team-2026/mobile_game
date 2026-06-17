@@ -39,7 +39,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import kotlinx.coroutines.delay
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 import moblile_game.shared.generated.resources.Res
 import moblile_game.shared.generated.resources.bg_alley_night
 import moblile_game.shared.generated.resources.bg_city_gate
@@ -61,7 +61,6 @@ import moblile_game.shared.generated.resources.bg_dungeon
 import moblile_game.shared.generated.resources.bg_guard_post
 import moblile_game.shared.generated.resources.bg_harbor
 import moblile_game.shared.generated.resources.bg_library
-import moblile_game.shared.generated.resources.bg_main_menu
 import moblile_game.shared.generated.resources.bg_market_dusk
 import moblile_game.shared.generated.resources.bg_noble_estate
 import moblile_game.shared.generated.resources.bg_tavern_interior
@@ -207,12 +206,7 @@ private fun SceneContent(
                 Modifier.fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            colors =
-                                listOf(
-                                    Color(0xCC1A1A2E),
-                                    Color(0xAA1A1A2E),
-                                    Color(0xDD1A1A2E),
-                                )
+                            colors = listOf(Color(0xCC1A1A2E), Color(0xAA1A1A2E), Color(0xDD1A1A2E))
                         )
                     )
         )
@@ -282,10 +276,7 @@ private fun SceneContent(
             Spacer(modifier = Modifier.height(12.dp))
 
             // Scene text (paginated) + choices
-            LazyColumn(
-                modifier = Modifier.weight(1f).fillMaxWidth(),
-                state = listState,
-            ) {
+            LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth(), state = listState) {
                 // Show only visible paragraphs
                 val visibleParagraphs = state.paragraphs.take(state.visibleParagraphs)
                 items(visibleParagraphs.size) { index ->
@@ -353,10 +344,7 @@ private fun SceneContent(
 
         // Choice outcome popup overlay (stat changes + relations + knowledge)
         if (state.choiceOutcome != null) {
-            ChoiceOutcomePopup(
-                outcome = state.choiceOutcome,
-                onDismiss = onDismissOutcome,
-            )
+            ChoiceOutcomePopup(outcome = state.choiceOutcome, onDismiss = onDismissOutcome)
         }
 
         // Glossary popup overlay
@@ -375,16 +363,10 @@ private fun SceneContent(
                 delay(2000)
                 onDismissSaveConfirmation()
             }
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.BottomCenter,
-            ) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
                 Card(
                     modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                    colors =
-                        CardDefaults.cardColors(
-                            containerColor = Color(0xDD1A1A2E),
-                        ),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xDD1A1A2E)),
                     shape = RoundedCornerShape(12.dp),
                 ) {
                     Text(
@@ -402,10 +384,7 @@ private fun SceneContent(
 }
 
 @Composable
-private fun ChoiceOutcomePopup(
-    outcome: ChoiceOutcome,
-    onDismiss: () -> Unit,
-) {
+private fun ChoiceOutcomePopup(outcome: ChoiceOutcome, onDismiss: () -> Unit) {
     Box(
         modifier =
             Modifier.fillMaxSize()
@@ -445,8 +424,7 @@ private fun ChoiceOutcomePopup(
                     Spacer(modifier = Modifier.height(8.dp))
                     outcome.statChanges.forEach { change ->
                         val sign = if (change.delta > 0) "+" else ""
-                        val color =
-                            if (change.delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
+                        val color = if (change.delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
                         val label = change.stat.replaceFirstChar { it.uppercase() }
                         Text(
                             text = "$label $sign${change.delta}",
@@ -482,8 +460,7 @@ private fun ChoiceOutcomePopup(
                     Spacer(modifier = Modifier.height(8.dp))
                     outcome.relationChanges.forEach { change ->
                         val sign = if (change.delta > 0) "+" else ""
-                        val color =
-                            if (change.delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
+                        val color = if (change.delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
                         Text(
                             text = "${change.npcDisplayName} $sign${change.delta}",
                             style = MaterialTheme.typography.bodyLarge,
@@ -607,8 +584,7 @@ private fun GlossaryPopup(
 
                 Box(
                     modifier =
-                        Modifier.weight(1f, fill = false)
-                            .verticalScroll(rememberScrollState())
+                        Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())
                 ) {
                     ClickableText(
                         text = descriptionAnnotated,

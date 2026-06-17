@@ -38,10 +38,7 @@ private val ButtonBg = Color(0xFF2A2A4E)
 
 @Composable
 fun MainMenuScreen(onNewGame: () -> Unit, onLoadGame: () -> Unit) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         // Background image
         Image(
             painter = painterResource(Res.drawable.bg_main_menu),
@@ -56,12 +53,7 @@ fun MainMenuScreen(onNewGame: () -> Unit, onLoadGame: () -> Unit) {
                 Modifier.fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            colors =
-                                listOf(
-                                    Color(0xDD1A1A2E),
-                                    Color(0x991A1A2E),
-                                    Color(0xDD1A1A2E),
-                                )
+                            colors = listOf(Color(0xDD1A1A2E), Color(0x991A1A2E), Color(0xDD1A1A2E))
                         )
                     )
         )
@@ -72,12 +64,7 @@ fun MainMenuScreen(onNewGame: () -> Unit, onLoadGame: () -> Unit) {
             verticalArrangement = Arrangement.Center,
         ) {
             // Decorative emblem
-            Text(
-                text = "⚜",
-                fontSize = 48.sp,
-                color = GoldAccent,
-                textAlign = TextAlign.Center,
-            )
+            Text(text = "⚜", fontSize = 48.sp, color = GoldAccent, textAlign = TextAlign.Center)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -122,12 +109,7 @@ fun MainMenuScreen(onNewGame: () -> Unit, onLoadGame: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(8.dp),
             ) {
-                Text(
-                    "Load Game",
-                    fontSize = 18.sp,
-                    color = TextLight,
-                    fontWeight = FontWeight.Bold,
-                )
+                Text("Load Game", fontSize = 18.sp, color = TextLight, fontWeight = FontWeight.Bold)
             }
         }
     }

@@ -188,11 +188,7 @@ class EvaluateConditionsUseCaseTest {
 
     @Test
     fun failsOnlyOnStatsReturnsFalseWhenOriginFails() {
-        val req =
-            Requirements(
-                statMin = mapOf("wisdom" to 10),
-                originRequired = setOf("merchant"),
-            )
+        val req = Requirements(statMin = mapOf("wisdom" to 10), originRequired = setOf("merchant"))
         assertFalse(useCase.failsOnlyOnStats(choice(requires = req), baseCharacter))
     }
 
@@ -204,11 +200,7 @@ class EvaluateConditionsUseCaseTest {
 
     @Test
     fun failsOnlyOnStatsReturnsFalseWhenFlagFails() {
-        val req =
-            Requirements(
-                statMin = mapOf("wisdom" to 10),
-                flagsRequired = setOf("met_king"),
-            )
+        val req = Requirements(statMin = mapOf("wisdom" to 10), flagsRequired = setOf("met_king"))
         assertFalse(useCase.failsOnlyOnStats(choice(requires = req), baseCharacter))
     }
 
