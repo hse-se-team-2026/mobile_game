@@ -10,7 +10,10 @@
       "effects": {
         "flags": [
           "knows_coup"
-        ]
+        ],
+        "stats": {
+          "charisma": 1
+        }
       },
       "next_scene": "scene_28"
     },
@@ -25,7 +28,10 @@
       "effects": {
         "flags": [
           "knows_coup"
-        ]
+        ],
+        "stats": {
+          "charisma": 1
+        }
       },
       "next_scene": "scene_29"
     },
@@ -40,7 +46,47 @@
       "effects": {
         "flags": [
           "knows_coup"
-        ]
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_30"
+    },
+    {
+      "id": "c4",
+      "text": "Use your noble connections to call an emergency council meeting",
+      "requires": {
+        "origin_required": ["noble"]
+      },
+      "effects": {
+        "flags": [
+          "knows_coup",
+          "council_called"
+        ],
+        "stats": {
+          "charisma": 2
+        },
+        "relations": {
+          "guard_captain": 2
+        }
+      },
+      "next_scene": "scene_28"
+    },
+    {
+      "id": "c5",
+      "text": "Calculate Harren's supply chain weaknesses and plan a financial sabotage",
+      "requires": {
+        "origin_required": ["merchant"]
+      },
+      "effects": {
+        "flags": [
+          "knows_coup",
+          "trade_sabotage"
+        ],
+        "stats": {
+          "cunning": 2
+        }
       },
       "next_scene": "scene_30"
     }

@@ -34,6 +34,44 @@
         }
       },
       "next_scene": "scene_12"
+    },
+    {
+      "id": "c4",
+      "text": "Flash a noble's signet ring and demand a private room",
+      "requires": {
+        "origin_required": ["noble"]
+      },
+      "effects": {
+        "stats": {
+          "charisma": 1
+        },
+        "relations": {
+          "marta": 2
+        },
+        "flags": [
+          "noble_authority"
+        ]
+      },
+      "next_scene": "scene_10"
+    },
+    {
+      "id": "c5",
+      "text": "Recognize the swordsman's military insignia — offer a veteran's greeting",
+      "requires": {
+        "origin_required": ["soldier"]
+      },
+      "effects": {
+        "stats": {
+          "strength": 1
+        },
+        "relations": {
+          "edric": 2
+        },
+        "flags": [
+          "soldier_bond"
+        ]
+      },
+      "next_scene": "scene_11"
     }
   ]
 }

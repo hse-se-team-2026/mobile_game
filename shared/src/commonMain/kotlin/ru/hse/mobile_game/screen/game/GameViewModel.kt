@@ -56,6 +56,19 @@ class GameViewModel(
         loadCurrentScene()
     }
 
+    /** Reveal the next paragraph of text. */
+    fun revealNextParagraph() {
+        val state = _uiState.value
+        if (state is GameUiState.SceneReady && !state.allTextRevealed) {
+            val newVisible = (state.visibleParagraphs + 1).coerceAtMost(state.paragraphs.size)
+            _uiState.value =
+                state.copy(
+                    visibleParagraphs = newVisible,
+                    allTextRevealed = newVisible >= state.paragraphs.size,
+                )
+        }
+    }
+
     /** Handle the player selecting a choice. */
     fun onChoiceSelected(choiceId: String) {
         val state = gameState ?: return
@@ -125,12 +138,21 @@ class GameViewModel(
                         )
                     }
 
+                // Split text into paragraphs on double-newline
+                val paragraphs =
+                    scene.text
+                        .split("\n\n")
+                        .map { it.trim() }
+                        .filter { it.isNotEmpty() }
+
                 _uiState.value =
                     GameUiState.SceneReady(
-                        sceneText = scene.text,
+                        paragraphs = paragraphs,
+                        visibleParagraphs = 1,
                         backgroundAsset = scene.backgroundAsset,
                         choices = choiceModels,
                         character = mapCharacterToUi(state.character),
+                        allTextRevealed = paragraphs.size <= 1,
                     )
             } catch (e: Exception) {
                 _uiState.value = GameUiState.Error("Failed to load scene: ${e.message}")
@@ -172,6 +194,17 @@ class GameViewModel(
         choice.requires?.statMin?.forEach { (stat, min) -> parts.add("$stat ≥ $min") }
         choice.requires?.flagsRequired?.forEach { flag -> parts.add("Requires: $flag") }
         choice.requires?.flagsForbidden?.forEach { flag -> parts.add("Forbidden: $flag") }
+        choice.requires?.originRequired?.forEach { origin ->
+            val label =
+                when (origin) {
+                    "noble" -> "Noble"
+                    "merchant" -> "Merchant"
+                    "soldier" -> "Soldier"
+                    "scholar" -> "Scholar"
+                    else -> origin
+                }
+            parts.add("Origin: $label only")
+        }
         return parts.joinToString(", ")
     }
 }

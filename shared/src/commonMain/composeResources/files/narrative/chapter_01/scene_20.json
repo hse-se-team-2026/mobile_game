@@ -15,7 +15,10 @@
           "thomas_ally",
           "has_records",
           "duke_poisoned"
-        ]
+        ],
+        "stats": {
+          "charisma": 1
+        }
       },
       "next_scene": "scene_24"
     },
@@ -55,9 +58,58 @@
         "flags": [
           "duke_poisoned",
           "saw_duke"
-        ]
+        ],
+        "stats": {
+          "charisma": 1
+        }
       },
       "next_scene": "scene_25"
+    },
+    {
+      "id": "c4",
+      "text": "Invoke your family's noble standing to override Goran's authority",
+      "requires": {
+        "origin_required": ["noble"]
+      },
+      "effects": {
+        "relations": {
+          "thomas": 3,
+          "goran": -2
+        },
+        "flags": [
+          "thomas_ally",
+          "has_records",
+          "duke_poisoned",
+          "saw_duke",
+          "noble_override"
+        ],
+        "stats": {
+          "charisma": 2
+        }
+      },
+      "next_scene": "scene_25"
+    },
+    {
+      "id": "c5",
+      "text": "Analyze the financial ledger on the spot — you can trace the money",
+      "requires": {
+        "origin_required": ["scholar", "merchant"]
+      },
+      "effects": {
+        "relations": {
+          "thomas": 2
+        },
+        "flags": [
+          "thomas_ally",
+          "has_records",
+          "duke_poisoned",
+          "traced_funds"
+        ],
+        "stats": {
+          "wisdom": 2
+        }
+      },
+      "next_scene": "scene_24"
     }
   ]
 }

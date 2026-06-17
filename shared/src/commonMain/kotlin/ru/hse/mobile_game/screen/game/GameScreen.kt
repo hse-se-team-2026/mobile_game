@@ -2,6 +2,8 @@ package ru.hse.mobile_game.screen.game
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,11 +12,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -112,6 +119,7 @@ fun GameScreen(
                 SceneContent(
                     state = state,
                     onChoiceSelected = { viewModel.onChoiceSelected(it) },
+                    onContinue = { viewModel.revealNextParagraph() },
                     onCharacterClick = { showCharacterSheet = true },
                     onSaveClick = onNavigateToSave,
                     onMenuClick = onNavigateToMenu,
@@ -147,15 +155,26 @@ private fun LoadingContent() {
     }
 }
 
+@Suppress("DEPRECATION")
 @Composable
 private fun SceneContent(
     state: GameUiState.SceneReady,
     onChoiceSelected: (String) -> Unit,
+    onContinue: () -> Unit,
     onCharacterClick: () -> Unit,
     onSaveClick: () -> Unit,
     onMenuClick: () -> Unit,
 ) {
     val bgDrawable = resolveBackground(state.backgroundAsset)
+    var glossaryEntry by remember { mutableStateOf<Glossary.Entry?>(null) }
+    val listState = rememberLazyListState()
+
+    // Auto-scroll when new paragraphs are revealed
+    LaunchedEffect(state.visibleParagraphs) {
+        if (state.visibleParagraphs > 1) {
+            listState.animateScrollToItem(state.visibleParagraphs - 1)
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Background image
@@ -220,34 +239,144 @@ private fun SceneContent(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Scene text + choices
-            LazyColumn(modifier = Modifier.weight(1f).fillMaxWidth()) {
-                item {
+            // Scene text (paginated) + choices
+            LazyColumn(
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                state = listState,
+            ) {
+                // Show only visible paragraphs
+                val visibleParagraphs = state.paragraphs.take(state.visibleParagraphs)
+                items(visibleParagraphs.size) { index ->
+                    val paragraph = visibleParagraphs[index]
                     Card(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors =
-                            CardDefaults.cardColors(containerColor = Color(0xBB1A1A2E)),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xBB1A1A2E)),
                     ) {
-                        val annotatedText = remember(state.sceneText) {
-                            parseNarrativeText(state.sceneText)
-                        }
-                        Text(
+                        val annotatedText = remember(paragraph) { parseNarrativeText(paragraph) }
+                        ClickableText(
                             text = annotatedText,
-                            style = MaterialTheme.typography.bodyLarge,
+                            style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 26.sp),
                             modifier = Modifier.padding(16.dp),
-                            lineHeight = 26.sp,
+                            onClick = { offset ->
+                                annotatedText
+                                    .getStringAnnotations(tag = "glossary", start = offset, end = offset)
+                                    .firstOrNull()
+                                    ?.let { annotation ->
+                                        glossaryEntry = Glossary.lookup(annotation.item)
+                                    }
+                            },
                         )
                     }
                 }
 
-                item { Spacer(modifier = Modifier.height(20.dp)) }
+                // "Continue" button when there's more text
+                if (!state.allTextRevealed) {
+                    item {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Button(
+                            onClick = onContinue,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp),
+                            colors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF2A2A4E),
+                                    contentColor = Color(0xFFE0C080),
+                                ),
+                        ) {
+                            Text("Continue ▼", fontSize = 16.sp)
+                        }
+                    }
+                }
 
-                items(state.choices) { choice ->
-                    ChoiceButton(choice = choice, onClick = { onChoiceSelected(choice.id) })
+                // Show choices only when all text is revealed
+                if (state.allTextRevealed) {
+                    item { Spacer(modifier = Modifier.height(20.dp)) }
+
+                    items(state.choices) { choice ->
+                        ChoiceButton(choice = choice, onClick = { onChoiceSelected(choice.id) })
+                    }
                 }
 
                 item { Spacer(modifier = Modifier.height(16.dp)) }
+            }
+        }
+
+        // Glossary popup overlay
+        if (glossaryEntry != null) {
+            GlossaryPopup(
+                entry = glossaryEntry!!,
+                onDismiss = { glossaryEntry = null },
+                onTermClick = { term -> glossaryEntry = Glossary.lookup(term) },
+            )
+        }
+    }
+}
+
+@Suppress("DEPRECATION")
+@Composable
+private fun GlossaryPopup(
+    entry: Glossary.Entry,
+    onDismiss: () -> Unit,
+    onTermClick: (String) -> Unit,
+) {
+    // Semi-transparent backdrop — dismiss on click
+    Box(
+        modifier =
+            Modifier.fillMaxSize()
+                .background(Color(0x99000000))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onDismiss,
+                ),
+        contentAlignment = Alignment.Center,
+    ) {
+        // Card — consume clicks so tapping inside doesn't dismiss
+        Card(
+            modifier =
+                Modifier.widthIn(max = 360.dp)
+                    .heightIn(max = 400.dp)
+                    .padding(24.dp)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {},
+                    ),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E)),
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                // Title
+                Text(
+                    text = entry.title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFE0C080),
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Scrollable description with glossary term support
+                val descriptionAnnotated =
+                    remember(entry.description) { parseSingleParagraph(entry.description) }
+
+                Box(modifier = Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())) {
+                    ClickableText(
+                        text = descriptionAnnotated,
+                        style =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                color = Color(0xFFF0EAE0),
+                                lineHeight = 22.sp,
+                            ),
+                        onClick = { offset ->
+                            descriptionAnnotated
+                                .getStringAnnotations(tag = "glossary", start = offset, end = offset)
+                                .firstOrNull()
+                                ?.let { annotation -> onTermClick(annotation.item) }
+                        },
+                    )
+                }
             }
         }
     }
@@ -330,7 +459,8 @@ private fun GameOverContent(onMenuClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Your choices have shaped the beginning of this tale.\nThe full story awaits...",
+                text =
+                    "Your choices have shaped the beginning of this tale.\nThe full story awaits...",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = Color(0xFFF0EAE0),

@@ -15,7 +15,8 @@ class EvaluateConditionsUseCase {
         val requirements = choice.requires ?: return true
         return checkStatRequirements(requirements, character.stats) &&
             checkRequiredFlags(requirements, character.flags) &&
-            checkForbiddenFlags(requirements, character.flags)
+            checkForbiddenFlags(requirements, character.flags) &&
+            checkOriginRequirement(requirements, character.origin)
     }
 
     private fun checkStatRequirements(requirements: Requirements, stats: Stats): Boolean {
@@ -30,6 +31,11 @@ class EvaluateConditionsUseCase {
 
     private fun checkForbiddenFlags(requirements: Requirements, flags: Set<String>): Boolean {
         return requirements.flagsForbidden.none { it in flags }
+    }
+
+    private fun checkOriginRequirement(requirements: Requirements, origin: String): Boolean {
+        if (requirements.originRequired.isEmpty()) return true
+        return origin in requirements.originRequired
     }
 
     private fun getStatValue(stats: Stats, statName: String): Int {

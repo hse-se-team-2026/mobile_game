@@ -26,6 +26,7 @@ data class RequirementsJson(
     @SerialName("stat_min") val statMin: Map<String, Int> = emptyMap(),
     @SerialName("flags_required") val flagsRequired: Set<String> = emptySet(),
     @SerialName("flags_forbidden") val flagsForbidden: Set<String> = emptySet(),
+    @SerialName("origin_required") val originRequired: Set<String> = emptySet(),
 )
 
 @Serializable

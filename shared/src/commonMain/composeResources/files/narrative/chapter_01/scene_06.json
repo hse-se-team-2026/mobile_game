@@ -13,7 +13,11 @@
     {
       "id": "c2",
       "text": "Examine the noticeboard",
-      "effects": {},
+      "effects": {
+        "stats": {
+          "wisdom": 1
+        }
+      },
       "next_scene": "scene_08"
     },
     {
@@ -21,6 +25,25 @@
       "text": "Head down to the harbor district",
       "effects": {},
       "next_scene": "scene_09"
+    },
+    {
+      "id": "c4",
+      "text": "Approach the merchants' stalls and ask about the empty spaces",
+      "requires": {
+        "origin_required": ["merchant"]
+      },
+      "effects": {
+        "stats": {
+          "cunning": 1
+        },
+        "flags": [
+          "knows_disappearances"
+        ],
+        "relations": {
+          "market_vendors": 1
+        }
+      },
+      "next_scene": "scene_08"
     }
   ]
 }

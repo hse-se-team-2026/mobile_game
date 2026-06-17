@@ -15,7 +15,10 @@
       "effects": {
         "flags": [
           "plan_duke"
-        ]
+        ],
+        "stats": {
+          "wisdom": 1
+        }
       },
       "next_scene": "scene_34"
     },
@@ -25,7 +28,10 @@
       "effects": {
         "flags": [
           "plan_weapons"
-        ]
+        ],
+        "stats": {
+          "strength": 1
+        }
       },
       "next_scene": "scene_35"
     },
@@ -35,9 +41,59 @@
       "effects": {
         "flags": [
           "plan_goran"
-        ]
+        ],
+        "stats": {
+          "cunning": 1
+        }
       },
       "next_scene": "scene_36"
+    },
+    {
+      "id": "c4",
+      "text": "Lead a soldiers' mutiny — rally Goran's own mercenaries against him",
+      "requires": {
+        "origin_required": ["soldier"],
+        "stat_min": {
+          "strength": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "plan_goran",
+          "military_mutiny"
+        ],
+        "stats": {
+          "strength": 2,
+          "charisma": 1
+        },
+        "relations": {
+          "edric": 2
+        }
+      },
+      "next_scene": "scene_36"
+    },
+    {
+      "id": "c5",
+      "text": "Petition the Ashen God's temple to grant sanctuary to the Duke",
+      "requires": {
+        "origin_required": ["scholar"],
+        "stat_min": {
+          "wisdom": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "plan_duke",
+          "temple_sanctuary"
+        ],
+        "stats": {
+          "wisdom": 2
+        },
+        "relations": {
+          "brother_orin": 2
+        }
+      },
+      "next_scene": "scene_34"
     }
   ]
 }

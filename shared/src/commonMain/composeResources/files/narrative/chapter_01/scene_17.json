@@ -12,13 +12,21 @@
           "charisma": 3
         }
       },
-      "effects": {},
+      "effects": {
+        "stats": {
+          "charisma": 1
+        }
+      },
       "next_scene": "scene_20"
     },
     {
       "id": "c2",
       "text": "Seek wisdom at the Temple of the Ashen God",
-      "effects": {},
+      "effects": {
+        "stats": {
+          "wisdom": 1
+        }
+      },
       "next_scene": "scene_21"
     },
     {
@@ -29,7 +37,11 @@
           "wisdom": 3
         }
       },
-      "effects": {},
+      "effects": {
+        "stats": {
+          "wisdom": 1
+        }
+      },
       "next_scene": "scene_22"
     },
     {
@@ -40,8 +52,47 @@
           "cunning": 3
         }
       },
-      "effects": {},
+      "effects": {
+        "stats": {
+          "cunning": 1
+        }
+      },
       "next_scene": "scene_19"
+    },
+    {
+      "id": "c5",
+      "text": "Invoke your family's trade connections to get an audience with Harren himself",
+      "requires": {
+        "origin_required": ["noble", "merchant"]
+      },
+      "effects": {
+        "stats": {
+          "charisma": 1
+        },
+        "flags": [
+          "met_harren_directly"
+        ],
+        "relations": {
+          "harren": 1
+        }
+      },
+      "next_scene": "scene_23"
+    },
+    {
+      "id": "c6",
+      "text": "Search the old military records for Goran's background",
+      "requires": {
+        "origin_required": ["scholar"]
+      },
+      "effects": {
+        "stats": {
+          "wisdom": 2
+        },
+        "flags": [
+          "goran_background"
+        ]
+      },
+      "next_scene": "scene_22"
     }
   ]
 }

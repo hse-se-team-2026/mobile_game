@@ -30,7 +30,32 @@
         "flags": [
           "has_copies",
           "knows_varketh"
-        ]
+        ],
+        "stats": {
+          "cunning": 2
+        }
+      },
+      "next_scene": "scene_28"
+    },
+    {
+      "id": "c3",
+      "text": "Forge a reply to Baron Varketh using Harren's seal, feeding false information",
+      "requires": {
+        "origin_required": ["merchant", "scholar"],
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "has_portfolio",
+          "knows_varketh",
+          "forged_letter"
+        ],
+        "stats": {
+          "cunning": 2,
+          "wisdom": 1
+        }
       },
       "next_scene": "scene_28"
     }

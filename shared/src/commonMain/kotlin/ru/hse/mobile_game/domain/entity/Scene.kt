@@ -20,6 +20,7 @@ data class Requirements(
     val statMin: Map<String, Int> = emptyMap(),
     val flagsRequired: Set<String> = emptySet(),
     val flagsForbidden: Set<String> = emptySet(),
+    val originRequired: Set<String> = emptySet(),
 )
 
 data class Effects(

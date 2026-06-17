@@ -5,11 +5,12 @@ sealed interface GameUiState {
     data object Loading : GameUiState
 
     data class SceneReady(
-        val sceneText: String,
+        val paragraphs: List<String>,
+        val visibleParagraphs: Int,
         val backgroundAsset: String,
         val choices: List<ChoiceUiModel>,
         val character: CharacterUiModel,
-        val isTyping: Boolean = false,
+        val allTextRevealed: Boolean,
     ) : GameUiState
 
     data class ChapterTransition(val chapter: Int, val summaryText: String) : GameUiState

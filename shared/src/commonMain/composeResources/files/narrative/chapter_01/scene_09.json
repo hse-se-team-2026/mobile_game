@@ -31,6 +31,43 @@
         }
       },
       "next_scene": "scene_16"
+    },
+    {
+      "id": "c3",
+      "text": "Demand the shipping manifests — you know trade irregularities when you see them",
+      "requires": {
+        "origin_required": ["merchant"]
+      },
+      "effects": {
+        "flags": [
+          "knows_harbor",
+          "found_manifests"
+        ],
+        "stats": {
+          "cunning": 1
+        },
+        "relations": {
+          "dock_workers": 1
+        }
+      },
+      "next_scene": "scene_15"
+    },
+    {
+      "id": "c4",
+      "text": "Study the warehouse construction for hidden passages",
+      "requires": {
+        "origin_required": ["scholar"]
+      },
+      "effects": {
+        "flags": [
+          "found_warehouse",
+          "knows_passages"
+        ],
+        "stats": {
+          "wisdom": 1
+        }
+      },
+      "next_scene": "scene_16"
     }
   ]
 }

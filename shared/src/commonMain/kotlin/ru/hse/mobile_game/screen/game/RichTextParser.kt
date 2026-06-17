@@ -13,14 +13,19 @@ private val NarratorColor = Color(0xFFCDBFAA)
 private val SpeakerColor = Color(0xFFE0C080)
 private val DialogueColor = Color(0xFFEDE4D4)
 private val BodyColor = Color(0xFFF0EAE0)
+val GlossaryColor = Color(0xFFE0C080)
 
 private val DIALOGUE_REGEX = Regex("""^([\w\s''-]+):\s*"(.+)"$""", RegexOption.DOT_MATCHES_ALL)
+
+/** Glossary term keys sorted longest-first for greedy matching. */
+private val glossaryTerms: List<String> by lazy { Glossary.allTerms() }
 
 /**
  * Parses scene text with simple markup conventions:
  * - A paragraph wrapped in `*asterisks*` is narrator text (rendered italic, muted color)
  * - A paragraph matching `Speaker: "dialogue"` is dialogue (bold speaker, italic quote)
  * - Within regular paragraphs, inline `*italic*` markers are supported
+ * - Glossary terms are highlighted in gold and annotated with tag "glossary"
  *
  * Paragraphs are separated by double newlines (`\n\n`).
  */
@@ -36,26 +41,42 @@ fun parseNarrativeText(text: String): AnnotatedString {
     }
 }
 
+/**
+ * Parses a single paragraph of text (no double-newline splitting). Used for glossary description
+ * text which may contain inline formatting.
+ */
+fun parseSingleParagraph(text: String): AnnotatedString {
+    return buildAnnotatedString { parseParagraph(text.trim()) }
+}
+
+@Suppress("DEPRECATION")
 private fun AnnotatedString.Builder.parseParagraph(paragraph: String) {
     when {
         // Full narrator paragraph: *entire text*
         paragraph.startsWith("*") && paragraph.endsWith("*") && paragraph.length > 2 -> {
-            withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = NarratorColor)) {
-                append(paragraph.substring(1, paragraph.length - 1))
-            }
+            val inner = paragraph.substring(1, paragraph.length - 1)
+            appendWithGlossary(
+                inner,
+                SpanStyle(fontStyle = FontStyle.Italic, color = NarratorColor),
+            )
         }
         // Dialogue: Speaker: "text"
         DIALOGUE_REGEX.matches(paragraph) -> {
             val match = DIALOGUE_REGEX.find(paragraph)!!
             val speaker = match.groupValues[1].trim()
             val dialogue = match.groupValues[2].trim()
-            withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = SpeakerColor)) {
-                append(speaker)
-            }
+
+            // Speaker name — may itself be a glossary term
+            appendWithGlossary(
+                speaker,
+                SpanStyle(fontWeight = FontWeight.Bold, color = SpeakerColor),
+            )
             withStyle(SpanStyle(color = BodyColor)) { append(": ") }
-            withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = DialogueColor)) {
-                append("\u201C$dialogue\u201D")
-            }
+            // Dialogue text
+            appendWithGlossary(
+                "\u201C$dialogue\u201D",
+                SpanStyle(fontStyle = FontStyle.Italic, color = DialogueColor),
+            )
         }
         // Regular text with possible inline *italic* markers
         else -> {
@@ -64,28 +85,78 @@ private fun AnnotatedString.Builder.parseParagraph(paragraph: String) {
     }
 }
 
+@Suppress("DEPRECATION")
 private fun AnnotatedString.Builder.parseInlineFormatting(text: String) {
     var i = 0
     while (i < text.length) {
         val starIndex = text.indexOf('*', i)
         if (starIndex == -1) {
-            withStyle(SpanStyle(color = BodyColor)) { append(text.substring(i)) }
+            appendWithGlossary(text.substring(i), SpanStyle(color = BodyColor))
             break
         }
         // Append text before the *
         if (starIndex > i) {
-            withStyle(SpanStyle(color = BodyColor)) { append(text.substring(i, starIndex)) }
+            appendWithGlossary(text.substring(i, starIndex), SpanStyle(color = BodyColor))
         }
         // Find closing *
         val endStar = text.indexOf('*', starIndex + 1)
         if (endStar == -1) {
-            withStyle(SpanStyle(color = BodyColor)) { append(text.substring(starIndex)) }
+            appendWithGlossary(text.substring(starIndex), SpanStyle(color = BodyColor))
             break
         }
-        // Render italic
-        withStyle(SpanStyle(fontStyle = FontStyle.Italic, color = NarratorColor)) {
-            append(text.substring(starIndex + 1, endStar))
-        }
+        // Render italic with glossary support
+        appendWithGlossary(
+            text.substring(starIndex + 1, endStar),
+            SpanStyle(fontStyle = FontStyle.Italic, color = NarratorColor),
+        )
         i = endStar + 1
+    }
+}
+
+/**
+ * Appends [text] using [baseStyle], scanning for glossary terms. Glossary terms are rendered with
+ * gold bold style and annotated with the "glossary" tag for click handling.
+ */
+@Suppress("DEPRECATION")
+private fun AnnotatedString.Builder.appendWithGlossary(text: String, baseStyle: SpanStyle) {
+    if (text.isEmpty()) return
+
+    var pos = 0
+    while (pos < text.length) {
+        // Find the earliest glossary term match from current position
+        var bestMatch: String? = null
+        var bestStart = Int.MAX_VALUE
+
+        for (term in glossaryTerms) {
+            val idx = text.indexOf(term, pos, ignoreCase = true)
+            if (idx != -1 && (idx < bestStart || (idx == bestStart && term.length > (bestMatch?.length ?: 0)))) {
+                bestStart = idx
+                bestMatch = term
+            }
+        }
+
+        if (bestMatch == null) {
+            // No more glossary terms — append remaining text with base style
+            withStyle(baseStyle) { append(text.substring(pos)) }
+            break
+        }
+
+        // Append text before the glossary term
+        if (bestStart > pos) {
+            withStyle(baseStyle) { append(text.substring(pos, bestStart)) }
+        }
+
+        // Append the glossary term with gold style + annotation
+        val matchedText = text.substring(bestStart, bestStart + bestMatch.length)
+        val glossaryStyle =
+            baseStyle.copy(
+                color = GlossaryColor,
+                fontWeight = FontWeight.Bold,
+            )
+        pushStringAnnotation(tag = "glossary", annotation = bestMatch)
+        withStyle(glossaryStyle) { append(matchedText) }
+        pop()
+
+        pos = bestStart + bestMatch.length
     }
 }

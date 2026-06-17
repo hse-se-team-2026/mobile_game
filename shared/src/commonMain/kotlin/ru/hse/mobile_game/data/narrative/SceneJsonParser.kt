@@ -48,6 +48,7 @@ class SceneJsonParser(private val json: Json = Json { ignoreUnknownKeys = true }
             statMin = requirementsJson.statMin,
             flagsRequired = requirementsJson.flagsRequired,
             flagsForbidden = requirementsJson.flagsForbidden,
+            originRequired = requirementsJson.originRequired,
         )
     }
 
