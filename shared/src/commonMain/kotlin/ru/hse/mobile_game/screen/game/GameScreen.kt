@@ -241,34 +241,35 @@ private fun SceneContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 OutlinedButton(onClick = onCharacterClick) {
-                    Text("📜 Character", color = Color(0xFFE0C080))
+                    Text("Character", color = Color(0xFFE0C080))
                 }
 
                 Box {
                     OutlinedButton(onClick = { showMenuPopup = true }) {
-                        Text("☰ Menu", color = Color(0xFFE0C080))
+                        Text("Menu", color = Color(0xFFE0C080))
                     }
                     DropdownMenu(
                         expanded = showMenuPopup,
                         onDismissRequest = { showMenuPopup = false },
+                        containerColor = Color(0xFF1A1A2E),
                     ) {
                         DropdownMenuItem(
-                            text = { Text("💾 Save") },
+                            text = { Text("Save", color = Color(0xFFF0EAE0)) },
                             onClick = {
                                 showMenuPopup = false
                                 onSaveClick()
                             },
                         )
                         DropdownMenuItem(
-                            text = { Text("📂 Load") },
+                            text = { Text("Load", color = Color(0xFFF0EAE0)) },
                             onClick = {
                                 showMenuPopup = false
                                 onLoadClick()
                             },
                         )
-                        HorizontalDivider()
+                        HorizontalDivider(color = Color(0xFF2A2A4E))
                         DropdownMenuItem(
-                            text = { Text("🏠 Main Menu") },
+                            text = { Text("Main Menu", color = Color(0xFFF0EAE0)) },
                             onClick = {
                                 showMenuPopup = false
                                 onMenuClick()

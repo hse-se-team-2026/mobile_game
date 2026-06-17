@@ -40,12 +40,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.hse.mobile_game.screen.game.FlagRegistry
+import ru.hse.mobile_game.screen.game.Glossary
 import ru.hse.mobile_game.screen.game.NpcRegistry
 import ru.hse.mobile_game.screen.model.CharacterUiModel
 
 @Composable
 fun CharacterSheet(character: CharacterUiModel) {
     var selectedFlag by remember { mutableStateOf<String?>(null) }
+    var selectedNpcKey by remember { mutableStateOf<String?>(null) }
 
     Box(modifier = Modifier.fillMaxWidth()) {
         LazyColumn(
@@ -87,7 +89,13 @@ fun CharacterSheet(character: CharacterUiModel) {
                 }
                 items(character.relations.entries.toList()) { (npc, value) ->
                     val displayName = NpcRegistry.displayName(npc)
-                    StatRow(displayName, value)
+                    val hasGlossary = Glossary.glossaryKeyForNpc(npc) != null
+                    ClickableStatRow(
+                        label = displayName,
+                        value = value,
+                        clickable = hasGlossary,
+                        onClick = { selectedNpcKey = npc },
+                    )
                 }
             }
 
@@ -134,6 +142,19 @@ fun CharacterSheet(character: CharacterUiModel) {
             FlagDetailPopup(
                 flagId = selectedFlag!!,
                 onDismiss = { selectedFlag = null },
+            )
+        }
+
+        // NPC glossary popup overlay
+        if (selectedNpcKey != null) {
+            NpcGlossaryPopup(
+                npcKey = selectedNpcKey!!,
+                onDismiss = { selectedNpcKey = null },
+                onTermClick = { glossaryKey ->
+                    // Navigate from one glossary entry to another via cross-link
+                    selectedNpcKey = null
+                    // We could open the linked term, but for simplicity we just close
+                },
             )
         }
     }
@@ -294,5 +315,135 @@ private fun StatRow(label: String, value: Int) {
                     else -> MaterialTheme.colorScheme.onSurface
                 },
         )
+    }
+}
+
+/** A stat row where the label is clickable (gold + underlined) to open a detail popup. */
+@Composable
+private fun ClickableStatRow(
+    label: String,
+    value: Int,
+    clickable: Boolean,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        if (clickable) {
+            Text(
+                text = label,
+                style =
+                    MaterialTheme.typography.bodyMedium.copy(
+                        textDecoration = TextDecoration.Underline,
+                    ),
+                color = Color(0xFFE0C080),
+                modifier = Modifier.clickable(onClick = onClick),
+            )
+        } else {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+        Text(
+            text = value.toString(),
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            color =
+                when {
+                    value > 0 -> MaterialTheme.colorScheme.primary
+                    value < 0 -> MaterialTheme.colorScheme.error
+                    else -> MaterialTheme.colorScheme.onSurface
+                },
+        )
+    }
+}
+
+/** Popup showing glossary info about an NPC, including relation flavor. */
+@Composable
+private fun NpcGlossaryPopup(
+    npcKey: String,
+    onDismiss: () -> Unit,
+    onTermClick: (String) -> Unit,
+) {
+    val glossaryKey = Glossary.glossaryKeyForNpc(npcKey)
+    val glossaryEntry = glossaryKey?.let { Glossary.lookup(it) }
+    val npcInfo = NpcRegistry.lookup(npcKey)
+    val displayName = npcInfo?.displayName ?: NpcRegistry.displayName(npcKey)
+
+    Box(
+        modifier =
+            Modifier.fillMaxSize()
+                .background(Color(0x99000000))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onDismiss,
+                ),
+        contentAlignment = Alignment.Center,
+    ) {
+        Card(
+            modifier =
+                Modifier.widthIn(max = 360.dp)
+                    .heightIn(max = 500.dp)
+                    .padding(24.dp)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {},
+                    ),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E)),
+        ) {
+            Column(
+                modifier = Modifier.padding(20.dp).verticalScroll(rememberScrollState()),
+            ) {
+                // Title
+                Text(
+                    text = displayName,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFE0C080),
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Glossary description
+                if (glossaryEntry != null) {
+                    Text(
+                        text = glossaryEntry.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFFF0EAE0),
+                        lineHeight = 22.sp,
+                    )
+                } else if (npcInfo != null) {
+                    Text(
+                        text = npcInfo.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFFF0EAE0),
+                        lineHeight = 22.sp,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+                HorizontalDivider(color = Color(0xFF2A2A4E))
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Close button
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2A2A4E),
+                            contentColor = Color(0xFFE0C080),
+                        ),
+                    shape = RoundedCornerShape(8.dp),
+                ) {
+                    Text("Close")
+                }
+            }
+        }
     }
 }

@@ -183,7 +183,37 @@ object Glossary {
                         + "to avoid it after dark.",
                     requiredFlag = "knows_harbor",
                 ),
+            "Dock Workers" to
+                Entry(
+                    "Dock Workers",
+                    "The laborers who load and unload cargo at Ashenmoor's harbor. "
+                        + "A tight-knit group led informally by Thomas, the dock foreman. "
+                        + "Some have been unwilling participants in Harren's smuggling operation; "
+                        + "others keep their heads down to survive.",
+                    requiredFlag = "knows_harbor",
+                ),
         )
+
+    /**
+     * Map from NPC relation keys (as stored in character state) to glossary entry keys. Allows the
+     * CharacterSheet to open the correct glossary entry when an NPC name is tapped.
+     */
+    private val npcKeyToGlossaryKey: Map<String, String> =
+        mapOf(
+            "sable" to "Sable",
+            "guard_captain" to "Brynn",
+            "thomas" to "Thomas",
+            "orin" to "Brother Orin",
+            "dock_workers" to "Dock Workers",
+            "harren" to "Harren",
+            "edric" to "Edric",
+            "marta" to "Marta",
+            "goran" to "Goran",
+            "kess" to "Kess",
+        )
+
+    /** Look up glossary entry key for an NPC relation key. Returns null if no mapping exists. */
+    fun glossaryKeyForNpc(npcKey: String): String? = npcKeyToGlossaryKey[npcKey]
 
     /** Look up a glossary entry by its key (case-insensitive). Returns null if not found. */
     fun lookup(term: String): Entry? {
