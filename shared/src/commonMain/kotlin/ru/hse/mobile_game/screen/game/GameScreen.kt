@@ -210,6 +210,9 @@ private fun SceneContent(
 
         // Content
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            // Extra top spacing to push buttons below the status bar area
+            Spacer(modifier = Modifier.height(40.dp))
+
             // Top bar
             Row(
                 modifier = Modifier.fillMaxWidth(),
