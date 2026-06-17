@@ -39,6 +39,7 @@ fun NavGraph(navController: NavHostController) {
             GameScreen(
                 viewModel = gameViewModel,
                 origin = route.origin,
+                slotId = route.slotId,
                 onNavigateToSave = { navController.navigate(Screen.SaveLoad) },
                 onNavigateToMenu = {
                     navController.navigate(Screen.MainMenu) {
@@ -53,8 +54,9 @@ fun NavGraph(navController: NavHostController) {
             SaveLoadScreen(
                 viewModel = saveLoadViewModel,
                 onSlotSelected = { slotId ->
-                    // Navigate to game with loaded state
-                    navController.navigate(Screen.Game()) { popUpTo<Screen.MainMenu>() }
+                    navController.navigate(Screen.Game(slotId = slotId)) {
+                        popUpTo<Screen.MainMenu>()
+                    }
                 },
                 onBack = { navController.popBackStack() },
             )

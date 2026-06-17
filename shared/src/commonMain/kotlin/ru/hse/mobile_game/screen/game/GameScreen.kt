@@ -101,6 +101,7 @@ private fun resolveBackground(backgroundAsset: String): DrawableResource? {
 fun GameScreen(
     viewModel: GameViewModel,
     origin: String?,
+    slotId: Long? = null,
     onNavigateToSave: () -> Unit,
     onNavigateToMenu: () -> Unit,
 ) {
@@ -108,9 +109,10 @@ fun GameScreen(
     var showCharacterSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
 
-    LaunchedEffect(origin) {
-        if (origin != null) {
-            viewModel.startNewGame(origin)
+    LaunchedEffect(origin, slotId) {
+        when {
+            origin != null -> viewModel.startNewGame(origin)
+            slotId != null -> viewModel.loadFromSlot(slotId)
         }
     }
 

@@ -12,6 +12,7 @@ import ru.hse.mobile_game.domain.entity.GameState
 import ru.hse.mobile_game.domain.entity.Scene
 import ru.hse.mobile_game.domain.entity.Stats
 import ru.hse.mobile_game.domain.usecase.EvaluateConditionsUseCase
+import ru.hse.mobile_game.domain.usecase.LoadGameUseCase
 import ru.hse.mobile_game.domain.usecase.LoadSceneUseCase
 import ru.hse.mobile_game.domain.usecase.MakeChoiceUseCase
 import ru.hse.mobile_game.domain.usecase.SaveGameUseCase
@@ -28,6 +29,7 @@ class GameViewModel(
     private val makeChoice: MakeChoiceUseCase,
     private val saveGame: SaveGameUseCase,
     private val evaluateConditions: EvaluateConditionsUseCase,
+    private val loadGame: LoadGameUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
@@ -62,6 +64,25 @@ class GameViewModel(
     fun resumeGame(savedState: GameState) {
         gameState = savedState
         loadCurrentScene()
+    }
+
+    /** Load a game from a specific save slot by id. */
+    fun loadFromSlot(slotId: Long) {
+        _uiState.value = GameUiState.Loading
+        viewModelScope.launch {
+            try {
+                val slots = loadGame()
+                val slot = slots.find { it.id == slotId }
+                if (slot != null) {
+                    gameState = slot.gameState
+                    loadCurrentScene()
+                } else {
+                    _uiState.value = GameUiState.Error("Save slot not found")
+                }
+            } catch (e: Exception) {
+                _uiState.value = GameUiState.Error("Failed to load save: ${e.message}")
+            }
+        }
     }
 
     /** Reveal the next paragraph of text. */

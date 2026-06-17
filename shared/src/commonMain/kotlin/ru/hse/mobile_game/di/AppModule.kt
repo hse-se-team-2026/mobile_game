@@ -32,7 +32,7 @@ val dataModule = module {
 }
 
 val viewModelModule = module {
-    factory { GameViewModel(get(), get(), get(), get()) }
+    factory { GameViewModel(get(), get(), get(), get(), get()) }
     factory { SaveLoadViewModel(get(), get()) }
 }
 
