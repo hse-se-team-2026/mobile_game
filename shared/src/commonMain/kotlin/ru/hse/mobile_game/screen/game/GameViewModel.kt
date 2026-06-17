@@ -41,6 +41,13 @@ class GameViewModel(
     /** Outcome from the last choice, shown as a popup on the next scene. */
     private var pendingOutcome: ChoiceOutcome? = null
 
+    /**
+     * Flags the character had *before* the most recent choice. Used to defer glossary term
+     * activation so that newly-gained knowledge doesn't spoil the scene that narratively reveals
+     * it. Cleared when the outcome popup is dismissed (or immediately if no popup is shown).
+     */
+    private var preChoiceFlags: Set<String>? = null
+
     /** Start a new game with the given origin. */
     fun startNewGame(origin: String) {
         val initialCharacter =
@@ -94,11 +101,15 @@ class GameViewModel(
         }
     }
 
-    /** Dismiss the choice outcome popup. */
+    /** Dismiss the choice outcome popup and activate deferred glossary terms. */
     fun dismissOutcome() {
         val state = _uiState.value
         if (state is GameUiState.SceneReady && state.choiceOutcome != null) {
-            _uiState.value = state.copy(choiceOutcome = null)
+            // Now that the player has seen the outcome, reveal the full glossary terms
+            val currentFlags = gameState?.character?.flags ?: emptySet()
+            val fullActiveTerms = Glossary.unlockedTerms(currentFlags)
+            preChoiceFlags = null
+            _uiState.value = state.copy(choiceOutcome = null, activeGlossaryTerms = fullActiveTerms)
         }
     }
 
@@ -155,6 +166,10 @@ class GameViewModel(
         viewModelScope.launch {
             try {
                 val oldCharacter = state.character
+
+                // Remember pre-choice flags so glossary terms are deferred
+                preChoiceFlags = oldCharacter.flags
+
                 val newState = makeChoice(state, choice)
                 gameState = newState.copy(timestamp = currentTimeMillis())
 
@@ -230,12 +245,20 @@ class GameViewModel(
                 val paragraphs =
                     scene.text.split("\n\n").map { it.trim() }.filter { it.isNotEmpty() }
 
-                // Compute unlocked glossary terms based on player flags
-                val activeTerms = Glossary.unlockedTerms(state.character.flags)
+                // Compute unlocked glossary terms. When an outcome popup is pending,
+                // use the pre-choice flags so that newly-gained knowledge doesn't
+                // spoil the scene that narratively reveals it.
+                val flagsForGlossary = preChoiceFlags ?: state.character.flags
+                val activeTerms = Glossary.unlockedTerms(flagsForGlossary)
 
                 // Pick up any pending outcome from the last choice
                 val outcome = pendingOutcome?.takeIf { it.hasContent }
                 pendingOutcome = null
+
+                // If there's no outcome popup, clear deferred flags immediately
+                if (outcome == null) {
+                    preChoiceFlags = null
+                }
 
                 _uiState.value =
                     GameUiState.SceneReady(
