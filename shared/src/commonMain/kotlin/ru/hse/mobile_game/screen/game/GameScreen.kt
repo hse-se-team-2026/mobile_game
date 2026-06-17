@@ -28,6 +28,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
@@ -313,7 +314,7 @@ private fun SceneContent(
             }
         }
 
-        // Choice outcome popup overlay (stat changes + knowledge)
+        // Choice outcome popup overlay (stat changes + relations + knowledge)
         if (state.choiceOutcome != null) {
             ChoiceOutcomePopup(
                 outcome = state.choiceOutcome,
@@ -351,7 +352,8 @@ private fun ChoiceOutcomePopup(
     ) {
         Card(
             modifier =
-                Modifier.widthIn(max = 340.dp)
+                Modifier.widthIn(max = 360.dp)
+                    .heightIn(max = 500.dp)
                     .padding(24.dp)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
@@ -362,40 +364,88 @@ private fun ChoiceOutcomePopup(
             colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E)),
         ) {
             Column(
-                modifier = Modifier.padding(24.dp),
+                modifier = Modifier.padding(24.dp).verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // Stat changes section
+                // ── Stat changes section ──
                 if (outcome.statChanges.isNotEmpty()) {
                     Text(
-                        text = "⚔ Traits changed",
+                        text = "⚔ Traits Changed",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFE0C080),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    outcome.statChanges.forEach { (stat, delta) ->
-                        val sign = if (delta > 0) "+" else ""
-                        val color = if (delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
-                        val label = stat.replaceFirstChar { it.uppercase() }
+                    outcome.statChanges.forEach { change ->
+                        val sign = if (change.delta > 0) "+" else ""
+                        val color =
+                            if (change.delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
+                        val label = change.stat.replaceFirstChar { it.uppercase() }
                         Text(
-                            text = "$label $sign$delta",
+                            text = "$label $sign${change.delta}",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = color,
                         )
+                        Text(
+                            text = change.reason,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontStyle = FontStyle.Italic,
+                            color = Color(0xFFCDBFAA),
+                            modifier = Modifier.padding(bottom = 4.dp),
+                        )
                     }
                 }
 
-                // Spacer between sections
-                if (outcome.statChanges.isNotEmpty() && outcome.newKnowledge.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(16.dp))
+                // ── Divider between stat and relation sections ──
+                if (outcome.statChanges.isNotEmpty() && outcome.relationChanges.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalDivider(color = Color(0xFF2A2A4E))
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
 
-                // New knowledge section
+                // ── Relation changes section ──
+                if (outcome.relationChanges.isNotEmpty()) {
+                    Text(
+                        text = "🤝 Relations Changed",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFE0C080),
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    outcome.relationChanges.forEach { change ->
+                        val sign = if (change.delta > 0) "+" else ""
+                        val color =
+                            if (change.delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
+                        Text(
+                            text = "${change.npcDisplayName} $sign${change.delta}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = color,
+                        )
+                        Text(
+                            text = change.reason,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontStyle = FontStyle.Italic,
+                            color = Color(0xFFCDBFAA),
+                            modifier = Modifier.padding(bottom = 4.dp),
+                        )
+                    }
+                }
+
+                // ── Divider before knowledge section ──
+                val hasPreviousSections =
+                    outcome.statChanges.isNotEmpty() || outcome.relationChanges.isNotEmpty()
+                if (hasPreviousSections && outcome.newKnowledge.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalDivider(color = Color(0xFF2A2A4E))
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
+                // ── New knowledge section ──
                 if (outcome.newKnowledge.isNotEmpty()) {
                     Text(
-                        text = "📖 New knowledge",
+                        text = "📖 New Knowledge",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFE0C080),
@@ -403,9 +453,17 @@ private fun ChoiceOutcomePopup(
                     Spacer(modifier = Modifier.height(8.dp))
                     outcome.newKnowledge.forEach { knowledge ->
                         Text(
-                            text = "• $knowledge",
+                            text = "• ${knowledge.title}",
                             style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
                             color = Color(0xFFF0EAE0),
+                        )
+                        Text(
+                            text = knowledge.description,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontStyle = FontStyle.Italic,
+                            color = Color(0xFFCDBFAA),
+                            modifier = Modifier.padding(bottom = 6.dp),
                         )
                     }
                 }

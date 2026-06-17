@@ -19,6 +19,9 @@ import ru.hse.mobile_game.screen.model.CharacterUiModel
 import ru.hse.mobile_game.screen.model.ChoiceOutcome
 import ru.hse.mobile_game.screen.model.ChoiceUiModel
 import ru.hse.mobile_game.screen.model.GameUiState
+import ru.hse.mobile_game.screen.model.KnowledgeGain
+import ru.hse.mobile_game.screen.model.RelationChange
+import ru.hse.mobile_game.screen.model.StatChange
 
 class GameViewModel(
     private val loadScene: LoadSceneUseCase,
@@ -94,7 +97,7 @@ class GameViewModel(
                 val newState = makeChoice(state, choice)
                 gameState = newState.copy(timestamp = currentTimeMillis())
 
-                // Compute outcome: stat changes + new knowledge
+                // Compute outcome: stat changes + relation changes + new knowledge
                 pendingOutcome = computeOutcome(oldCharacter, newState.character, choice)
 
                 // Auto-save after each choice
@@ -208,25 +211,79 @@ class GameViewModel(
     }
 
     /**
-     * Compute outcome from a choice — what stat changes occurred and what new knowledge was gained.
+     * Compute rich outcome from a choice — stat changes with reasons, relation changes with NPC
+     * names and reasons, and new knowledge with descriptions.
      */
     private fun computeOutcome(
         oldCharacter: Character,
         newCharacter: Character,
         choice: Choice,
     ): ChoiceOutcome {
-        // Stat changes from the choice effects
-        val statChanges = choice.effects.stats.filter { it.value != 0 }
+        // ── Stat changes with narrative reasons ──
+        val statChanges =
+            choice.effects.stats
+                .filter { it.value != 0 }
+                .map { (stat, delta) ->
+                    StatChange(
+                        stat = stat,
+                        delta = delta,
+                        reason = buildStatReason(stat, delta, choice),
+                    )
+                }
 
-        // New flags: present in new character but absent in old
+        // ── Relation changes with NPC names and reasons ──
+        val relationChanges =
+            choice.effects.relations
+                .filter { it.value != 0 }
+                .map { (npcKey, delta) ->
+                    RelationChange(
+                        npcKey = npcKey,
+                        npcDisplayName = NpcRegistry.displayName(npcKey),
+                        delta = delta,
+                        reason = buildRelationReason(npcKey, delta, choice),
+                    )
+                }
+
+        // ── New flags → knowledge gains with descriptions ──
         val newFlags = newCharacter.flags - oldCharacter.flags
-        val newKnowledge = newFlags.map { formatFlagAsKnowledge(it) }
+        val newKnowledge =
+            newFlags.map { flagId ->
+                val info = FlagRegistry.lookup(flagId)
+                KnowledgeGain(
+                    flagId = flagId,
+                    title = info?.title ?: formatFlagFallback(flagId),
+                    description = info?.description ?: "You have acquired new knowledge.",
+                )
+            }
 
-        return ChoiceOutcome(statChanges = statChanges, newKnowledge = newKnowledge)
+        return ChoiceOutcome(
+            statChanges = statChanges,
+            relationChanges = relationChanges,
+            newKnowledge = newKnowledge,
+        )
     }
 
-    /** Convert a flag like "met_marta" → "Marta", "knows_harbor" → "Harbor". */
-    private fun formatFlagAsKnowledge(flag: String): String {
+    /** Build a narrative reason for a stat change based on the choice context. */
+    private fun buildStatReason(stat: String, delta: Int, choice: Choice): String {
+        val choiceText = choice.text.take(REASON_PREVIEW_LENGTH)
+        val verb = if (delta > 0) "increased" else "decreased"
+        val statLabel = stat.replaceFirstChar { it.uppercase() }
+        return "Your $statLabel $verb from choosing: \"$choiceText\""
+    }
+
+    /** Build a narrative reason for a relation change based on the choice context. */
+    private fun buildRelationReason(npcKey: String, delta: Int, choice: Choice): String {
+        val npcName = NpcRegistry.displayName(npcKey)
+        val choiceText = choice.text.take(REASON_PREVIEW_LENGTH)
+        return if (delta > 0) {
+            "$npcName appreciates your decision: \"$choiceText\""
+        } else {
+            "$npcName disapproves of your decision: \"$choiceText\""
+        }
+    }
+
+    /** Fallback title for flags not in the registry. */
+    private fun formatFlagFallback(flag: String): String {
         return flag
             .removePrefix("met_")
             .removePrefix("knows_")
@@ -255,6 +312,10 @@ class GameViewModel(
         val parts = mutableListOf<String>()
         choice.requires?.statMin?.forEach { (stat, min) -> parts.add("$stat ≥ $min") }
         return if (parts.isEmpty()) "Requirements not met" else parts.joinToString(", ")
+    }
+
+    companion object {
+        private const val REASON_PREVIEW_LENGTH = 60
     }
 }
 
