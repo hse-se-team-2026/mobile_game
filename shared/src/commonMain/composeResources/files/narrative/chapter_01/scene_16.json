@@ -1,0 +1,40 @@
+{
+  "id": "scene_16",
+  "title": "The Locked Warehouse",
+  "chapter": 1,
+  "background": "warehouse",
+  "text": "*The warehouses at the far end of the dock are supposed to be abandoned. But the lock on the third one is new — oiled steel, expensive. You work it open with patience and a thin piece of wire.*\n\n*Inside, the warehouse is not empty. Far from it. Crates are stacked to the ceiling, marked with the Merchants' Guild seal. You pry one open and find bolts of silk. But beneath the silk — heavy iron ingots, stamped with a forge mark you don't recognize.*\n\n*Another crate holds something worse: blasting powder, military grade, in quantities that have no civilian use. Someone is stockpiling weapons material in secret, right under the city's nose.*\n\n*You hear footsteps outside — a patrol, or something less welcome. Time to decide quickly.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Take a sample of the blasting powder as evidence",
+      "effects": {
+        "flags": [
+          "has_evidence",
+          "knows_smuggling",
+          "found_weapons"
+        ]
+      },
+      "next_scene": "scene_19"
+    },
+    {
+      "id": "c2",
+      "text": "Memorize the forge marks and slip out before being seen",
+      "requires": {
+        "stat_min": {
+          "cunning": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_forge_mark",
+          "knows_smuggling"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_19"
+    }
+  ]
+}

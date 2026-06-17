@@ -1,0 +1,36 @@
+{
+  "id": "scene_03",
+  "title": "The Rat Roads",
+  "chapter": 1,
+  "background": "alley_night",
+  "text": "*You drift away from the line casually, as though stretching your legs. Twenty paces along the wall, half-hidden by a collapsed cart, you spot it — a drainage grate, rusted but loose.*\n\n*The tunnel beyond is narrow and stinking, but short. You emerge in a cellar that smells of old wine and rat droppings. Upstairs, muffled voices.*\n\nA figure steps from the shadows — lean, hooded, a knife glinting at her belt.\n\nSable: \"Well, well. Someone who knows to use the rat roads. Either you're very clever or very desperate. Which is it?\"\n\n*Her eyes are sharp and amused. This woman knows these tunnels like her own veins.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "\"Clever enough to find this passage. I'm looking for information.\"",
+      "effects": {
+        "relations": {
+          "sable": 2
+        },
+        "flags": [
+          "met_sable",
+          "sable_contact"
+        ]
+      },
+      "next_scene": "scene_06"
+    },
+    {
+      "id": "c2",
+      "text": "Say nothing and push past her toward the exit",
+      "effects": {
+        "relations": {
+          "sable": -1
+        },
+        "flags": [
+          "met_sable"
+        ]
+      },
+      "next_scene": "scene_06"
+    }
+  ]
+}

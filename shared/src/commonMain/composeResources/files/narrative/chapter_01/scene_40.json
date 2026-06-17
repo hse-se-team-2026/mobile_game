@@ -1,0 +1,29 @@
+{
+  "id": "scene_40",
+  "title": "The First Strike",
+  "chapter": 1,
+  "background": "market_dusk",
+  "text": "*Your first strike has succeeded. The conspiracy is weakened — but not broken. Harren still has men, Varketh is still coming, and the city doesn't know how close it came to falling.*\n\n*Dawn breaks over Ashenmoor, painting the grey buildings in shades of amber. The market is stirring, oblivious to the shadow war being fought in their streets. You have a brief window before the enemy regroups.*\n\n*Marta finds you near the fountain, a worried crease on her brow.*\n\nMarta: \"Word is spreading. Harren knows something went wrong. He's pulled his people off the streets — gone to ground. If we're going to finish this, it has to be now.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "March on Harren's stronghold with everything you've got",
+      "effects": {
+        "flags": [
+          "final_assault"
+        ]
+      },
+      "next_scene": "scene_41"
+    },
+    {
+      "id": "c2",
+      "text": "Secure the north gate first — block Varketh's army",
+      "effects": {
+        "flags": [
+          "secure_gate"
+        ]
+      },
+      "next_scene": "scene_42"
+    }
+  ]
+}

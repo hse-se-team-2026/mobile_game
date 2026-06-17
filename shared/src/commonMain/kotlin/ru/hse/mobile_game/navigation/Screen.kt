@@ -9,7 +9,7 @@ sealed class Screen {
 
     @Serializable data object OriginSelect : Screen()
 
-    @Serializable data class Game(val origin: String? = null) : Screen()
+    @Serializable data class Game(val origin: String? = null, val slotId: Long? = null) : Screen()
 
     @Serializable data object SaveLoad : Screen()
 }

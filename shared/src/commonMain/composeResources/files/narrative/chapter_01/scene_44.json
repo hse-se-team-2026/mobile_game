@@ -1,0 +1,63 @@
+{
+  "id": "scene_44",
+  "title": "Varketh's Army",
+  "chapter": 1,
+  "background": "city_gate",
+  "text": "*The dust cloud resolves into men — hundreds of them, marching under the red-and-black banners of Baron Varketh. They halt outside bowshot, assessing the barricaded gate.*\n\n*A rider approaches under a white flag. He wears Varketh's colors and carries himself with the arrogance of a man who expects to win.*\n\nHerald: \"By order of Baron Varketh, rightful lord of Ashenmoor by treaty and compact, open this gate and submit to lawful authority. Resistance will be met with force.\"\n\n*The defenders on the wall look to you. Fear is natural — these are shopkeepers and fishermen, not soldiers. But they're here, and they're standing.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Rally the defenders with a rousing speech",
+      "requires": {
+        "stat_min": {
+          "charisma": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "defenders_rallied"
+        ],
+        "stats": {
+          "charisma": 1
+        }
+      },
+      "next_scene": "scene_46"
+    },
+    {
+      "id": "c2",
+      "text": "Set traps and prepare a tactical defense",
+      "requires": {
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "gate_trapped"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_46"
+    },
+    {
+      "id": "c3",
+      "text": "Challenge Varketh's herald to single combat — a show of strength",
+      "requires": {
+        "stat_min": {
+          "strength": 5
+        }
+      },
+      "effects": {
+        "flags": [
+          "champion_duel"
+        ],
+        "stats": {
+          "strength": 1
+        }
+      },
+      "next_scene": "scene_46"
+    }
+  ]
+}

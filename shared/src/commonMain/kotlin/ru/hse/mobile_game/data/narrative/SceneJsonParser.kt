@@ -26,6 +26,7 @@ class SceneJsonParser(private val json: Json = Json { ignoreUnknownKeys = true }
     fun mapToDomain(sceneJson: SceneJson): Scene {
         return Scene(
             id = sceneJson.id,
+            title = sceneJson.title.ifEmpty { sceneJson.id },
             chapter = sceneJson.chapter,
             backgroundAsset = sceneJson.background,
             text = sceneJson.text,
@@ -48,6 +49,7 @@ class SceneJsonParser(private val json: Json = Json { ignoreUnknownKeys = true }
             statMin = requirementsJson.statMin,
             flagsRequired = requirementsJson.flagsRequired,
             flagsForbidden = requirementsJson.flagsForbidden,
+            originRequired = requirementsJson.originRequired,
         )
     }
 

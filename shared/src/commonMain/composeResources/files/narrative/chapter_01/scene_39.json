@@ -1,0 +1,34 @@
+{
+  "id": "scene_39",
+  "title": "The Duke's Cure",
+  "chapter": 1,
+  "background": "noble_estate",
+  "text": "*With the physician dealt with, you turn your attention to the Duke. Brother Orin — if you found him — has provided an antidote. If not, simply stopping the poison will have to do.*\n\n*Hours pass. Thomas watches over his lord while you guard the door. Then — a hoarse voice from the bed.*\n\nDuke Aldren: \"Water... I need water. Not wine. Water.\"\n\n*The Duke's eyes are clearer than they've been in weeks. He sits up — slowly, painfully — and looks around his chamber as if seeing it for the first time.*\n\nDuke Aldren: \"How long have I been... like this? Thomas — what has happened to my city?\"\n\n*Thomas tells him everything. The Duke's expression shifts from confusion to horror to cold, royal fury.*\n\nDuke Aldren: \"Goran. Harren. They will answer for this. All of them will answer for this.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "\"Your Grace, we need your authority. Issue orders to the loyal guards.\"",
+      "effects": {
+        "flags": [
+          "duke_recovered",
+          "duke_orders"
+        ],
+        "relations": {
+          "duke": 3
+        }
+      },
+      "next_scene": "scene_41"
+    },
+    {
+      "id": "c2",
+      "text": "\"Rest, Your Grace. We'll handle Harren. Just give us your seal.\"",
+      "effects": {
+        "flags": [
+          "duke_recovered",
+          "has_seal"
+        ]
+      },
+      "next_scene": "scene_41"
+    }
+  ]
+}

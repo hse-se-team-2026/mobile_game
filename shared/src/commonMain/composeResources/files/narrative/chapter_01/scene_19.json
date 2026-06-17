@@ -1,0 +1,61 @@
+{
+  "id": "scene_19",
+  "title": "Harbor at Night",
+  "chapter": 1,
+  "background": "harbor",
+  "text": "*The harbor is different at night. The legitimate workers are gone. Moonlight silvers the water, and the only sounds are the creak of moored ships and the distant cry of gulls.*\n\n*You find a hiding spot among the stacked crates and wait. An hour passes. Two. Then — a dark shape glides into the harbor, running without lights. A ship, narrow and fast, slides to the furthest quay.*\n\n*Men appear from the shadows — not dock workers, but armed figures in dark clothing. They begin unloading heavy crates with practiced efficiency. You hear the clank of metal on metal. Weapons.*\n\n*A tall figure supervises from the quay. Even in the darkness, you recognize the embroidered cloak of a Guild officer. This is Harren's operation — you're sure of it now.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Follow the crates to see where they're being stored",
+      "requires": {
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_smuggling",
+          "followed_shipment"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_23"
+    },
+    {
+      "id": "c2",
+      "text": "Confront the Guild officer directly",
+      "requires": {
+        "stat_min": {
+          "strength": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_smuggling",
+          "confronted_officer"
+        ],
+        "relations": {
+          "harren": -2
+        },
+        "stats": {
+          "strength": 1,
+          "cunning": -1
+        }
+      },
+      "next_scene": "scene_23"
+    },
+    {
+      "id": "c3",
+      "text": "Retreat and report what you've seen",
+      "effects": {
+        "flags": [
+          "knows_smuggling"
+        ]
+      },
+      "next_scene": "scene_23"
+    }
+  ]
+}

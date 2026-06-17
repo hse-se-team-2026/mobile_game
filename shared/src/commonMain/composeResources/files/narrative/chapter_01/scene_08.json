@@ -1,0 +1,29 @@
+{
+  "id": "scene_08",
+  "title": "The Noticeboard",
+  "chapter": 1,
+  "background": "market_dusk",
+  "text": "*The noticeboard is a weathered wooden panel plastered with overlapping sheets of parchment. Most are the usual fare — goods for sale, rooms for rent, a lost cat named Whiskers. But several notices catch your eye.*\n\nA yellowed proclamation reads: *By order of the Duke's steward — any information regarding the disappearance of merchants Aldric Voss, Petra Helm, and Jonas Kreel will be rewarded. Report to the Guard Captain.*\n\n*Three merchants, vanished. Below that notice, someone has pinned a newer one in hasty script: STAY AWAY FROM THE HARBOR AT NIGHT. THE WATCH CANNOT PROTECT YOU.*\n\nA small crowd reads the notices with grim expressions. A young woman in a clerk's robe copies down names into a ledger.",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Investigate the merchant quarter where Aldric Voss had his shop",
+      "effects": {
+        "flags": [
+          "knows_disappearances"
+        ]
+      },
+      "next_scene": "scene_13"
+    },
+    {
+      "id": "c2",
+      "text": "Find the Guard Captain to ask about the disappearances",
+      "effects": {
+        "flags": [
+          "knows_disappearances"
+        ]
+      },
+      "next_scene": "scene_14"
+    }
+  ]
+}

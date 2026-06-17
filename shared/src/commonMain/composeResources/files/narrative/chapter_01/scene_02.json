@@ -1,17 +1,28 @@
 {
   "id": "scene_02",
+  "title": "A Noble Arrival",
   "chapter": 1,
-  "background": "guard_post",
-  "text": "The guard watches you carefully, waiting for your answer.",
+  "background": "city_gate",
+  "text": "*You step out of line, chin raised, and walk directly toward the sergeant at the gate. The crowd parts — something in your bearing commands it.*\n\nGuard Sergeant: \"Hold. Papers.\"\n\n*You produce the sealed letter, stamped with the Duke's crest. The sergeant's eyes widen a fraction — the only sign of surprise he permits himself.*\n\nGuard Sergeant: \"An envoy. We were told to expect someone, though not so... presentable. Welcome to Ashenmoor. Mind the Lowmarket after dark — we've had trouble.\"\n\n*He waves you through with something approaching respect. Beyond the gate, the city unfolds before you — cramped streets, leaning buildings, and above it all, the Duke's estate on the hill, shrouded in grey mist.*",
   "choices": [
     {
       "id": "c1",
-      "text": "Promise to help with patrol duties",
+      "text": "Ask the sergeant about the 'trouble' he mentioned",
       "effects": {
-        "relations": { "npc_guard": 2 },
-        "flags": ["guard_alliance"]
+        "relations": {
+          "guard_captain": 1
+        },
+        "flags": [
+          "knows_trouble"
+        ]
       },
-      "next_scene": "scene_02"
+      "next_scene": "scene_06"
+    },
+    {
+      "id": "c2",
+      "text": "Thank him and proceed into the city",
+      "effects": {},
+      "next_scene": "scene_06"
     }
   ]
 }

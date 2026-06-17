@@ -1,0 +1,46 @@
+{
+  "id": "scene_33",
+  "title": "Defiance",
+  "chapter": 1,
+  "background": "dungeon",
+  "text": "*Harren wipes your spit from his cheek with studied calm. His smile doesn't waver, but something cold enters his eyes.*\n\nHarren: \"A bold gesture. Pointless, but bold. Lock them in the cellar. We'll deal with this one after the operation concludes.\"\n\n*They throw you into a stone cell beneath the warehouse. The door is iron, the walls are thick, and the only light comes from a thin crack in the ceiling. Hours pass.*\n\n*But you're not alone. A weak voice emerges from the darkness.*\n\nAldric: \"Another prisoner? That man... he'll kill us both, you know. Once he's done with this city.\"\n\n*The missing merchant. Aldric Voss is alive — barely. Thin, beaten, but alive. And he knows everything.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Work with Aldric to find a way out of this cell",
+      "requires": {
+        "stat_min": {
+          "cunning": 3
+        }
+      },
+      "effects": {
+        "relations": {
+          "aldric": 3
+        },
+        "flags": [
+          "aldric_rescued",
+          "knows_full_plan"
+        ]
+      },
+      "next_scene": "scene_38"
+    },
+    {
+      "id": "c2",
+      "text": "Break through the weak point in the wall with brute force",
+      "requires": {
+        "stat_min": {
+          "strength": 5
+        }
+      },
+      "effects": {
+        "stats": {
+          "strength": 1
+        },
+        "flags": [
+          "aldric_rescued"
+        ]
+      },
+      "next_scene": "scene_38"
+    }
+  ]
+}

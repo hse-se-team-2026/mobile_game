@@ -1,0 +1,38 @@
+{
+  "id": "scene_13",
+  "title": "Aldric's Ransacked Shop",
+  "chapter": 1,
+  "background": "market_dusk",
+  "text": "*Aldric Voss's shop is in the merchant quarter — or what remains of it. The door hangs from one hinge. Inside, the shelves are overturned, goods scattered across the floor like the aftermath of a storm.*\n\n*You step through the wreckage carefully. This wasn't a simple burglary. The destruction is systematic — someone was searching for something specific. Drawers have been pulled out, floorboards pried up, even the walls have been probed.*\n\n*Near the back, you find Aldric's desk. Most papers are gone, but a scrap has fallen between the wall and the floorboards — a fragment of a shipping manifest. The numbers don't add up: cargo weights listed are far heavier than what the recorded goods should weigh.*\n\n*Someone was smuggling something into Ashenmoor through Aldric's legitimate trade routes. And when Aldric found out...*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Study the manifest fragment more closely",
+      "requires": {
+        "stat_min": {
+          "wisdom": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "has_manifest",
+          "knows_smuggling"
+        ],
+        "stats": {
+          "wisdom": 1
+        }
+      },
+      "next_scene": "scene_18"
+    },
+    {
+      "id": "c2",
+      "text": "Search the rest of the shop for more clues",
+      "effects": {
+        "flags": [
+          "knows_smuggling"
+        ]
+      },
+      "next_scene": "scene_18"
+    }
+  ]
+}

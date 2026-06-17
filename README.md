@@ -6,7 +6,7 @@ The project is built as a Kotlin Multiplatform application targeting Android and
 
 ## Documentation
 
-Architecture documents are available in `internnalDocs/Architecture/`:
+Architecture documents are available in `docs/Architecture/`:
 
 - [Architecture](./docs/ARCHITECTURE.md)
 - [Tech Stack](./docs/TECH_STACK.md)

@@ -2,6 +2,7 @@ package ru.hse.mobile_game.domain.entity
 
 data class Scene(
     val id: String,
+    val title: String,
     val chapter: Int,
     val backgroundAsset: String,
     val text: String,
@@ -20,6 +21,7 @@ data class Requirements(
     val statMin: Map<String, Int> = emptyMap(),
     val flagsRequired: Set<String> = emptySet(),
     val flagsForbidden: Set<String> = emptySet(),
+    val originRequired: Set<String> = emptySet(),
 )
 
 data class Effects(

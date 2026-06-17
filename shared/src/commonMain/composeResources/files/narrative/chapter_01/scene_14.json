@@ -1,0 +1,60 @@
+{
+  "id": "scene_14",
+  "title": "The Guard Station",
+  "chapter": 1,
+  "background": "guard_post",
+  "text": "*The guard station is a squat stone building near the main gate. Inside, it smells of sweat, ink, and stale bread. Maps of the city cover one wall, pins marking... something.*\n\n*Guard Captain Brynn is a compact woman with iron-grey hair and the permanent scowl of someone who has filed too many reports about things she cannot fix.*\n\nBrynn: \"Another outsider asking about the merchants. What's your stake in this?\"\n\n*You show her your letter of passage. She reads it slowly, then sets it down.*\n\nBrynn: \"The Duke's seal. Genuine, from the look of it. Fine. Three merchants missing, no bodies found. Their businesses were searched — by whom, we don't know. My guards are stretched thin. Half my veterans were replaced last year by the steward's order, and the new lot are... less than useful.\"\n\n*She pins you with a stare.*\n\nBrynn: \"I'll be honest — I don't trust the Merchants' Guild in this. Harren controls too much of the harbor trade. But I need evidence, not suspicions.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Offer to work with her and share what you find",
+      "effects": {
+        "relations": {
+          "guard_captain": 3
+        },
+        "flags": [
+          "met_brynn",
+          "brynn_ally",
+          "knows_harren",
+          "knows_disappearances"
+        ]
+      },
+      "next_scene": "scene_18"
+    },
+    {
+      "id": "c2",
+      "text": "Ask about the replaced veterans and the steward",
+      "effects": {
+        "relations": {
+          "guard_captain": 1
+        },
+        "flags": [
+          "met_brynn",
+          "knows_goran",
+          "knows_harren",
+          "knows_disappearances"
+        ]
+      },
+      "next_scene": "scene_18"
+    },
+    {
+      "id": "c3",
+      "text": "Slam the desk and demand she act, not file reports",
+      "effects": {
+        "relations": {
+          "guard_captain": -2
+        },
+        "flags": [
+          "met_brynn",
+          "knows_harren",
+          "knows_disappearances"
+        ],
+        "stats": {
+          "strength": 1,
+          "charisma": -1
+        }
+      },
+      "next_scene": "scene_18"
+    }
+  ]
+}

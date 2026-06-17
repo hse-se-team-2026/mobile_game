@@ -1,0 +1,55 @@
+{
+  "id": "scene_29",
+  "title": "Audience with the Steward",
+  "chapter": 1,
+  "background": "noble_estate",
+  "text": "*You march to the Duke's estate and demand an audience with the steward. Goran receives you in a study lined with books he has never read — a small man with sharp features and restless hands.*\n\nGoran: \"Ah, the investigator. I've heard you've been busy. Asking questions, bothering honest merchants, frightening dock workers. Not exactly diplomatic behavior.\"\n\n*He pours two glasses of wine and offers you one. You decline.*\n\nGoran: \"Smart. Trust no one — that's the survival instinct talking. Tell me, what have you found in your... investigations?\"\n\n*His eyes are sharp, calculating. He's fishing for information — wanting to know how much you know. Every word here is a weapon or a shield.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Bluff — tell him you've found nothing of interest",
+      "requires": {
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "bluffed_goran"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_28"
+    },
+    {
+      "id": "c2",
+      "text": "Accuse him directly — you know about the poison and the weapons",
+      "requires": {
+        "stat_min": {
+          "charisma": 5
+        }
+      },
+      "effects": {
+        "relations": {
+          "goran": -3
+        },
+        "flags": [
+          "confronted_goran"
+        ]
+      },
+      "next_scene": "scene_37"
+    },
+    {
+      "id": "c3",
+      "text": "Play along and try to learn what he knows",
+      "effects": {
+        "relations": {
+          "goran": 1
+        }
+      },
+      "next_scene": "scene_28"
+    }
+  ]
+}

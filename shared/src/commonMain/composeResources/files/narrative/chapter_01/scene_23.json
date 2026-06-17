@@ -1,0 +1,80 @@
+{
+  "id": "scene_23",
+  "title": "Night of Revelations",
+  "chapter": 1,
+  "background": "alley_night",
+  "text": "*The night's investigation has given you what you need — confirmation that the Merchants' Guild is smuggling weapons into Ashenmoor. But the scale of it is staggering. This isn't petty contraband. This is an arsenal.*\n\n*As you make your way back through the dark streets, you hear footsteps behind you — heavy, deliberate. Two figures step from a side alley, blocking your path. A third appears behind you.*\n\nThug: \"Harren sends his regards. You've been asking too many questions, stranger. Time to stop.\"\n\n*Moonlight glints on drawn blades. This was inevitable — but you're not defenseless.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Fight — you didn't survive this long by running",
+      "requires": {
+        "stat_min": {
+          "strength": 4
+        }
+      },
+      "effects": {
+        "stats": {
+          "strength": 1,
+          "wisdom": -1
+        },
+        "flags": [
+          "survived_ambush",
+          "fought_thugs"
+        ]
+      },
+      "next_scene": "scene_26"
+    },
+    {
+      "id": "c2",
+      "text": "Talk your way out — turn their loyalty with words",
+      "requires": {
+        "stat_min": {
+          "charisma": 4
+        }
+      },
+      "effects": {
+        "stats": {
+          "charisma": 1
+        },
+        "flags": [
+          "survived_ambush",
+          "turned_thug"
+        ]
+      },
+      "next_scene": "scene_26"
+    },
+    {
+      "id": "c3",
+      "text": "Use the alley's shadows to escape",
+      "requires": {
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "stats": {
+          "cunning": 1
+        },
+        "flags": [
+          "survived_ambush"
+        ]
+      },
+      "next_scene": "scene_26"
+    },
+    {
+      "id": "c4",
+      "text": "Surrender and see where they take you",
+      "effects": {
+        "flags": [
+          "captured"
+        ],
+        "stats": {
+          "cunning": 1,
+          "strength": -1
+        }
+      },
+      "next_scene": "scene_27"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "scene_12",
+  "title": "The Dice Table",
+  "chapter": 1,
+  "background": "tavern_interior",
+  "text": "*You drop into the empty chair at the dice table. Three men look up — a dockworker with calloused hands, a thin man in a merchant's vest, and a woman with a shaved head and tattoos up her neck.*\n\nTattooed Woman: \"Fresh meat. Buy in is two silvers. You know the rules?\"\n\n*The game is Liar's Bones — part luck, part bluff. Your kind of game. You lose the first round deliberately, studying their tells. The dockworker scratches his nose when he bluffs. The merchant blinks too fast. The woman... the woman is good. But not good enough.*\n\n*Three rounds later, you've doubled your coin and earned grudging respect.*\n\nTattooed Woman: \"Not bad, stranger. Name's Kess. I run cargo for the Guild — legitimate cargo, if such a thing exists in Ashenmoor anymore. You want to know what's really happening at the harbor? Buy me a drink and maybe I'll tell you.\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Buy Kess a drink and ask about the harbor",
+      "effects": {
+        "relations": {
+          "kess": 2
+        },
+        "flags": [
+          "knows_harbor",
+          "knows_smuggling"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_17"
+    },
+    {
+      "id": "c2",
+      "text": "Take your winnings and move on",
+      "effects": {},
+      "next_scene": "scene_17"
+    },
+    {
+      "id": "c3",
+      "text": "Cheat at the next round — palm the dice for a bigger payout",
+      "effects": {
+        "stats": {
+          "cunning": 2,
+          "charisma": -1
+        },
+        "flags": [
+          "knows_harbor",
+          "cheated_dice"
+        ],
+        "relations": {
+          "kess": -1
+        }
+      },
+      "next_scene": "scene_17"
+    }
+  ]
+}

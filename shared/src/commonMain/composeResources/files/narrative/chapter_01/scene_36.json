@@ -1,0 +1,37 @@
+{
+  "id": "scene_36",
+  "title": "Undermining Goran",
+  "chapter": 1,
+  "background": "noble_estate",
+  "text": "*To bring down Goran, you need to turn his own people against him. A steward rules through paper and appointments — cut those threads, and he falls.*\n\n*Thomas provides the financial records. The evidence is damning: embezzlement, forged orders, unauthorized arms purchases. You draft a formal accusation and gather signatures from the household staff who still serve the Duke loyally.*\n\n*When you present the charges to the estate guard — even Goran's hires — the evidence is overwhelming. Most of them are mercenaries, not zealots. They didn't sign up for treason.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Demand Goran's arrest in the Duke's name",
+      "requires": {
+        "stat_min": {
+          "charisma": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "goran_arrested"
+        ],
+        "stats": {
+          "charisma": 1
+        }
+      },
+      "next_scene": "scene_40"
+    },
+    {
+      "id": "c2",
+      "text": "Present the evidence and let the guards decide",
+      "effects": {
+        "flags": [
+          "goran_exposed"
+        ]
+      },
+      "next_scene": "scene_40"
+    }
+  ]
+}

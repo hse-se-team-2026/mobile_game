@@ -1,21 +1,76 @@
 {
   "id": "scene_01",
+  "title": "The Gates of Ashenmoor",
   "chapter": 1,
-  "background": "market_dusk",
-  "text": "You wake up before dawn and step into a noisy city market.",
+  "background": "city_gate",
+  "text": "*The road to Ashenmoor stretches before you like a scar across the land. Grey dust clings to your boots, and the air carries the faint taste of copper and old smoke.*\n\nThe city gates loom ahead — massive iron-bound doors set into walls of blackened stone. A line of weary travelers shuffles forward under the watchful eyes of guards in tarnished armor. Above the gate, carved in weathered letters: *Ashenmoor Endures.*\n\n*You have traveled far to reach this place. The sealed letter in your pack speaks of disappearances, of a city rotting from within. Three merchants vanished in a fortnight. The Duke's own envoy found dead in a ditch. Whatever waits beyond these gates, there is no turning back now.*\n\nThe guards are checking papers with deliberate slowness. You study the gate and consider your approach.",
   "choices": [
     {
       "id": "c1",
-      "text": "Talk to the guard at the gate",
-      "requires": { "stat_min": { "cunning": 1 } },
-      "effects": { "relations": { "npc_guard": 1 } },
+      "text": "Stride to the front and present your credentials with authority",
+      "requires": {
+        "stat_min": {
+          "charisma": 4
+        }
+      },
+      "effects": {
+        "relations": {
+          "guard_captain": 1
+        },
+        "flags": [
+          "noble_entry"
+        ]
+      },
       "next_scene": "scene_02"
     },
     {
       "id": "c2",
-      "text": "Stay in the crowd and observe",
-      "effects": { "stats": { "cunning": 1 } },
-      "next_scene": "scene_02"
+      "text": "Slip away from the line and look for a less watched entrance",
+      "requires": {
+        "stat_min": {
+          "cunning": 4
+        }
+      },
+      "effects": {
+        "stats": {
+          "cunning": 1
+        },
+        "flags": [
+          "secret_entry"
+        ]
+      },
+      "next_scene": "scene_03"
+    },
+    {
+      "id": "c3",
+      "text": "Shoulder your way to the front — you've waited long enough",
+      "requires": {
+        "stat_min": {
+          "strength": 4
+        }
+      },
+      "effects": {
+        "relations": {
+          "guard_captain": -1
+        },
+        "flags": [
+          "forced_entry"
+        ]
+      },
+      "next_scene": "scene_04"
+    },
+    {
+      "id": "c4",
+      "text": "Wait patiently and listen to the other travelers' conversations",
+      "effects": {
+        "stats": {
+          "wisdom": 1
+        },
+        "flags": [
+          "patient_entry"
+        ]
+      },
+      "next_scene": "scene_05"
     }
   ]
 }

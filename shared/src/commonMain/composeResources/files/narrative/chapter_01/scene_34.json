@@ -1,0 +1,63 @@
+{
+  "id": "scene_34",
+  "title": "The Plan",
+  "chapter": 1,
+  "background": "noble_estate",
+  "text": "*The plan is simple: get to the Duke, stop the poison, and wake the old lion before the city falls. Thomas will get you inside. The rest is up to you.*\n\n*Thomas meets you at the servant's entrance, pale with fear but resolute. He leads you through back corridors to the Duke's chambers. The new physician — Goran's man — sits in the anteroom, reading.*\n\n*The wine on the Duke's table is laced — you can smell the faint sweetness of nightbloom beneath the grape. The physician looks up as you enter.*\n\nPhysician: \"Who are you? You can't be here! Guards!\"",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Restrain the physician before he can call for help",
+      "requires": {
+        "stat_min": {
+          "strength": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "physician_restrained"
+        ],
+        "stats": {
+          "strength": 1
+        }
+      },
+      "next_scene": "scene_39"
+    },
+    {
+      "id": "c2",
+      "text": "Reveal the poison — make him confess in front of witnesses",
+      "requires": {
+        "stat_min": {
+          "charisma": 4
+        }
+      },
+      "effects": {
+        "flags": [
+          "physician_confessed"
+        ],
+        "stats": {
+          "charisma": 1
+        }
+      },
+      "next_scene": "scene_39"
+    },
+    {
+      "id": "c3",
+      "text": "Let Thomas distract him while you swap the poisoned wine",
+      "requires": {
+        "stat_min": {
+          "cunning": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "poison_swapped"
+        ],
+        "stats": {
+          "cunning": 1
+        }
+      },
+      "next_scene": "scene_39"
+    }
+  ]
+}

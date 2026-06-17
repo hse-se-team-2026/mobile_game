@@ -1,0 +1,59 @@
+{
+  "id": "scene_15",
+  "title": "Dockside Rumors",
+  "chapter": 1,
+  "background": "harbor",
+  "text": "*You approach a group of dock workers taking a break, sharing a flask of something cheap. They eye you with the wariness of men accustomed to trouble.*\n\nDock Worker: \"Ships? Aye, ships are missing. Three merchantmen due from Kerhold — never arrived. Harbormaster says 'delayed by weather,' but the weather's been fair for a week.\"\n\n*Another worker, older, spits into the water.*\n\nOld Docker: \"Tell the truth, Fen. It's the night ships that should worry folk. Ships that come in after midnight, unload without lights, and are gone before dawn. I've seen 'em three times this month.\"\n\nDock Worker: \"Shut it, Grell. You want to end up like Aldric?\"\n\n*The workers exchange nervous glances. Whatever is happening at the harbor, these men are afraid.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Press the old docker for more details about the night ships",
+      "requires": {
+        "stat_min": {
+          "charisma": 3
+        }
+      },
+      "effects": {
+        "flags": [
+          "knows_night_ships",
+          "knows_smuggling",
+          "knows_harbor"
+        ],
+        "relations": {
+          "dock_workers": 1
+        }
+      },
+      "next_scene": "scene_19"
+    },
+    {
+      "id": "c2",
+      "text": "Note the information and investigate the empty warehouses instead",
+      "effects": {
+        "flags": [
+          "knows_night_ships",
+          "knows_harbor"
+        ]
+      },
+      "next_scene": "scene_19"
+    },
+    {
+      "id": "c3",
+      "text": "Share the workers' flask and loosen their tongues with camaraderie",
+      "effects": {
+        "flags": [
+          "knows_night_ships",
+          "knows_smuggling",
+          "knows_harbor"
+        ],
+        "relations": {
+          "dock_workers": 2
+        },
+        "stats": {
+          "charisma": 1,
+          "wisdom": -1
+        }
+      },
+      "next_scene": "scene_19"
+    }
+  ]
+}

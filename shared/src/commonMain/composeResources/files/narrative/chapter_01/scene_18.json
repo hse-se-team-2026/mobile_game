@@ -1,0 +1,32 @@
+{
+  "id": "scene_18",
+  "title": "Pieces of the Puzzle",
+  "chapter": 1,
+  "background": "market_dusk",
+  "text": "*You piece together what you've found so far. The missing merchants, the ransacked shop, the guard captain's frustrations — it all points in one direction. Someone powerful is running an operation through Ashenmoor, and they're eliminating anyone who gets too close.*\n\n*The shipping manifest fragment you found in Aldric's shop lists goods routed through the Merchants' Guild harbor offices. Harren's name appears as the authorizing signature on every shipment.*\n\n*But knowing and proving are two different things. You need more evidence, or allies who can help you get it.*",
+  "choices": [
+    {
+      "id": "c1",
+      "text": "Take your findings to the Duke's estate",
+      "effects": {},
+      "next_scene": "scene_20"
+    },
+    {
+      "id": "c2",
+      "text": "Visit the Temple — the priests hear many confessions",
+      "effects": {},
+      "next_scene": "scene_21"
+    },
+    {
+      "id": "c3",
+      "text": "Check the city archives for shipping records",
+      "requires": {
+        "stat_min": {
+          "wisdom": 3
+        }
+      },
+      "effects": {},
+      "next_scene": "scene_22"
+    }
+  ]
+}
