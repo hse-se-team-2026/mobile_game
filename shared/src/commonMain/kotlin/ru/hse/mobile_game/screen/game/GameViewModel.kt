@@ -106,6 +106,52 @@ class GameViewModel(
         }
     }
 
+    /** Dismiss the save confirmation message. */
+    fun dismissSaveConfirmation() {
+        val state = _uiState.value
+        if (state is GameUiState.SceneReady && state.saveConfirmation != null) {
+            _uiState.value = state.copy(saveConfirmation = null)
+        }
+    }
+
+    /** Manually save the game to a new slot with auto-generated name. */
+    fun manualSave() {
+        val state = gameState ?: return
+        viewModelScope.launch {
+            try {
+                val slotId = currentTimeMillis()
+                val sceneName = state.currentSceneId
+                    .replace("_", " ")
+                    .replaceFirstChar { it.uppercase() }
+                val time = formatTime(currentTimeMillis())
+                val saveName = "$sceneName — $time"
+
+                saveGame(
+                    slotId = slotId,
+                    name = saveName,
+                    gameState = state,
+                    previewText = currentScene?.text?.take(100),
+                )
+
+                // Show confirmation
+                val uiState = _uiState.value
+                if (uiState is GameUiState.SceneReady) {
+                    _uiState.value = uiState.copy(saveConfirmation = "Saved: $saveName")
+                }
+            } catch (e: Exception) {
+                _uiState.value = GameUiState.Error("Failed to save: ${e.message}")
+            }
+        }
+    }
+
+    /** Format millisecond timestamp to HH:MM string. */
+    private fun formatTime(timestamp: Long): String {
+        val totalSeconds = timestamp / 1000
+        val hours = (totalSeconds / 3600) % 24
+        val minutes = (totalSeconds / 60) % 60
+        return "${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}"
+    }
+
     /** Handle the player selecting a choice. */
     fun onChoiceSelected(choiceId: String) {
         val state = gameState ?: return

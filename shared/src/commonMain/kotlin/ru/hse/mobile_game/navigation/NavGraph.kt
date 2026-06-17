@@ -40,7 +40,7 @@ fun NavGraph(navController: NavHostController) {
                 viewModel = gameViewModel,
                 origin = route.origin,
                 slotId = route.slotId,
-                onNavigateToSave = { navController.navigate(Screen.SaveLoad) },
+                onNavigateToLoad = { navController.navigate(Screen.SaveLoad) },
                 onNavigateToMenu = {
                     navController.navigate(Screen.MainMenu) {
                         popUpTo<Screen.MainMenu> { inclusive = true }

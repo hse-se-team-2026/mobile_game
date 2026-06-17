@@ -37,6 +37,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import kotlinx.coroutines.delay
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -102,7 +103,7 @@ fun GameScreen(
     viewModel: GameViewModel,
     origin: String?,
     slotId: Long? = null,
-    onNavigateToSave: () -> Unit,
+    onNavigateToLoad: () -> Unit,
     onNavigateToMenu: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -125,9 +126,11 @@ fun GameScreen(
                     onChoiceSelected = { viewModel.onChoiceSelected(it) },
                     onContinue = { viewModel.revealNextParagraph() },
                     onCharacterClick = { showCharacterSheet = true },
-                    onSaveClick = onNavigateToSave,
+                    onSaveClick = { viewModel.manualSave() },
+                    onLoadClick = onNavigateToLoad,
                     onMenuClick = onNavigateToMenu,
                     onDismissOutcome = { viewModel.dismissOutcome() },
+                    onDismissSaveConfirmation = { viewModel.dismissSaveConfirmation() },
                 )
             is GameUiState.ChapterTransition ->
                 ChapterTransitionContent(chapter = state.chapter, summary = state.summaryText)
@@ -168,8 +171,10 @@ private fun SceneContent(
     onContinue: () -> Unit,
     onCharacterClick: () -> Unit,
     onSaveClick: () -> Unit,
+    onLoadClick: () -> Unit,
     onMenuClick: () -> Unit,
     onDismissOutcome: () -> Unit,
+    onDismissSaveConfirmation: () -> Unit,
 ) {
     val bgDrawable = resolveBackground(state.backgroundAsset)
     var glossaryEntry by remember { mutableStateOf<Glossary.Entry?>(null) }
@@ -231,15 +236,21 @@ private fun SceneContent(
                 Row {
                     OutlinedButton(
                         onClick = onCharacterClick,
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = Modifier.padding(end = 4.dp),
                     ) {
-                        Text("Character", color = Color(0xFFE0C080))
+                        Text("Char", color = Color(0xFFE0C080))
                     }
                     OutlinedButton(
                         onClick = onSaveClick,
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = Modifier.padding(end = 4.dp),
                     ) {
                         Text("Save", color = Color(0xFFE0C080))
+                    }
+                    OutlinedButton(
+                        onClick = onLoadClick,
+                        modifier = Modifier.padding(end = 4.dp),
+                    ) {
+                        Text("Load", color = Color(0xFFE0C080))
                     }
                     OutlinedButton(onClick = onMenuClick) {
                         Text("Menu", color = Color(0xFFE0C080))
@@ -335,6 +346,36 @@ private fun SceneContent(
                 onDismiss = { glossaryEntry = null },
                 onTermClick = { term -> glossaryEntry = Glossary.lookup(term) },
             )
+        }
+
+        // Save confirmation banner (auto-dismisses after 2 seconds)
+        if (state.saveConfirmation != null) {
+            LaunchedEffect(state.saveConfirmation) {
+                delay(2000)
+                onDismissSaveConfirmation()
+            }
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter,
+            ) {
+                Card(
+                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = Color(0xDD1A1A2E),
+                        ),
+                    shape = RoundedCornerShape(12.dp),
+                ) {
+                    Text(
+                        text = "💾 ${state.saveConfirmation}",
+                        color = Color(0xFFE0C080),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().padding(12.dp),
+                    )
+                }
+            }
         }
     }
 }

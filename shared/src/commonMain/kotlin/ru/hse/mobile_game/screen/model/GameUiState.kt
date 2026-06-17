@@ -13,6 +13,8 @@ sealed interface GameUiState {
         val allTextRevealed: Boolean,
         val activeGlossaryTerms: List<String>,
         val choiceOutcome: ChoiceOutcome? = null,
+        /** Brief message shown after a manual save, e.g. "Saved: Scene 05 — 15:42". */
+        val saveConfirmation: String? = null,
     ) : GameUiState
 
     data class ChapterTransition(val chapter: Int, val summaryText: String) : GameUiState
