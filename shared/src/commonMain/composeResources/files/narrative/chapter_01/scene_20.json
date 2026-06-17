@@ -12,9 +12,11 @@
           "thomas": 3
         },
         "flags": [
+          "met_thomas",
           "thomas_ally",
           "has_records",
-          "duke_poisoned"
+          "duke_poisoned",
+          "knows_disappearances"
         ],
         "stats": {
           "charisma": 1
@@ -35,7 +37,9 @@
           "thomas": 1
         },
         "flags": [
-          "duke_poisoned"
+          "met_thomas",
+          "duke_poisoned",
+          "knows_disappearances"
         ],
         "stats": {
           "wisdom": 1
@@ -56,8 +60,10 @@
           "thomas": 2
         },
         "flags": [
+          "met_thomas",
           "duke_poisoned",
-          "saw_duke"
+          "saw_duke",
+          "knows_disappearances"
         ],
         "stats": {
           "charisma": 1
@@ -77,11 +83,13 @@
           "goran": -2
         },
         "flags": [
+          "met_thomas",
           "thomas_ally",
           "has_records",
           "duke_poisoned",
           "saw_duke",
-          "noble_override"
+          "noble_override",
+          "knows_disappearances"
         ],
         "stats": {
           "charisma": 2
@@ -100,10 +108,12 @@
           "thomas": 2
         },
         "flags": [
+          "met_thomas",
           "thomas_ally",
           "has_records",
           "duke_poisoned",
-          "traced_funds"
+          "traced_funds",
+          "knows_disappearances"
         ],
         "stats": {
           "wisdom": 2

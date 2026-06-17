@@ -13,10 +13,11 @@
         },
         "flags": [
           "knows_disappearances",
-          "knows_harren"
+          "knows_harren",
+          "met_edric"
         ]
       },
-      "next_scene": "scene_17"
+      "next_scene": "scene_11"
     },
     {
       "id": "c2",
@@ -26,6 +27,27 @@
           "knows_disappearances",
           "knows_harren"
         ]
+      },
+      "next_scene": "scene_17"
+    },
+    {
+      "id": "c3",
+      "text": "Keep drinking — the ale loosens your tongue and your muscles",
+      "effects": {
+        "stats": {
+          "strength": 1,
+          "charisma": 1,
+          "wisdom": -1,
+          "cunning": -1
+        },
+        "flags": [
+          "knows_disappearances",
+          "knows_harren",
+          "tavern_drunk"
+        ],
+        "relations": {
+          "marta": 1
+        }
       },
       "next_scene": "scene_17"
     }

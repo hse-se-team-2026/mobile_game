@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.hse.mobile_game.domain.entity.Character
+import ru.hse.mobile_game.domain.entity.Choice
 import ru.hse.mobile_game.domain.entity.GameState
 import ru.hse.mobile_game.domain.entity.Scene
 import ru.hse.mobile_game.domain.entity.Stats
@@ -15,6 +16,7 @@ import ru.hse.mobile_game.domain.usecase.LoadSceneUseCase
 import ru.hse.mobile_game.domain.usecase.MakeChoiceUseCase
 import ru.hse.mobile_game.domain.usecase.SaveGameUseCase
 import ru.hse.mobile_game.screen.model.CharacterUiModel
+import ru.hse.mobile_game.screen.model.ChoiceOutcome
 import ru.hse.mobile_game.screen.model.ChoiceUiModel
 import ru.hse.mobile_game.screen.model.GameUiState
 
@@ -30,6 +32,9 @@ class GameViewModel(
 
     private var gameState: GameState? = null
     private var currentScene: Scene? = null
+
+    /** Outcome from the last choice, shown as a popup on the next scene. */
+    private var pendingOutcome: ChoiceOutcome? = null
 
     /** Start a new game with the given origin. */
     fun startNewGame(origin: String) {
@@ -69,6 +74,14 @@ class GameViewModel(
         }
     }
 
+    /** Dismiss the choice outcome popup. */
+    fun dismissOutcome() {
+        val state = _uiState.value
+        if (state is GameUiState.SceneReady && state.choiceOutcome != null) {
+            _uiState.value = state.copy(choiceOutcome = null)
+        }
+    }
+
     /** Handle the player selecting a choice. */
     fun onChoiceSelected(choiceId: String) {
         val state = gameState ?: return
@@ -77,8 +90,12 @@ class GameViewModel(
 
         viewModelScope.launch {
             try {
+                val oldCharacter = state.character
                 val newState = makeChoice(state, choice)
                 gameState = newState.copy(timestamp = currentTimeMillis())
+
+                // Compute outcome: stat changes + new knowledge
+                pendingOutcome = computeOutcome(oldCharacter, newState.character, choice)
 
                 // Auto-save after each choice
                 autoSave()
@@ -126,17 +143,24 @@ class GameViewModel(
                 val scene = loadScene(state.currentSceneId)
                 currentScene = scene
 
+                // Filter: only show choices that pass origin + flag checks (visibility).
+                // Choices that fail stat checks are shown as disabled with a hint.
                 val choiceModels =
-                    scene.choices.map { choice ->
-                        val available =
-                            evaluateConditions.isChoiceAvailable(choice, state.character)
-                        ChoiceUiModel(
-                            id = choice.id,
-                            text = choice.text,
-                            isAvailable = available,
-                            requirementHint = if (!available) buildRequirementHint(choice) else null,
-                        )
-                    }
+                    scene.choices
+                        .filter { choice ->
+                            evaluateConditions.isChoiceVisible(choice, state.character)
+                        }
+                        .map { choice ->
+                            val available =
+                                evaluateConditions.isChoiceAvailable(choice, state.character)
+                            ChoiceUiModel(
+                                id = choice.id,
+                                text = choice.text,
+                                isAvailable = available,
+                                requirementHint =
+                                    if (!available) buildRequirementHint(choice) else null,
+                            )
+                        }
 
                 // Split text into paragraphs on double-newline
                 val paragraphs =
@@ -144,6 +168,13 @@ class GameViewModel(
                         .split("\n\n")
                         .map { it.trim() }
                         .filter { it.isNotEmpty() }
+
+                // Compute unlocked glossary terms based on player flags
+                val activeTerms = Glossary.unlockedTerms(state.character.flags)
+
+                // Pick up any pending outcome from the last choice
+                val outcome = pendingOutcome?.takeIf { it.hasContent }
+                pendingOutcome = null
 
                 _uiState.value =
                     GameUiState.SceneReady(
@@ -153,6 +184,8 @@ class GameViewModel(
                         choices = choiceModels,
                         character = mapCharacterToUi(state.character),
                         allTextRevealed = paragraphs.size <= 1,
+                        activeGlossaryTerms = activeTerms,
+                        choiceOutcome = outcome,
                     )
             } catch (e: Exception) {
                 _uiState.value = GameUiState.Error("Failed to load scene: ${e.message}")
@@ -174,6 +207,34 @@ class GameViewModel(
         }
     }
 
+    /**
+     * Compute outcome from a choice — what stat changes occurred and what new knowledge was gained.
+     */
+    private fun computeOutcome(
+        oldCharacter: Character,
+        newCharacter: Character,
+        choice: Choice,
+    ): ChoiceOutcome {
+        // Stat changes from the choice effects
+        val statChanges = choice.effects.stats.filter { it.value != 0 }
+
+        // New flags: present in new character but absent in old
+        val newFlags = newCharacter.flags - oldCharacter.flags
+        val newKnowledge = newFlags.map { formatFlagAsKnowledge(it) }
+
+        return ChoiceOutcome(statChanges = statChanges, newKnowledge = newKnowledge)
+    }
+
+    /** Convert a flag like "met_marta" → "Marta", "knows_harbor" → "Harbor". */
+    private fun formatFlagAsKnowledge(flag: String): String {
+        return flag
+            .removePrefix("met_")
+            .removePrefix("knows_")
+            .removePrefix("visited_")
+            .replace("_", " ")
+            .replaceFirstChar { it.uppercase() }
+    }
+
     private fun mapCharacterToUi(character: Character): CharacterUiModel {
         return CharacterUiModel(
             id = character.id,
@@ -189,23 +250,11 @@ class GameViewModel(
         )
     }
 
-    private fun buildRequirementHint(choice: ru.hse.mobile_game.domain.entity.Choice): String {
+    /** Build hint showing only stat requirements (origin/flags are hidden, not hinted). */
+    private fun buildRequirementHint(choice: Choice): String {
         val parts = mutableListOf<String>()
         choice.requires?.statMin?.forEach { (stat, min) -> parts.add("$stat ≥ $min") }
-        choice.requires?.flagsRequired?.forEach { flag -> parts.add("Requires: $flag") }
-        choice.requires?.flagsForbidden?.forEach { flag -> parts.add("Forbidden: $flag") }
-        choice.requires?.originRequired?.forEach { origin ->
-            val label =
-                when (origin) {
-                    "noble" -> "Noble"
-                    "merchant" -> "Merchant"
-                    "soldier" -> "Soldier"
-                    "scholar" -> "Scholar"
-                    else -> origin
-                }
-            parts.add("Origin: $label only")
-        }
-        return parts.joinToString(", ")
+        return if (parts.isEmpty()) "Requirements not met" else parts.joinToString(", ")
     }
 }
 

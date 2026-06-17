@@ -14,7 +14,10 @@
         "flags": [
           "knows_harbor",
           "knows_smuggling"
-        ]
+        ],
+        "stats": {
+          "cunning": 1
+        }
       },
       "next_scene": "scene_17"
     },
@@ -22,6 +25,24 @@
       "id": "c2",
       "text": "Take your winnings and move on",
       "effects": {},
+      "next_scene": "scene_17"
+    },
+    {
+      "id": "c3",
+      "text": "Cheat at the next round — palm the dice for a bigger payout",
+      "effects": {
+        "stats": {
+          "cunning": 2,
+          "charisma": -1
+        },
+        "flags": [
+          "knows_harbor",
+          "cheated_dice"
+        ],
+        "relations": {
+          "kess": -1
+        }
+      },
       "next_scene": "scene_17"
     }
   ]

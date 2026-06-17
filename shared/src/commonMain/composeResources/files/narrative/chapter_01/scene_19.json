@@ -38,6 +38,10 @@
         ],
         "relations": {
           "harren": -2
+        },
+        "stats": {
+          "strength": 1,
+          "cunning": -1
         }
       },
       "next_scene": "scene_23"

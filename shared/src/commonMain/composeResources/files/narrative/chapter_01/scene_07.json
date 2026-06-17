@@ -10,14 +10,22 @@
       "effects": {
         "relations": {
           "marta": 1
-        }
+        },
+        "flags": [
+          "met_marta"
+        ]
       },
       "next_scene": "scene_10"
     },
     {
       "id": "c2",
       "text": "Approach the lone swordsman by the fire",
-      "effects": {},
+      "effects": {
+        "flags": [
+          "met_marta",
+          "met_edric"
+        ]
+      },
       "next_scene": "scene_11"
     },
     {
@@ -31,12 +39,34 @@
       "effects": {
         "stats": {
           "cunning": 1
-        }
+        },
+        "flags": [
+          "met_marta",
+          "met_kess"
+        ]
       },
       "next_scene": "scene_12"
     },
     {
       "id": "c4",
+      "text": "Order the strongest drink in the house and slam it down",
+      "effects": {
+        "stats": {
+          "strength": 1,
+          "wisdom": -1
+        },
+        "flags": [
+          "met_marta",
+          "tavern_drunk"
+        ],
+        "relations": {
+          "marta": 1
+        }
+      },
+      "next_scene": "scene_10"
+    },
+    {
+      "id": "c5",
       "text": "Flash a noble's signet ring and demand a private room",
       "requires": {
         "origin_required": ["noble"]
@@ -49,13 +79,14 @@
           "marta": 2
         },
         "flags": [
+          "met_marta",
           "noble_authority"
         ]
       },
       "next_scene": "scene_10"
     },
     {
-      "id": "c5",
+      "id": "c6",
       "text": "Recognize the swordsman's military insignia — offer a veteran's greeting",
       "requires": {
         "origin_required": ["soldier"]
@@ -68,6 +99,8 @@
           "edric": 2
         },
         "flags": [
+          "met_marta",
+          "met_edric",
           "soldier_bond"
         ]
       },

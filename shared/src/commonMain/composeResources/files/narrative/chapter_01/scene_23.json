@@ -14,7 +14,8 @@
       },
       "effects": {
         "stats": {
-          "strength": 1
+          "strength": 1,
+          "wisdom": -1
         },
         "flags": [
           "survived_ambush",
@@ -66,7 +67,11 @@
       "effects": {
         "flags": [
           "captured"
-        ]
+        ],
+        "stats": {
+          "cunning": 1,
+          "strength": -1
+        }
       },
       "next_scene": "scene_27"
     }

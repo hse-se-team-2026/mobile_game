@@ -12,6 +12,8 @@
           "orin": 2
         },
         "flags": [
+          "met_orin",
+          "visited_temple",
           "orin_ally",
           "duke_poisoned",
           "knows_poison"
@@ -32,11 +34,34 @@
           "orin": 1
         },
         "flags": [
+          "met_orin",
+          "visited_temple",
           "duke_poisoned",
           "knows_poison"
         ],
         "stats": {
           "wisdom": 1
+        }
+      },
+      "next_scene": "scene_24"
+    },
+    {
+      "id": "c3",
+      "text": "Offer a generous donation to gain the brother's full trust",
+      "effects": {
+        "relations": {
+          "orin": 3
+        },
+        "flags": [
+          "met_orin",
+          "visited_temple",
+          "orin_ally",
+          "duke_poisoned",
+          "knows_poison"
+        ],
+        "stats": {
+          "charisma": 1,
+          "cunning": -1
         }
       },
       "next_scene": "scene_24"

@@ -15,7 +15,8 @@
       "effects": {
         "flags": [
           "knows_night_ships",
-          "knows_smuggling"
+          "knows_smuggling",
+          "knows_harbor"
         ],
         "relations": {
           "dock_workers": 1
@@ -28,8 +29,28 @@
       "text": "Note the information and investigate the empty warehouses instead",
       "effects": {
         "flags": [
-          "knows_night_ships"
+          "knows_night_ships",
+          "knows_harbor"
         ]
+      },
+      "next_scene": "scene_19"
+    },
+    {
+      "id": "c3",
+      "text": "Share the workers' flask and loosen their tongues with camaraderie",
+      "effects": {
+        "flags": [
+          "knows_night_ships",
+          "knows_smuggling",
+          "knows_harbor"
+        ],
+        "relations": {
+          "dock_workers": 2
+        },
+        "stats": {
+          "charisma": 1,
+          "wisdom": -1
+        }
       },
       "next_scene": "scene_19"
     }

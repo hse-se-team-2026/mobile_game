@@ -30,6 +30,8 @@ class EvaluateConditionsUseCaseTest {
             nextSceneId = "scene_02",
         )
 
+    // ── isChoiceAvailable ──
+
     @Test
     fun choiceWithNoRequirementsIsAlwaysAvailable() {
         val result = useCase.isChoiceAvailable(choice(requires = null), baseCharacter)
@@ -115,5 +117,118 @@ class EvaluateConditionsUseCaseTest {
         val req = Requirements(statMin = mapOf("luck" to 1))
         val result = useCase.isChoiceAvailable(choice(requires = req), baseCharacter)
         assertFalse(result)
+    }
+
+    // ── isChoiceVisible ──
+
+    @Test
+    fun visibleWithNoRequirements() {
+        assertTrue(useCase.isChoiceVisible(choice(requires = null), baseCharacter))
+    }
+
+    @Test
+    fun visibleWhenOnlyStatRequirementFails() {
+        val req = Requirements(statMin = mapOf("cunning" to 99))
+        assertTrue(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun hiddenWhenOriginDoesNotMatch() {
+        val req = Requirements(originRequired = setOf("merchant"))
+        assertFalse(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun visibleWhenOriginMatches() {
+        val req = Requirements(originRequired = setOf("noble", "merchant"))
+        assertTrue(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun hiddenWhenRequiredFlagMissing() {
+        val req = Requirements(flagsRequired = setOf("met_king"))
+        assertFalse(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun visibleWhenRequiredFlagPresent() {
+        val req = Requirements(flagsRequired = setOf("met_guard"))
+        assertTrue(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun hiddenWhenForbiddenFlagPresent() {
+        val req = Requirements(flagsForbidden = setOf("met_guard"))
+        assertFalse(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun visibleIgnoresStatRequirements() {
+        val req =
+            Requirements(
+                statMin = mapOf("strength" to 999),
+                originRequired = setOf("noble"),
+                flagsRequired = setOf("met_guard"),
+            )
+        assertTrue(useCase.isChoiceVisible(choice(requires = req), baseCharacter))
+    }
+
+    // ── failsOnlyOnStats ──
+
+    @Test
+    fun failsOnlyOnStatsReturnsFalseWhenNoRequirements() {
+        assertFalse(useCase.failsOnlyOnStats(choice(requires = null), baseCharacter))
+    }
+
+    @Test
+    fun failsOnlyOnStatsReturnsTrueWhenStatFails() {
+        val req = Requirements(statMin = mapOf("wisdom" to 10))
+        assertTrue(useCase.failsOnlyOnStats(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun failsOnlyOnStatsReturnsFalseWhenOriginFails() {
+        val req =
+            Requirements(
+                statMin = mapOf("wisdom" to 10),
+                originRequired = setOf("merchant"),
+            )
+        assertFalse(useCase.failsOnlyOnStats(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun failsOnlyOnStatsReturnsFalseWhenStatsPass() {
+        val req = Requirements(statMin = mapOf("strength" to 3))
+        assertFalse(useCase.failsOnlyOnStats(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun failsOnlyOnStatsReturnsFalseWhenFlagFails() {
+        val req =
+            Requirements(
+                statMin = mapOf("wisdom" to 10),
+                flagsRequired = setOf("met_king"),
+            )
+        assertFalse(useCase.failsOnlyOnStats(choice(requires = req), baseCharacter))
+    }
+
+    // ── Origin requirement in isChoiceAvailable ──
+
+    @Test
+    fun availableWhenOriginMatchesInList() {
+        val req = Requirements(originRequired = setOf("noble", "scholar"))
+        assertTrue(useCase.isChoiceAvailable(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun unavailableWhenOriginNotInList() {
+        val req = Requirements(originRequired = setOf("merchant", "scholar"))
+        assertFalse(useCase.isChoiceAvailable(choice(requires = req), baseCharacter))
+    }
+
+    @Test
+    fun emptyOriginSetPassesCheck() {
+        val req = Requirements(originRequired = emptySet())
+        assertTrue(useCase.isChoiceAvailable(choice(requires = req), baseCharacter))
     }
 }

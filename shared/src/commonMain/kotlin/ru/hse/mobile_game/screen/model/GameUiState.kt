@@ -11,6 +11,8 @@ sealed interface GameUiState {
         val choices: List<ChoiceUiModel>,
         val character: CharacterUiModel,
         val allTextRevealed: Boolean,
+        val activeGlossaryTerms: List<String>,
+        val choiceOutcome: ChoiceOutcome? = null,
     ) : GameUiState
 
     data class ChapterTransition(val chapter: Int, val summaryText: String) : GameUiState
@@ -26,6 +28,20 @@ data class ChoiceUiModel(
     val isAvailable: Boolean,
     val requirementHint: String? = null,
 )
+
+/**
+ * Outcome shown after a choice — stat changes and/or newly discovered knowledge. Displayed as a
+ * popup overlay before the next scene text starts.
+ */
+data class ChoiceOutcome(
+    /** Stat deltas, e.g. mapOf("strength" to 1, "wisdom" to -1). */
+    val statChanges: Map<String, Int> = emptyMap(),
+    /** Newly acquired flags in human-readable form, e.g. ["Marta", "Edric"]. */
+    val newKnowledge: List<String> = emptyList(),
+) {
+    val hasContent: Boolean
+        get() = statChanges.isNotEmpty() || newKnowledge.isNotEmpty()
+}
 
 data class CharacterUiModel(
     val id: String,

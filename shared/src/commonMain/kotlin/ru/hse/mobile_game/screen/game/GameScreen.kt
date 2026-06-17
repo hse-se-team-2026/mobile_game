@@ -66,6 +66,7 @@ import moblile_game.shared.generated.resources.bg_warehouse
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.hse.mobile_game.screen.character.CharacterSheet
+import ru.hse.mobile_game.screen.model.ChoiceOutcome
 import ru.hse.mobile_game.screen.model.ChoiceUiModel
 import ru.hse.mobile_game.screen.model.GameUiState
 
@@ -123,6 +124,7 @@ fun GameScreen(
                     onCharacterClick = { showCharacterSheet = true },
                     onSaveClick = onNavigateToSave,
                     onMenuClick = onNavigateToMenu,
+                    onDismissOutcome = { viewModel.dismissOutcome() },
                 )
             is GameUiState.ChapterTransition ->
                 ChapterTransitionContent(chapter = state.chapter, summary = state.summaryText)
@@ -164,10 +166,12 @@ private fun SceneContent(
     onCharacterClick: () -> Unit,
     onSaveClick: () -> Unit,
     onMenuClick: () -> Unit,
+    onDismissOutcome: () -> Unit,
 ) {
     val bgDrawable = resolveBackground(state.backgroundAsset)
     var glossaryEntry by remember { mutableStateOf<Glossary.Entry?>(null) }
     val listState = rememberLazyListState()
+    val activeTerms = state.activeGlossaryTerms
 
     // Auto-scroll when new paragraphs are revealed
     LaunchedEffect(state.visibleParagraphs) {
@@ -253,14 +257,21 @@ private fun SceneContent(
                         shape = RoundedCornerShape(12.dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0xBB1A1A2E)),
                     ) {
-                        val annotatedText = remember(paragraph) { parseNarrativeText(paragraph) }
+                        val annotatedText =
+                            remember(paragraph, activeTerms) {
+                                parseNarrativeText(paragraph, activeTerms)
+                            }
                         ClickableText(
                             text = annotatedText,
                             style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 26.sp),
                             modifier = Modifier.padding(16.dp),
                             onClick = { offset ->
                                 annotatedText
-                                    .getStringAnnotations(tag = "glossary", start = offset, end = offset)
+                                    .getStringAnnotations(
+                                        tag = "glossary",
+                                        start = offset,
+                                        end = offset,
+                                    )
                                     .firstOrNull()
                                     ?.let { annotation ->
                                         glossaryEntry = Glossary.lookup(annotation.item)
@@ -302,13 +313,118 @@ private fun SceneContent(
             }
         }
 
+        // Choice outcome popup overlay (stat changes + knowledge)
+        if (state.choiceOutcome != null) {
+            ChoiceOutcomePopup(
+                outcome = state.choiceOutcome,
+                onDismiss = onDismissOutcome,
+            )
+        }
+
         // Glossary popup overlay
         if (glossaryEntry != null) {
             GlossaryPopup(
                 entry = glossaryEntry!!,
+                activeTerms = activeTerms,
                 onDismiss = { glossaryEntry = null },
                 onTermClick = { term -> glossaryEntry = Glossary.lookup(term) },
             )
+        }
+    }
+}
+
+@Composable
+private fun ChoiceOutcomePopup(
+    outcome: ChoiceOutcome,
+    onDismiss: () -> Unit,
+) {
+    Box(
+        modifier =
+            Modifier.fillMaxSize()
+                .background(Color(0x99000000))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onDismiss,
+                ),
+        contentAlignment = Alignment.Center,
+    ) {
+        Card(
+            modifier =
+                Modifier.widthIn(max = 340.dp)
+                    .padding(24.dp)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {},
+                    ),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A2E)),
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Stat changes section
+                if (outcome.statChanges.isNotEmpty()) {
+                    Text(
+                        text = "⚔ Traits changed",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFE0C080),
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    outcome.statChanges.forEach { (stat, delta) ->
+                        val sign = if (delta > 0) "+" else ""
+                        val color = if (delta > 0) Color(0xFF88CC88) else Color(0xFFCC6666)
+                        val label = stat.replaceFirstChar { it.uppercase() }
+                        Text(
+                            text = "$label $sign$delta",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = color,
+                        )
+                    }
+                }
+
+                // Spacer between sections
+                if (outcome.statChanges.isNotEmpty() && outcome.newKnowledge.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                // New knowledge section
+                if (outcome.newKnowledge.isNotEmpty()) {
+                    Text(
+                        text = "📖 New knowledge",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFFE0C080),
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    outcome.newKnowledge.forEach { knowledge ->
+                        Text(
+                            text = "• $knowledge",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = Color(0xFFF0EAE0),
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Dismiss button
+                Button(
+                    onClick = onDismiss,
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2A2A4E),
+                            contentColor = Color(0xFFE0C080),
+                        ),
+                    shape = RoundedCornerShape(8.dp),
+                ) {
+                    Text("Continue")
+                }
+            }
         }
     }
 }
@@ -317,6 +433,7 @@ private fun SceneContent(
 @Composable
 private fun GlossaryPopup(
     entry: Glossary.Entry,
+    activeTerms: List<String>,
     onDismiss: () -> Unit,
     onTermClick: (String) -> Unit,
 ) {
@@ -359,9 +476,15 @@ private fun GlossaryPopup(
 
                 // Scrollable description with glossary term support
                 val descriptionAnnotated =
-                    remember(entry.description) { parseSingleParagraph(entry.description) }
+                    remember(entry.description, activeTerms) {
+                        parseSingleParagraph(entry.description, activeTerms)
+                    }
 
-                Box(modifier = Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState())) {
+                Box(
+                    modifier =
+                        Modifier.weight(1f, fill = false)
+                            .verticalScroll(rememberScrollState())
+                ) {
                     ClickableText(
                         text = descriptionAnnotated,
                         style =
@@ -371,7 +494,11 @@ private fun GlossaryPopup(
                             ),
                         onClick = { offset ->
                             descriptionAnnotated
-                                .getStringAnnotations(tag = "glossary", start = offset, end = offset)
+                                .getStringAnnotations(
+                                    tag = "glossary",
+                                    start = offset,
+                                    end = offset,
+                                )
                                 .firstOrNull()
                                 ?.let { annotation -> onTermClick(annotation.item) }
                         },

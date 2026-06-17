@@ -12,6 +12,7 @@
           "sable": 2
         },
         "flags": [
+          "met_sable",
           "sable_contact"
         ]
       },
@@ -23,7 +24,10 @@
       "effects": {
         "relations": {
           "sable": -1
-        }
+        },
+        "flags": [
+          "met_sable"
+        ]
       },
       "next_scene": "scene_06"
     }

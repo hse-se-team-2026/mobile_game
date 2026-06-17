@@ -12,8 +12,10 @@
           "guard_captain": 3
         },
         "flags": [
+          "met_brynn",
           "brynn_ally",
-          "knows_harren"
+          "knows_harren",
+          "knows_disappearances"
         ]
       },
       "next_scene": "scene_18"
@@ -26,9 +28,30 @@
           "guard_captain": 1
         },
         "flags": [
+          "met_brynn",
           "knows_goran",
-          "knows_harren"
+          "knows_harren",
+          "knows_disappearances"
         ]
+      },
+      "next_scene": "scene_18"
+    },
+    {
+      "id": "c3",
+      "text": "Slam the desk and demand she act, not file reports",
+      "effects": {
+        "relations": {
+          "guard_captain": -2
+        },
+        "flags": [
+          "met_brynn",
+          "knows_harren",
+          "knows_disappearances"
+        ],
+        "stats": {
+          "strength": 1,
+          "charisma": -1
+        }
       },
       "next_scene": "scene_18"
     }

@@ -19,7 +19,10 @@
         "flags": [
           "edric_ally",
           "knows_goran"
-        ]
+        ],
+        "stats": {
+          "charisma": 1
+        }
       },
       "next_scene": "scene_17"
     },
@@ -32,7 +35,10 @@
         },
         "flags": [
           "knows_goran"
-        ]
+        ],
+        "stats": {
+          "wisdom": 1
+        }
       },
       "next_scene": "scene_17"
     },
@@ -41,6 +47,24 @@
       "text": "\"I work alone. But the information is useful.\"",
       "effects": {
         "flags": [
+          "knows_goran"
+        ]
+      },
+      "next_scene": "scene_17"
+    },
+    {
+      "id": "c4",
+      "text": "Challenge Edric to an arm-wrestling match to earn his respect",
+      "effects": {
+        "stats": {
+          "strength": 1,
+          "cunning": -1
+        },
+        "relations": {
+          "edric": 2
+        },
+        "flags": [
+          "edric_ally",
           "knows_goran"
         ]
       },

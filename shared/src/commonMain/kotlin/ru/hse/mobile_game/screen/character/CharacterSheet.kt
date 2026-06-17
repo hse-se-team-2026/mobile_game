@@ -72,11 +72,11 @@ fun CharacterSheet(character: CharacterUiModel) {
             }
         }
 
-        // Flags section
+        // Chronicle section — alliances, discoveries, events survived
         if (character.flags.isNotEmpty()) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                SectionHeader("Traits & Flags")
+                SectionHeader("Chronicle")
                 Spacer(modifier = Modifier.height(8.dp))
             }
             items(character.flags) { flag ->
