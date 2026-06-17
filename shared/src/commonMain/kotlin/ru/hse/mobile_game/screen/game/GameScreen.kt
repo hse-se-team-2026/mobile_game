@@ -44,10 +44,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import moblile_game.shared.generated.resources.Res
+import moblile_game.shared.generated.resources.bg_alley_night
 import moblile_game.shared.generated.resources.bg_city_gate
+import moblile_game.shared.generated.resources.bg_dungeon
 import moblile_game.shared.generated.resources.bg_guard_post
+import moblile_game.shared.generated.resources.bg_harbor
+import moblile_game.shared.generated.resources.bg_library
 import moblile_game.shared.generated.resources.bg_main_menu
 import moblile_game.shared.generated.resources.bg_market_dusk
+import moblile_game.shared.generated.resources.bg_noble_estate
+import moblile_game.shared.generated.resources.bg_tavern_interior
+import moblile_game.shared.generated.resources.bg_temple
+import moblile_game.shared.generated.resources.bg_warehouse
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import ru.hse.mobile_game.screen.character.CharacterSheet
@@ -57,24 +65,24 @@ import ru.hse.mobile_game.screen.model.GameUiState
 private fun resolveBackground(backgroundAsset: String): DrawableResource? {
     return when (backgroundAsset) {
         "market_dusk" -> Res.drawable.bg_market_dusk
-        "guard_post" -> Res.drawable.bg_guard_post
-        "city_gate" -> Res.drawable.bg_city_gate
-        "tavern_interior" -> Res.drawable.bg_market_dusk // reuse
-        "palace_hall" -> Res.drawable.bg_city_gate // reuse
         "market_day" -> Res.drawable.bg_market_dusk
-        "throne_room" -> Res.drawable.bg_main_menu
-        "dungeon" -> Res.drawable.bg_guard_post // reuse dark
-        "council_chamber" -> Res.drawable.bg_city_gate
-        "harbor" -> Res.drawable.bg_city_gate
-        "temple" -> Res.drawable.bg_main_menu
-        "warehouse" -> Res.drawable.bg_guard_post
-        "alley_night" -> Res.drawable.bg_guard_post
-        "noble_estate" -> Res.drawable.bg_city_gate
-        "library" -> Res.drawable.bg_main_menu
+        "guard_post" -> Res.drawable.bg_guard_post
         "barracks" -> Res.drawable.bg_guard_post
+        "city_gate" -> Res.drawable.bg_city_gate
         "garden" -> Res.drawable.bg_city_gate
+        "tavern_interior" -> Res.drawable.bg_tavern_interior
+        "noble_estate" -> Res.drawable.bg_noble_estate
+        "palace_hall" -> Res.drawable.bg_noble_estate
+        "council_chamber" -> Res.drawable.bg_noble_estate
+        "throne_room" -> Res.drawable.bg_noble_estate
+        "warehouse" -> Res.drawable.bg_warehouse
+        "alley_night" -> Res.drawable.bg_alley_night
+        "harbor" -> Res.drawable.bg_harbor
+        "dungeon" -> Res.drawable.bg_dungeon
+        "temple" -> Res.drawable.bg_temple
+        "cathedral" -> Res.drawable.bg_temple
+        "library" -> Res.drawable.bg_library
         "battlefield" -> Res.drawable.bg_guard_post
-        "cathedral" -> Res.drawable.bg_main_menu
         else -> Res.drawable.bg_market_dusk
     }
 }
