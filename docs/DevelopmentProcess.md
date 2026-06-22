@@ -13,7 +13,7 @@
    Реализовать `SaveRepositoryImpl`, `SettingsRepositoryImpl`, `DatabaseDriverFactory`, SQLDelight schema и platform-specific driver wiring для Android и iOS.
 ### SRE
 5. **Сборочная и dependency-основа**
-   Подготовить Gradle/KMP-конфиг под целевой стек: Compose Multiplatform, Navigation Compose, Koin, Coroutines, SQLDelight, DataStore KMP, kotlinx.serialization-json, Coil 3.
+   Подготовить Gradle/KMP-конфиг под целевой стек: Compose Multiplatform, Navigation Compose, Koin, Coroutines, SQLDelight, DataStore KMP, kotlinx.serialization-json.
 6. **Качество и автоматизация**
    Настроить `GitHub Actions`, `Detekt`, `ktfmt`, а также базовые проверки сборки и тестов.
 7. **Среда разработки и bootstrap**
